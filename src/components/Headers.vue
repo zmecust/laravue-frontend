@@ -16,7 +16,7 @@
                             <router-link class="head-link" to="/">打赏</router-link>
                         </div>
                         <div class="head-nav">
-                            <router-link class="head-link" to="/">关于</router-link>
+                            <router-link class="head-link" to="/about">关于</router-link>
                         </div>
                         <div style="float: left; padding-left: 40px">
                             <form method="GET" action="/search" accept-charset="UTF-8">

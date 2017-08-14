@@ -29,6 +29,7 @@
                     GitHub 账号注册
                 </div>
             </div>
+            <div style="clear: both; border: 1px solid #fff"></div>
         </div>
     </div>
 </template>

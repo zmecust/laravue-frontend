@@ -11,6 +11,7 @@ const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
 const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
 const UserShow = resolve => require(['../views/article/Show'], resolve)
+const About = resolve => require(['../views/other/About'], resolve)
 
 Vue.use(Router)
 
@@ -59,6 +60,10 @@ const router = new Router({
       path: '/tags/:id/articles',
       name: 'TagsArticle',
       component: UserShow
+    },
+    {
+      path: '/about',
+      component: About
     }
   ]
 })
