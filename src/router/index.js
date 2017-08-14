@@ -12,6 +12,7 @@ const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
 const UserShow = resolve => require(['../views/article/Show'], resolve)
 const About = resolve => require(['../views/other/About'], resolve)
+const Payment = resolve => require(['../views/other/Payment'], resolve)
 
 Vue.use(Router)
 
@@ -64,6 +65,10 @@ const router = new Router({
     {
       path: '/about',
       component: About
+    },
+    {
+      path: '/payment',
+      component: Payment
     }
   ]
 })

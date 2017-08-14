@@ -13,7 +13,7 @@
                             <router-link class="head-link" to="/">首页</router-link>
                         </div>
                         <div class="head-nav">
-                            <router-link class="head-link" to="/">打赏</router-link>
+                            <router-link class="head-link" to="/payment">打赏</router-link>
                         </div>
                         <div class="head-nav">
                             <router-link class="head-link" to="/about">关于</router-link>

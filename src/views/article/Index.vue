@@ -2,7 +2,7 @@
     <div id="load-index">
         <el-row :gutter="25">
             <el-col :span="10" :offset="5">
-                <div style="border: 1px solid #fff"></div>
+                <div style="border: 1px solid #fff;padding-top: 10px"></div>
                 <div class="content" v-for="(article, index) in articles">
                     <div class="content-body">
                         <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="border-bottom: 1px solid #ddd; padding-top: 60px"></div>
+                    <div style="border-bottom: 1px solid #ddd; padding-top: 50px"></div>
                 </div>
             </el-col>
             <el-col :span="4" style="margin-top: 20px;">
@@ -69,7 +69,7 @@
 <style lang="scss" scoped>
     .content-body {
         width: 90%;
-        margin-top: 40px;
+        margin-top: 30px;
         .content-title {
             color: #333;
             &:hover {
