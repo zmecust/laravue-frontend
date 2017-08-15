@@ -12,13 +12,13 @@
                             <dt>标签：</dt>
                             <el-select
                                     class="el-input"
-                                    v-model="params.tag"
+                                    v-model="tags"
                                     multiple
                                     filterable
                                     allow-create
                                     placeholder="请选择文章标签">
                                 <el-option
-                                        v-for="item in tags"
+                                        v-for="item in allTags"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -54,8 +54,6 @@
     import { VueEditor } from 'vue2-editor';
     import api from '../../api';
 
-    const articleId = this.$route.params.slug;
-
     export default {
         components: {
             VueEditor
@@ -69,22 +67,22 @@
                 is_hidden: 'F'
             },
             options: [
-                { value: 'F', label: '否' },
-                { value: 'T', label: '是' }
+                { value: 'F', label: '是' },
+                { value: 'T', label: '否' }
             ],
             tags: '',
+            allTags: '',
         }
     },
     beforeCreate() {
-        console.log(articleId);
-        api.get_article(articleId).then((res) => {
-            console.log(res.data.data);
+        api.get_article(this.$route.params.slug).then((res) => {
+            this.tags = res.data.data.tags;
             this.params = res.data.data;
         });
     },
     mounted() {
         api.get_tags().then((res) => {
-            this.tags = res.data.data;
+            this.allTags = res.data.data;
         });
     },
     methods: {
@@ -93,7 +91,8 @@
             if (e != null && e.keyCode === 13) {
                 return;
             }
-            api.edit_article(articleId, this.params).then((res) => {
+            this.params.tag = this.tags;
+            api.edit_article(this.$route.params.slug, this.params).then((res) => {
                 console.log(res.data);
             });
         },

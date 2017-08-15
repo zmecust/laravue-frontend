@@ -4,8 +4,8 @@
             <p>热门话题</p>
             <div style="border-bottom: 1px solid #eee;"></div>
             <ul v-for="article in articles">
-                <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
-                    <li>{{article.title.substring(0, 25)}}</li>
+                <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
+                    <li>{{article.title.substring(0, 22)}}</li>
                 </router-link>
             </ul>
         </div>
@@ -62,7 +62,7 @@
             font-size: 14px;
             text-align: left;
             list-style-type: disc;
-            padding: 15px 10px 0 0px;
+            padding: 10px 10px 0 0px;
             margin-left: 25px;
         }
         a {
@@ -95,7 +95,7 @@
         background-color: #eee;
         color: #00b5ad;
         float: left;
-        margin-right: 10px;
+        margin: 5px 5px;
     }
     #btn-tag:hover {
         color: #00b5ad;

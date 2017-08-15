@@ -5,7 +5,7 @@
                 <div class="article">
                     <p>{{article.title}}</p>
                     <div class="article-edit" v-if="auth.id == article.user.id ? true : false">
-                        <router-link :to="{name: 'ArticleEdit', params: {slug: this.$route.params.id}}">
+                        <router-link :to="{name: 'ArticleEdit', params: {slug: this.$route.params.slug}}">
                             <span style="padding-left: 10px; font-size: larger"><i class="fa fa-edit"></i></span>
                         </router-link>
                     </div>
@@ -18,6 +18,7 @@
                                 <router-link :to="{name: 'UserShow', params: {slug: article.user.id}}" id="btn-topic">
                                     作者
                                 </router-link>
+                                <span>{{article.user.name}}</span>
                                 <span>{{article.user.name}}</span>
                             </div>
                             <div class="article-detail">
@@ -45,7 +46,7 @@
                                     type="textarea"
                                     :rows="4"
                                     placeholder="请输入评论内容"
-                                    v-model="textarea">
+                                    v-model="comment">
                             </el-input>
                             <button>评 论</button>
                         </form>
@@ -101,7 +102,8 @@
     data() {
       return {
         article: '',
-        like: ''
+        like: '',
+        comment: ''
       }
     },
     computed: mapState({
