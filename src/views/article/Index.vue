@@ -5,12 +5,12 @@
                 <div style="border: 1px solid #fff;padding-top: 10px"></div>
                 <div class="content" v-for="(article, index) in articles">
                     <div class="content-body">
-                        <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
+                        <router-link class="content-title" :to="{name: 'ArticleShow', params: {slug: article.id}}">
                             <h3>{{article.title}}</h3>
                         </router-link>
                         <div style="padding-top: 5px; font-size: 13px; color: #bbb">由 {{article.user.name}} 发表于 {{article.created_at.split(' ')[0]}}</div>
                         <div class="content-body-body">
-                            {{ article.body.substring(0, 100) }} ...
+                            {{ article.abstract }} ...
                         </div>
                         <div style="padding-top: 15px">
                             <div v-for="tag in article.tags" style="float: left">
@@ -59,6 +59,10 @@
       api.get_articles().then((res) => {
         if (res.data.status == 1) {
           this.articles = res.data.data.data;
+          for (let index in this.articles) {
+              this.articles[index].abstract = this.articles[index].body.substring(0, 150)
+                      .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ');
+          }
           loadingInstance.close();
         }
       })

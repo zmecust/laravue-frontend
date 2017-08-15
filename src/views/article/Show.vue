@@ -4,6 +4,11 @@
             <el-col :span="10" :offset="5">
                 <div class="article">
                     <p>{{article.title}}</p>
+                    <div class="article-edit" v-if="auth.id == article.user.id ? true : false">
+                        <router-link :to="{name: 'ArticleEdit', params: {slug: this.$route.params.id}}">
+                            <span style="padding-left: 10px; font-size: larger"><i class="fa fa-edit"></i></span>
+                        </router-link>
+                    </div>
                     <div class="article-author">
                         <router-link  style="float: left" :to="{name: 'UserShow', params: {slug: article.user.id}}">
                             <img :src="article.user.avatar" alt="">
@@ -16,7 +21,7 @@
                                 <span>{{article.user.name}}</span>
                             </div>
                             <div class="article-detail">
-                                <span>创作于 {{article.created_at}}</span>
+                                <span>创作于 {{ article.created_at }}</span>
                                 <span>阅读 {{ article.view_count }}</span>
                                 <span>评论 {{ article.comments_count }}</span>
                                 <span>点赞 {{ article.likes_count }}</span>
@@ -107,13 +112,13 @@
         target: document.querySelector('#app')
       };
       let loadingInstance = Loading.service(options);
-      api.get_article(this.$route.params.id).then((res) => {
+      api.get_article(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.article = res.data.data;
           loadingInstance.close();
         }
       });
-      api.is_like_or_not(this.$route.params.id).then((res) => {
+      api.is_like_or_not(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.like = res.data.data.liked;
         }
@@ -121,7 +126,7 @@
     },
     methods: {
       click_like() {
-        api.like(this.$route.params.id).then((res) => {
+        api.like(this.$route.params.slug).then((res) => {
           if (res.data.status == 1) {
             this.like = res.data.data.liked;
           }
@@ -137,10 +142,18 @@
         p {
             font-size: 30px;
             font-weight: bold;
+            float: left;
+        }
+        a {
+            color: tomato;
+        }
+        .article-edit {
+            padding-top: 5px;
         }
     }
     .article-author {
-        margin-top: 15px;
+        clear: both;
+        margin-top: 30px;
         position: relative;
         img {
             position: absolute;

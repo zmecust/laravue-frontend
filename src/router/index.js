@@ -7,12 +7,15 @@ import 'nprogress/nprogress.css';
 const Login = resolve => require(['../views/account/Login'], resolve) //懒加载
 const Register = resolve => require(['../views/account/Register'], resolve)
 const VerifyEmail = resolve => require(['../views/account/VerifyEmail'], resolve)
+const Common = resolve => require(['../views/Common'], resolve)
 const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
 const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
-const UserShow = resolve => require(['../views/article/Show'], resolve)
+const ArticleEdit = resolve => require(['../views/article/Edit'], resolve)
+const UserShow = resolve => require(['../views/account/Show'], resolve)
 const About = resolve => require(['../views/other/About'], resolve)
 const Payment = resolve => require(['../views/other/Payment'], resolve)
+const Error404 = resolve => require(['../views/error/404'], resolve)
 
 Vue.use(Router)
 
@@ -34,41 +37,59 @@ const router = new Router({
     },
     {
       path: '/',
-      component: ArticleIndex
+      component: Common,
+      children: [
+        {
+          path: '/',
+          component: ArticleIndex,
+        },
+        {
+          path: '/articles',
+          component: ArticleIndex
+        },
+        {
+          path: '/articles/:slug',
+          name: 'ArticleShow',
+          component: ArticleShow
+        },
+        {
+          path: '/article/create',
+          meta: {
+            requireAuth: true
+          },
+          component: ArticleCreate
+        },
+        {
+          path: '/articles/:slug/edit',
+          name: 'ArticleEdit',
+          meta: {
+            requireAuth: true
+          },
+          component: ArticleEdit
+        },
+        {
+          path: '/users/:slug',
+          name: 'UserShow',
+          component: UserShow
+        },
+        {
+          path: '/tags/:id/articles',
+          name: 'TagsArticle',
+          component: UserShow
+        },
+        {
+          path: '/about',
+          component: About
+        },
+        {
+          path: '/payment',
+          component: Payment
+        },
+      ]
     },
     {
-      path: '/articles',
-      component: ArticleIndex
-    },
-    {
-      path: '/articles/:id',
-      name: 'ArticleShow',
-      component: ArticleShow
-    },
-    {
-      path: '/article/create',
-      meta: {
-        requireAuth: true
-      },
-      component: ArticleCreate
-    },
-    {
-      path: '/users/:slug',
-      name: 'UserShow',
-      component: UserShow
-    },
-    {
-      path: '/tags/:id/articles',
-      name: 'TagsArticle',
-      component: UserShow
-    },
-    {
-      path: '/about',
-      component: About
-    },
-    {
-      path: '/payment',
-      component: Payment
+      path: '*',
+      component: Error404,
     }
   ]
 })
