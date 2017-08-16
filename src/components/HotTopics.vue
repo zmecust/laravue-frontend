@@ -52,7 +52,7 @@
         text-align: center;
         margin-top: 20px;
         padding-bottom: 10px;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         border-radius: 4px;
         p {
             padding: 8px 0 8px 0;
@@ -75,7 +75,7 @@
     .hot-tags {
         text-align: center;
         margin-top: 20px;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         border-radius: 4px;
         p {
             padding: 8px 0 8px 0;

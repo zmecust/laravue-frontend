@@ -1,7 +1,7 @@
 <template>
     <div class="payment">
         <p class="first">$打赏</p>
-        <p>社区的维护需要money，各位心情好就施舍点吧</p>
+        <p>社区的维护需要money，各位心情好就施舍点吧，哈哈！</p>
         <img src="../../assets/payment.png" alt="">
     </div>
 </template>

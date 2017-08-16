@@ -246,7 +246,7 @@
     .sidebar-author {
         text-align: center;
         margin-top: 40px;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         border-radius: 4px;
         p {
             padding: 8px 0 8px 0;

@@ -18,7 +18,7 @@
                                     allow-create
                                     placeholder="请选择文章标签">
                                 <el-option
-                                        v-for="item in tags"
+                                        v-for="item in allTags"
                                         :key="item.id"
                                         :label="item.name"
                                         :value="item.id">
@@ -67,15 +67,15 @@
           is_hidden: 'F'
         },
         options: [
-          { value: 'F', label: '否' },
-          { value: 'T', label: '是' }
+          { value: 'F', label: '是' },
+          { value: 'T', label: '否' }
         ],
-        tags: '',
+        allTags: '',
       }
     },
     mounted() {
       api.get_tags().then((res) => {
-        this.tags = res.data.data;
+        this.allTags = res.data.data;
       });
     },
     methods: {
@@ -85,7 +85,9 @@
           return;
         }
         api.create_article(this.params).then((res) => {
-          console.log(res.data);
+          if (res.data.status == 1) {
+            this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
+          }
         });
       },
     }

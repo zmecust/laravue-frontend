@@ -1,26 +1,29 @@
 <template>
-    <div id="login" class='login-wrap'>
-        <div class="container">
-            <div class="ms-title">
-                <span><router-link to="/user/login" style="color: #00b5ad; font-weight: bold">登录</router-link></span>
-                <span class="this-span">·</span>
-                <span><router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link></span>
-            </div>
-            <div class="ms-login">
-                <el-form :model="params" :rules="rules" ref="ruleForm" label-width="68px" class="demo-ruleForm">
-                    <el-form-item prop="login" label="账号：">
-                        <el-input v-model="params.login" placeholder="请输入用户名或邮箱" ></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password" label="密码：">
-                        <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
-                    </el-form-item>
-                    <div v-if="failure" style="color:red" class='message'>{{failure.data}}</div>
-                    <div class="login-btn">
-                        <el-button class="btn-define" @click="submit('ruleForm')">登 录</el-button>
+    <div>
+        <headers></headers>
+        <div id="login" class='login-wrap'>
+            <div class="container">
+                <div class="ms-title">
+                    <span><router-link to="/user/login" style="color: #00b5ad; font-weight: bold">登录</router-link></span>
+                    <span class="this-span">·</span>
+                    <span><router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link></span>
+                </div>
+                <div class="ms-login">
+                    <el-form :model="params" :rules="rules" ref="ruleForm" label-width="68px" class="demo-ruleForm">
+                        <el-form-item prop="login" label="账号：">
+                            <el-input v-model="params.login" placeholder="请输入用户名或邮箱" ></el-input>
+                        </el-form-item>
+                        <el-form-item prop="password" label="密码：">
+                            <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
+                        </el-form-item>
+                        <div v-if="failure" style="color:red" class='message'>{{failure.data}}</div>
+                        <div class="login-btn">
+                            <el-button class="btn-define" @click="submit('ruleForm')">登 录</el-button>
+                        </div>
+                    </el-form>
+                    <div class="pull-center">
+                        GitHub 账号登录
                     </div>
-                </el-form>
-                <div class="pull-center">
-                    GitHub 账号登录
                 </div>
             </div>
         </div>
@@ -28,10 +31,14 @@
 </template>
 
 <script>
+  import Headers from '../../components/Headers';
   import {mapState, mapMutations} from 'vuex';
 
   export default {
     name: 'login',
+    components: {
+      Headers
+    },
     data() {
       return {
         rules: {
@@ -70,6 +77,7 @@
     }
     .login-wrap {
         position: relative;
+        margin-top: 5%;
         width: 100%;
         height: 100%;
         .container {

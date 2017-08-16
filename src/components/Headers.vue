@@ -29,7 +29,9 @@
                             <span><img :src="auth.user.avatar" alt=""></span>
                             <p class="dropbtn">{{auth.user.name}} <span><i class="fa fa-caret-down"></i></span></p>
                             <div class="dropdown-content">
-                                <a href=""><span><i class="fa fa-user"></i></span><span style="padding-left: 20px">个人中心</span></a>
+                                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                                    <span><i class="fa fa-user"></i></span><span style="padding-left: 20px">个人中心</span>
+                                </router-link>
                                 <a href=""><span><i class="fa fa-gear"></i></span><span style="padding-left: 20px">编辑资料</span></a>
                                 <a @click.prevent="logOut()">
                                     <span><i class="fa fa-sign-out"></i></span><span style="padding-left: 20px">退出</span>
@@ -165,6 +167,7 @@
         display: inline-block;
     }
     .dropdown-content {
+        z-index: 1;
         margin-top: 50px;
         font-size: 15px;
         display: none;

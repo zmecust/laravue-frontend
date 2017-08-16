@@ -40,7 +40,7 @@
                             <li>系统：Linux（CentOS & Ubuntu）</li>
                            </ul>
                         </li>
-                        <li>化工技能
+                        <li>其他技能
                         <ul style="padding-left: 20px">
                             <li>擅长：凝聚态物理第一性原理计算、反应器模拟设计</li>
                             <li>模拟软件：Matlab、Aspen Plus、MaterialsStudio、VASP</li>

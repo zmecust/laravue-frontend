@@ -8,7 +8,7 @@
                         <router-link class="content-title" :to="{name: 'ArticleShow', params: {slug: article.id}}">
                             <h3>{{article.title}}</h3>
                         </router-link>
-                        <div style="padding-top: 5px; font-size: 13px; color: #bbb">由 {{article.user.name}} 发表于 {{article.created_at.split(' ')[0]}}</div>
+                        <div style="padding-top: 5px; font-size: 13px; color: #bbb">由 <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link> 发表于 {{article.created_at}}</div>
                         <div class="content-body-body">
                             {{ article.abstract }} ...
                         </div>
@@ -74,6 +74,12 @@
     .content-body {
         width: 90%;
         margin-top: 30px;
+        a {
+            color: #999;
+            &:hover {
+                color: #00b5ad;
+            }
+        }
         .content-title {
             color: #333;
             &:hover {

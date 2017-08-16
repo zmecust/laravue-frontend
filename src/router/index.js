@@ -12,7 +12,11 @@ const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
 const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
 const ArticleEdit = resolve => require(['../views/article/Edit'], resolve)
-const UserShow = resolve => require(['../views/account/Show'], resolve)
+const UserInfo = resolve => require(['../views/account/UserInfo'], resolve)
+const UserArticles = resolve => require(['../views/account/UserArticles'], resolve)
+const UserReplies = resolve => require(['../views/account/UserReplies'], resolve)
+const UserLikesUsers = resolve => require(['../views/account/UserLikesUsers'], resolve)
+const UserLikesArticles = resolve => require(['../views/account/UserLikesArticles'], resolve)
 const About = resolve => require(['../views/other/About'], resolve)
 const Payment = resolve => require(['../views/other/Payment'], resolve)
 const Error404 = resolve => require(['../views/error/404'], resolve)
@@ -69,13 +73,39 @@ const router = new Router({
         },
         {
           path: '/users/:slug',
-          name: 'UserShow',
-          component: UserShow
+          component: UserInfo,
+          children: [
+            {
+              path: '/',
+              component: UserArticles
+            },
+            {
+              path: 'articles',
+              name: 'UserArticles',
+              component: UserArticles
+            },
+            {
+              path: 'replies',
+              name: 'UserReplies',
+              component: UserReplies
+            },
+            {
+              path: 'likes_users',
+              name: 'UserLikesUsers',
+              component: UserLikesUsers
+            },
+            {
+              path: 'likes_articles',
+              name: 'UserLikesArticles',
+              component: UserLikesArticles
+            }
+          ]
         },
+
         {
           path: '/tags/:id/articles',
           name: 'TagsArticle',
-          component: UserShow
+          component: UserArticles
         },
         {
           path: '/about',

@@ -1,44 +1,51 @@
 <template>
-    <div id="register" class='login-wrap'>
-        <div class="container">
-            <div class="ms-title">
-                <span><router-link to="/user/login" style="color: #00b5ad; font-weight: bold">登录</router-link></span>
-                <span class="this-span">·</span>
-                <span><router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link></span>
-            </div>
-            <div class="ms-login">
-                <div v-if="failure" style="color: red">{{failure.message}}</div>
-                <el-form ref="params" :model="params" :rules="rules" label-width="82px">
-                    <el-form-item label="用户名" prop="name">
-                        <el-input v-model="params.name" placeholder="请输入用户名"></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮箱" prop="email">
-                        <el-input v-model="params.email" placeholder="请输入邮箱"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password" label="密码">
-                        <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password_confirmation" label="确认密码">
-                        <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
-                    </el-form-item>
-                    <div class="login-btn">
-                        <el-button class="btn-define" @click="submit('ruleForm')">注 册</el-button>
-                    </div>
-                </el-form>
-                <div class="pull-center">
-                    GitHub 账号注册
+    <div>
+        <headers></headers>
+        <div id="register" class='login-wrap'>
+            <div class="container">
+                <div class="ms-title">
+                    <span><router-link to="/user/login" style="color: #00b5ad; font-weight: bold">登录</router-link></span>
+                    <span class="this-span">·</span>
+                    <span><router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link></span>
                 </div>
+                <div class="ms-login">
+                    <div v-if="failure" style="color: red">{{failure.message}}</div>
+                    <el-form ref="params" :model="params" :rules="rules" label-width="82px">
+                        <el-form-item label="用户名" prop="name">
+                            <el-input v-model="params.name" placeholder="请输入用户名"></el-input>
+                        </el-form-item>
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input v-model="params.email" placeholder="请输入邮箱"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="password" label="密码">
+                            <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="password_confirmation" label="确认密码">
+                            <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
+                        </el-form-item>
+                        <div class="login-btn">
+                            <el-button class="btn-define" @click="submit('ruleForm')">注 册</el-button>
+                        </div>
+                    </el-form>
+                    <div class="pull-center">
+                        GitHub 账号注册
+                    </div>
+                </div>
+                <div style="clear: both; border: 1px solid #fff"></div>
             </div>
-            <div style="clear: both; border: 1px solid #fff"></div>
         </div>
     </div>
 </template>
 
 <script>
   import {mapState} from 'vuex';
+  import Headers from '../../components/Headers';
 
   export default {
     name: 'register',
+    components: {
+      Headers
+    },
     data() {
       return {
         rules: {
@@ -78,11 +85,13 @@
         text-align: center
     }
     .login-wrap {
+        margin-top: 5%;
         position: relative;
         width: 100%;
         height: 100%;
         .container {
             position: absolute;
+            height: 490px;
             top: 10%;
             left: 40%;
             text-align: center;

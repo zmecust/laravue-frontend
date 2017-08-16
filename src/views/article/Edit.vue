@@ -70,20 +70,22 @@
                 { value: 'F', label: '是' },
                 { value: 'T', label: '否' }
             ],
-            tags: '',
+            tags: [],
             allTags: '',
         }
     },
     beforeCreate() {
-        api.get_article(this.$route.params.slug).then((res) => {
-            this.tags = res.data.data.tags;
-            this.params = res.data.data;
+        api.get_tags().then((res) => {
+            this.allTags = res.data.data;
+            api.get_article(this.$route.params.slug).then((res) => {
+                for (let index in res.data.data.tags) {
+                    this.tags.push(res.data.data.tags[index].id);
+                }
+                this.params = res.data.data;
+            });
         });
     },
     mounted() {
-        api.get_tags().then((res) => {
-            this.allTags = res.data.data;
-        });
     },
     methods: {
         submit(e) {
@@ -91,9 +93,11 @@
             if (e != null && e.keyCode === 13) {
                 return;
             }
-            this.params.tag = this.tags;
-            api.edit_article(this.$route.params.slug, this.params).then((res) => {
-                console.log(res.data);
+            let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body}
+            api.edit_article(this.$route.params.slug, form).then((res) => {
+                if (res.data.status == 1) {
+                    this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
+                }
             });
         },
     }

@@ -31,9 +31,17 @@ export default {
   logout() {
     return Vue.http.get('user/logout');
   },
+
   get_user(id) {
     return Vue.http.get('users/' + id);
   },
+  user_get_articles(id) {
+    return Vue.http.get('users/' + id + '/articles');
+  },
+  user_get_replies(id) {
+    return Vue.http.get('users/' + id + '/replies');
+  },
+
   get_articles() {
     return Vue.http.get('articles');
   },
