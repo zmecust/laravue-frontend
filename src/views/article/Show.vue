@@ -10,15 +10,14 @@
                         </router-link>
                     </div>
                     <div class="article-author">
-                        <router-link  style="float: left" :to="{name: 'UserShow', params: {slug: article.user.id}}">
+                        <router-link  style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
                             <img :src="article.user.avatar" alt="">
                         </router-link>
                         <div class="article-author-detail">
                             <div>
-                                <router-link :to="{name: 'UserShow', params: {slug: article.user.id}}" id="btn-topic">
+                                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}" id="btn-topic">
                                     作者
                                 </router-link>
-                                <span>{{article.user.name}}</span>
                                 <span>{{article.user.name}}</span>
                             </div>
                             <div class="article-detail">
