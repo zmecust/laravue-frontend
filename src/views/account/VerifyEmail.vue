@@ -4,6 +4,7 @@
 
 <script>
   import { mapMutations } from 'vuex';
+  import api from '../../api';
 
   export default {
     created() {

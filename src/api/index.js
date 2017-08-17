@@ -26,7 +26,7 @@ export default {
     return Vue.http.post('user/register', params);
   },
   verify_email(code) {
-    return Vue.http.get('user/register', code);
+    return Vue.http.get('verify_email', code);
   },
   logout() {
     return Vue.http.get('user/logout');
@@ -70,9 +70,9 @@ export default {
     return Vue.http.get('article/like', {params: {id: id}});
   },
   is_follow_or_not(id) {
-    return Vue.http.get('article/is_follow', {params: {id: id}});
+    return Vue.http.get('user/is_follow', {params: {id: id}});
   },
   follow(id) {
-    return Vue.http.get('article/follow', {params: {id: id}});
+    return Vue.http.get('user/follow', {params: {id: id}});
   },
 }

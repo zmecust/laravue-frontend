@@ -78,9 +78,9 @@
                             <p>文章</p>
                         </el-col>
                     </el-row>
-                    <el-button class="btn-define" @click="submit('ruleForm')">
+                    <el-button class="btn-define" @click.prevent="click_follow()">
                         <span v-if="!follow"><i class="fa fa-plus"></i> 关注 Ta </span>
-                        <span v-if="follow"><i class="fa fa-plus"></i> 已关注 </span>
+                        <span v-if="follow"><i class="fa fa-minus"></i> 已关注 </span>
                     </el-button>
                 </div>
                 <hot-topics></hot-topics>
@@ -104,8 +104,8 @@
     data() {
       return {
         article: '',
-        like: '',
-        follow: '',
+        like: false,
+        follow: false,
         comment: ''
       }
     },
@@ -120,17 +120,17 @@
       api.get_article(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.article = res.data.data;
+          api.is_follow_or_not(this.article.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+            }
+          });
           loadingInstance.close();
         }
       });
       api.is_like_or_not(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.like = res.data.data.liked;
-        }
-      });
-      api.is_follow_or_not(this.$route.params.slug).then((res) => {
-        if (res.data.status == 1) {
-          this.follow = res.data.data.followed;
         }
       });
     },
@@ -143,7 +143,7 @@
         });
       },
       click_follow() {
-        api.follow(this.$route.params.slug).then((res) => {
+        api.follow(this.article.user.id).then((res) => {
           if (res.data.status == 1) {
             this.follow = res.data.data.followed;
           }

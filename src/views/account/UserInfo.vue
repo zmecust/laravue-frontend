@@ -34,7 +34,17 @@
                             <dt><label>最近访问:</label></dt><dd><span style="line-height: 24px">{{ user.last_actived_at }}</span></dd>
                         </div>
                     </dl>
-                    <el-button class="btn-define" @click="submit('ruleForm')"><i class="fa fa-plus"></i> 关注 Ta</el-button>
+                    <div v-if="auth.id !== user.id">
+                        <el-button class="btn-define" @click.prevent="click_follow()">
+                            <span v-if="!follow"><i class="fa fa-plus"></i> 关注 Ta </span>
+                            <span v-if="follow"><i class="fa fa-minus"></i> 已关注 </span>
+                        </el-button>
+                    </div>
+                    <div v-if="auth.id == user.id">
+                        <el-button class="btn-define" @click.prevent="edit_user_info()">
+                            <span><i class="fa fa-plus"></i> 编辑个人资料 </span>
+                        </el-button>
+                    </div>
                 </div>
                 <div class="user-info">
                     <ul class="reply">
@@ -61,20 +71,43 @@
 </template>
 
 <script>
-    import api from '../../api';
+  import api from '../../api';
+  import { mapState } from 'vuex';
 
-    export default {
-        data() {
-        return {
-            user: ''
-        }
+  export default {
+    data() {
+      return {
+        user: ''
+      }
     },
+    computed: mapState({
+      auth: state => state.account.auth,
+    }),
     beforeCreate() {
-        api.get_user(this.$route.params.slug).then((res) => {
-            this.user = res.data.data;
-        });
+      api.get_user(this.$route.params.slug).then((res) => {
+        this.user = res.data.data;
+      });
     },
+    mounted() {
+      api.is_follow_or_not(this.user.id).then((res) => {
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
+        }
+      });
+    },
+    methods: {
+      click_follow() {
+        api.follow(this.article.user.id).then((res) => {
+          if (res.data.status == 1) {
+            this.follow = res.data.data.followed;
+          }
+        });
+      },
+      edit_user_info() {
+
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>
