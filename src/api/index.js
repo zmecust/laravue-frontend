@@ -42,8 +42,8 @@ export default {
     return Vue.http.get('users/' + id + '/replies');
   },
 
-  get_articles() {
-    return Vue.http.get('articles');
+  get_articles(params) {
+    return Vue.http.get('articles', params);
   },
   get_article(id) {
     return Vue.http.get('articles/' + id);
@@ -68,5 +68,11 @@ export default {
   },
   like(id) {
     return Vue.http.get('article/like', {params: {id: id}});
-  }
+  },
+  is_follow_or_not(id) {
+    return Vue.http.get('article/is_follow', {params: {id: id}});
+  },
+  follow(id) {
+    return Vue.http.get('article/follow', {params: {id: id}});
+  },
 }

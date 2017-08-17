@@ -14,11 +14,11 @@
                         </div>
                         <div style="padding-top: 15px">
                             <div v-for="tag in article.tags" style="float: left">
-                                <router-link  v-if="tag"
-                                              to="tags"
+                                <a  v-if="tag"
+                                              :href="'/#/articles?tag=' + tag.name"
                                               id="btn-topic">
-                                   # {{ tag.name }}
-                                </router-link>
+                                    # {{ tag.name }}
+                                </a>
                             </div>
                             <div class="content-count">
                                 <span style="padding-right: 4px"><i class="fa fa-eye"></i></span><span>{{ article.view_count }}</span>
@@ -38,34 +38,54 @@
 </template>
 
 <script>
-  import api from '../../api'
+  import api from '../../api';
   import { Loading } from 'element-ui';
-  import HotTopics from '../../components/HotTopics'
+  import HotTopics from '../../components/HotTopics';
+  let loadingInstance;
 
   export default {
     data() {
       return {
         articles: '',
+        tagName: ''
       }
     },
     components: {
       HotTopics
     },
+    beforeRouteUpdate(to, from, next) {
+      this.tagName = to.query;
+      next();
+    },
+    beforeRouteLeave (to, from, next) {
+      this.tagName = to.query;
+      next();
+    },
     mounted() {
       let options = {
         target: document.querySelector('#app')
       };
-      let loadingInstance = Loading.service(options);
-      api.get_articles().then((res) => {
-        if (res.data.status == 1) {
-          this.articles = res.data.data.data;
-          for (let index in this.articles) {
+      loadingInstance = Loading.service(options);
+      this.get_articles();
+    },
+    methods: {
+      get_articles() {
+        api.get_articles({params: this.tagName}).then((res) => {
+          if (res.data.status == 1) {
+            this.articles = res.data.data.data;
+            for (let index in this.articles) {
               this.articles[index].abstract = this.articles[index].body.substring(0, 150)
-                      .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ');
+                  .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ');
+            }
+            loadingInstance.close();
           }
-          loadingInstance.close();
-        }
-      })
+        })
+      }
+    },
+    watch: {
+      tagName: function() {
+        this.get_articles();
+      }
     }
   }
 </script>

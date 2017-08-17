@@ -13,9 +13,9 @@
             <p>热门标签</p>
             <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
             <div class="tag" v-for="tag in tags">
-                <router-link to="" id="btn-tag">
+                <a :href="'/#/articles?tag=' + tag.name" id="btn-tag">
                     {{tag.name}}
-                </router-link>
+                </a>
             </div>
             <div style="clear: both; margin-bottom: 15px"></div>
         </div>

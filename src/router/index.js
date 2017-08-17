@@ -49,6 +49,7 @@ const router = new Router({
         },
         {
           path: '/articles',
+          name: 'ArticleIndex',
           component: ArticleIndex
         },
         {
@@ -101,12 +102,17 @@ const router = new Router({
             }
           ]
         },
-
         {
-          path: '/tags/:id/articles',
-          name: 'TagsArticle',
-          component: UserArticles
+          path: '/users/:slug',
+          component: UserInfo,
+          children: [
+            {
+              path: '/',
+              component: UserArticles
+            }
+          ]
         },
+
         {
           path: '/about',
           component: About

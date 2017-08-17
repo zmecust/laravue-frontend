@@ -32,7 +32,9 @@
                                 <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
                                     <span><i class="fa fa-user"></i></span><span style="padding-left: 20px">个人中心</span>
                                 </router-link>
-                                <a href=""><span><i class="fa fa-gear"></i></span><span style="padding-left: 20px">编辑资料</span></a>
+                                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                                    <span><i class="fa fa-gear"></i></span><span style="padding-left: 20px">编辑资料</span>
+                                </router-link>
                                 <a @click.prevent="logOut()">
                                     <span><i class="fa fa-sign-out"></i></span><span style="padding-left: 20px">退出</span>
                                 </a>

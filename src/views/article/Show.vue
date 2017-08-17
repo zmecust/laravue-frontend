@@ -10,12 +10,12 @@
                         </router-link>
                     </div>
                     <div class="article-author">
-                        <router-link  style="float: left" :to="{name: 'UserShow', params: {slug: article.user.id}}">
+                        <router-link  style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
                             <img :src="article.user.avatar" alt="">
                         </router-link>
                         <div class="article-author-detail">
                             <div>
-                                <router-link :to="{name: 'UserShow', params: {slug: article.user.id}}" id="btn-topic">
+                                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}" id="btn-topic">
                                     作者
                                 </router-link>
                                 <span>{{article.user.name}}</span>
@@ -34,8 +34,8 @@
                     </div>
                     <div class="article-like">
                         <button type="submit" id="btn-like" @click.prevent="click_like()">
-                            <span v-if="!like"><i class="fa fa-heart-o"></i> 喜欢 </span>
-                            <span v-if="like"><i class="fa fa-heart"></i> 已关注 </span>
+                            <span v-if="!like"><i class="fa fa-thumbs-o-up"></i> 点赞 </span>
+                            <span v-if="like"><i class="fa fa-thumbs-up"></i> 已赞 </span>
                             <span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}
                         </button>
                     </div>
@@ -79,7 +79,10 @@
                             <p>文章</p>
                         </el-col>
                     </el-row>
-                    <el-button class="btn-define" @click="submit('ruleForm')"><i class="fa fa-plus"></i> 关注 Ta</el-button>
+                    <el-button class="btn-define" @click="submit('ruleForm')">
+                        <span v-if="!follow"><i class="fa fa-plus"></i> 关注 Ta </span>
+                        <span v-if="follow"><i class="fa fa-plus"></i> 已关注 </span>
+                    </el-button>
                 </div>
                 <hot-topics></hot-topics>
             </el-col>
@@ -103,6 +106,7 @@
       return {
         article: '',
         like: '',
+        follow: '',
         comment: ''
       }
     },
@@ -125,12 +129,24 @@
           this.like = res.data.data.liked;
         }
       });
+      api.is_follow_or_not(this.$route.params.slug).then((res) => {
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
+        }
+      });
     },
     methods: {
       click_like() {
         api.like(this.$route.params.slug).then((res) => {
           if (res.data.status == 1) {
             this.like = res.data.data.liked;
+          }
+        });
+      },
+      click_follow() {
+        api.follow(this.$route.params.slug).then((res) => {
+          if (res.data.status == 1) {
+            this.follow = res.data.data.followed;
           }
         });
       }
@@ -196,10 +212,11 @@
             background-color: #fff;
             color: tomato;
             font-size: 18px;
-            padding: 10px 20px 10px 20px;
+            padding: 8px 20px 8px 20px;
             border-radius: 100px;
             box-shadow: none;
             border: 1px solid tomato;
+            cursor: pointer;
         }
         #btn-like:hover,
         #btn-like:focus,
