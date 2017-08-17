@@ -51,6 +51,9 @@ export default {
   create_article(params) {
     return Vue.http.post('articles', params);
   },
+  content_image(params) {
+    return Vue.http.post('content_image', params);
+  },
   edit_article(id, params) {
     return Vue.http.patch('articles/' + id, params);
   },

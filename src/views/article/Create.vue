@@ -27,7 +27,12 @@
                         </div>
                         <div class="article-create">
                             <dt>内容：</dt>
-                            <vue-editor style="width: 70%; padding-left: 17%" v-model="params.body"></vue-editor>
+                            <vue-editor id="editor"
+                                        useCustomImageHandler
+                                        @imageAdded="handleImageAdded"
+                                        style="width: 70%; padding-left: 17%;"
+                                        v-model="params.body">
+                            </vue-editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -90,6 +95,17 @@
           }
         });
       },
+      handleImageAdded: function(file, Editor, cursorLocation) {
+        var formData = new FormData();
+        formData.append('image', file);
+        console.log(formData);
+        api.content_image(file).then((res) => {
+            let url = res.data.data.url // Get url from response
+            Editor.insertEmbed(cursorLocation, 'image', url);
+        }).catch((err) => {
+            console.log(err);
+        })
+      }
     }
   }
 </script>
@@ -110,6 +126,9 @@
             .el-input {
                 width: 70%;
                 margin-left: 2%;
+            }
+            #editor {
+                height: 400px;
             }
         }
         .article-button {
