@@ -1,4 +1,4 @@
-# laravue-frontend
+# 微型社区 LaraVue 的前端项目，地址：https://laravue.org (正在开发中)
 
 > LaraVue
 

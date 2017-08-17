@@ -19,7 +19,6 @@
                                     作者
                                 </router-link>
                                 <span>{{article.user.name}}</span>
-                                <span>{{article.user.name}}</span>
                             </div>
                             <div class="article-detail">
                                 <span>创作于 {{ article.created_at }}</span>
