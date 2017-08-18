@@ -95,13 +95,12 @@
           }
         });
       },
-      handleImageAdded: function(file, Editor, cursorLocation) {
+      handleImageAdded(file, Editor, cursorLocation) {
         var formData = new FormData();
         formData.append('image', file);
-        console.log(formData);
-        api.content_image(file).then((res) => {
-            let url = res.data.data.url // Get url from response
-            Editor.insertEmbed(cursorLocation, 'image', url);
+        api.content_image(formData).then((res) => {
+          let url = res.data.data.url // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url);
         }).catch((err) => {
             console.log(err);
         })

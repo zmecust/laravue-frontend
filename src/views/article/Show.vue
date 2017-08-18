@@ -32,11 +32,11 @@
                         <vue-markdown>{{article.body}}</vue-markdown>
                     </div>
                     <div class="article-like">
-                        <button type="submit" id="btn-like" @click.prevent="click_like()">
+                        <el-button type="submit" id="btn-like" @click.prevent="click_like()">
                             <span v-if="!like"><i class="fa fa-thumbs-o-up"></i> 点赞 </span>
                             <span v-if="like"><i class="fa fa-thumbs-up"></i> 已赞 </span>
-                            <span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}
-                        </button>
+                            <!--<span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}-->
+                        </el-button>
                     </div>
                     <div class="article-comment">
                         <img :src="auth.check() ? auth.user.avatar : article.user.avatar" alt="">
@@ -47,7 +47,7 @@
                                     placeholder="请输入评论内容"
                                     v-model="comment">
                             </el-input>
-                            <button>评 论</button>
+                            <el-button>评 论</el-button>
                         </form>
                     </div>
                     <div style="clear: both">
@@ -86,6 +86,7 @@
                 <hot-topics></hot-topics>
             </el-col>
         </el-row>
+        <popup v-show="showPreview" @closePreview="closePreview"></popup>
     </div>
 </template>
 
@@ -95,18 +96,21 @@
   import { mapState } from 'vuex'
   import { Loading } from 'element-ui'
   import HotTopics from '../../components/HotTopics'
+  import Popup from '../../components/Popup'
 
   export default {
     components: {
       HotTopics,
-      VueMarkdown
+      VueMarkdown,
+      Popup
     },
     data() {
       return {
         article: '',
         like: false,
         follow: false,
-        comment: ''
+        comment: '',
+        showPreview: false
       }
     },
     computed: mapState({
@@ -120,34 +124,49 @@
       api.get_article(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.article = res.data.data;
-          api.is_follow_or_not(this.article.user.id).then((res) => {
-            if (res.data.status == 1) {
-              this.follow = res.data.data.followed;
-            }
-          });
+          if (this.auth.check()) {
+            api.is_follow_or_not(this.article.user.id).then((res) => {
+              if (res.data.status == 1) {
+                this.follow = res.data.data.followed;
+              }
+            });
+          }
           loadingInstance.close();
         }
       });
-      api.is_like_or_not(this.$route.params.slug).then((res) => {
-        if (res.data.status == 1) {
-          this.like = res.data.data.liked;
-        }
-      });
-    },
-    methods: {
-      click_like() {
-        api.like(this.$route.params.slug).then((res) => {
+      if (this.auth.check()) {
+        api.is_like_or_not(this.$route.params.slug).then((res) => {
           if (res.data.status == 1) {
             this.like = res.data.data.liked;
           }
         });
+      }
+    },
+    methods: {
+      click_like() {
+        if (this.auth.check()) {
+          api.like(this.$route.params.slug).then((res) => {
+            if (res.data.status == 1) {
+              this.like = res.data.data.liked;
+            }
+          });
+        } else {
+          this.showPreview = true;
+        }
       },
       click_follow() {
-        api.follow(this.article.user.id).then((res) => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-          }
-        });
+        if (this.auth.check()) {
+          api.follow(this.article.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+            }
+          });
+        } else {
+          this.showPreview = true;
+        }
+      },
+      closePreview() {
+        this.showPreview = false;
       }
     }
   }
@@ -246,7 +265,7 @@
                 background-color: #00b5ad;
                 color: #fff;
                 font-size: 17px;
-                padding: 2px 15px 3px 15px;
+                padding: 5px 15px 5px 15px;
                 border-radius: 100px;
                 box-shadow: none;
                 border: 1px solid #00b5ad;

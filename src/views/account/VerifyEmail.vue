@@ -7,9 +7,10 @@
   import api from '../../api';
 
   export default {
-    created() {
+    beforeCreate() {
       let verify_code = this.$route.params.slug;
-      api.verify_email({params: verify_code}).then((res) => {
+      api.verify_email({params: {code: verify_code}}).then((res) => {
+        console.log(res.data);
         if (res.data.status == 1) {
           this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
         }
