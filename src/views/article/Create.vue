@@ -27,12 +27,12 @@
                         </div>
                         <div class="article-create">
                             <dt>内容：</dt>
-                            <vue-editor id="editor"
-                                        useCustomImageHandler
+                            <editor id="editor"
                                         @imageAdded="handleImageAdded"
+                                        useCustomImageHandler
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
-                            </vue-editor>
+                            </editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-  import { VueEditor } from 'vue2-editor';
+  import Editor from '../../components/Editor';
   import api from '../../api';
 
   export default {
     components: {
-      VueEditor
+      Editor,
     },
     data() {
       return {
@@ -97,6 +97,7 @@
       },
       handleImageAdded(file, Editor, cursorLocation) {
         var formData = new FormData();
+        var i = 1;
         formData.append('image', file);
         api.content_image(formData).then((res) => {
           let url = res.data.data.url // Get url from response

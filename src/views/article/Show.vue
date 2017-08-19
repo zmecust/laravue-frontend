@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="article-body">
-                        <vue-markdown>{{article.body}}</vue-markdown>
+                        <vue-markdown class="markdown-body append-content">{{article.body}}</vue-markdown>
                     </div>
                     <div class="article-like">
                         <el-button type="submit" id="btn-like" @click.prevent="click_like()">
@@ -173,6 +173,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../../static/css/markdown.css';
     .article {
         margin-top: 40px;
         p {
