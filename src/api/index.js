@@ -57,6 +57,9 @@ export default {
   edit_article(id, params) {
     return Vue.http.patch('articles/' + id, params);
   },
+  get_comments(id) {
+    return Vue.http.get('articles/' + id + '/comments');
+  },
   hot_articles() {
     return Vue.http.get('hot_articles');
   },

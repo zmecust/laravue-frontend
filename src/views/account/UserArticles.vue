@@ -45,6 +45,7 @@
     .user-article {
       padding: 10px 10px 0 20px;
       a {
+        font-size: 15px;
         color: #00b5ad;
         &:hover {
           color: tomato;

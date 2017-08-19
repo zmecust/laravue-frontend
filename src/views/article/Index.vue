@@ -92,7 +92,7 @@
 
 <style lang="scss" scoped>
     .content-body {
-        width: 90%;
+        width: 95%;
         margin-top: 30px;
         a {
             color: #999;

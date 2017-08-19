@@ -66,6 +66,7 @@
             <el-col :span="10">
                 <router-view></router-view>
             </el-col>
+            <popup v-show="showPreview" @closePreview="closePreview"></popup>
         </el-row>
     </div>
 </template>
@@ -73,38 +74,51 @@
 <script>
   import api from '../../api';
   import { mapState } from 'vuex';
+  import Popup from '../../components/Popup'
 
   export default {
     data() {
       return {
-        user: ''
+        user: '',
+        follow: false,
+        showPreview: false
       }
+    },
+    components: {
+      Popup
     },
     computed: mapState({
       auth: state => state.account.auth,
     }),
-    beforeCreate() {
+    mounted() {
       api.get_user(this.$route.params.slug).then((res) => {
         this.user = res.data.data;
-      });
-    },
-    mounted() {
-      api.is_follow_or_not(this.user.id).then((res) => {
-        if (res.data.status == 1) {
-          this.follow = res.data.data.followed;
+        if (this.auth.check()) {
+          api.is_follow_or_not(this.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+            }
+          });
         }
       });
     },
     methods: {
       click_follow() {
-        api.follow(this.article.user.id).then((res) => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-          }
-        });
+        if (this.auth.check()) {
+          api.follow(this.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+            }
+          });
+        } else {
+          this.showPreview = true;
+        }
       },
       edit_user_info() {
 
+      },
+      closePreview() {
+        this.showPreview = false;
       }
     }
   }
@@ -143,6 +157,7 @@
         width: 35%;
         text-align: right;
         float: left;
+        font-size: 15px;
     }
     dd {
         width: 60%;

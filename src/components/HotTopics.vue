@@ -5,7 +5,7 @@
             <div style="border-bottom: 1px solid #eee;"></div>
             <ul v-for="article in articles">
                 <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
-                    <li>{{article.title.substring(0, 22)}}</li>
+                    <li>• &nbsp;{{article.title}}</li>
                 </router-link>
             </ul>
         </div>
@@ -61,9 +61,12 @@
         li {
             font-size: 14px;
             text-align: left;
-            list-style-type: disc;
-            padding: 10px 10px 0 0px;
-            margin-left: 25px;
+            padding: 10px 10px 0 0;
+            margin-left: 15px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
         a {
             color: #333;
@@ -83,7 +86,7 @@
         }
         .tag {
             text-align: left;
-            margin: 15px 5px 15px 10px;
+            margin: 10px 5px 10px 10px;
         }
     }
     #btn-tag {
@@ -96,9 +99,10 @@
         color: #00b5ad;
         float: left;
         margin: 5px 5px;
+        height: 17px;
     }
     #btn-tag:hover {
-        color: #00b5ad;
+        color: orangered;
         background-color: #dedede;
         border-radius: 4px;
         border: 1px solid #dedede;

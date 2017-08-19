@@ -38,8 +38,8 @@
                             <!--<span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}-->
                         </el-button>
                     </div>
-                    <div class="article-comment">
-                        <img :src="auth.check() ? auth.user.avatar : article.user.avatar" alt="">
+                    <div class="article-comment" v-if="auth.check()">
+                        <img :src="auth.user.avatar" alt="">
                         <form action="">
                             <el-input
                                     type="textarea"
@@ -50,12 +50,38 @@
                             <el-button>评 论</el-button>
                         </form>
                     </div>
+                    <div v-if="! auth.check()" class="article-login">
+                        <p><router-link :to="{path: '/user/login', query: { redirect_url: this.$route.path }}">
+                            登录参与评论
+                        </router-link></p>
+                    </div>
                     <div style="clear: both">
                         <h4>{{article.comments_count ? article.comments_count + ' 条' : '暂无'}}评论</h4>
                     </div>
-                    <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
-                    <div>
-
+                    <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
+                    <div v-for="(comment, index) in comments">
+                        <div class="comment-author">
+                            <router-link  style="float: left" :to="{name: 'UserArticles', params: {slug: comment.user.id}}">
+                                <img :src="comment.user.avatar" alt="">
+                            </router-link>
+                            <div class="comment-author-detail">
+                                <div>
+                                    <span>
+                                        <router-link  style="float: left; padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
+                                            {{comment.user.name}}&nbsp;
+                                        </router-link>
+                                    </span>
+                                    <span> · 评论于 {{ comment.created_at }}</span>
+                                </div>
+                                <div class="comment-detail">
+                                    <span v-if="comment.parent_id !== 0">
+                                        <router-link  style="float: left; padding-top: 1px; font-size: 15px; color: #00b5ad; font-weight: bold" :to="{name: 'UserArticles', params: {slug: comment.parent_user_id}}">
+                                            @{{comment.parent_name}}
+                                        </router-link>
+                                    </span> {{comment.body}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </el-col>
@@ -102,14 +128,15 @@
     components: {
       HotTopics,
       VueMarkdown,
-      Popup
+      Popup,
+      Comment
     },
     data() {
       return {
         article: '',
         like: false,
         follow: false,
-        comment: '',
+        comments: '',
         showPreview: false
       }
     },
@@ -133,6 +160,9 @@
           }
           loadingInstance.close();
         }
+        api.get_comments(this.$route.params.slug).then((res) => {
+          this.comments = res.data.data;
+        });
       });
       if (this.auth.check()) {
         api.is_like_or_not(this.$route.params.slug).then((res) => {
@@ -180,6 +210,7 @@
             font-size: 30px;
             font-weight: bold;
             float: left;
+            margin-bottom: 10px;
         }
         a {
             color: tomato;
@@ -213,8 +244,34 @@
         }
     }
     .article-body {
-        padding-top: 50px;
+        padding-top: 35px;
         line-height: 25px;
+    }
+    .comment-author {
+        clear: both;
+        margin-top: 30px;
+        position: relative;
+        img {
+            position: absolute;
+            width: 36px;
+            border: 1px solid #aaa;
+            border-radius: 100px;
+            margin-top: 5px;
+        }
+        .comment-author-detail {
+            padding-top: 2px;
+            padding-left: 50px;
+            color: #999;
+            font-size: 13px;
+            .comment-detail {
+                padding-top: 10px;
+                color: #555;
+                font-size: 15px;
+                span {
+                    padding-right: 5px;
+                }
+            }
+        }
     }
     #btn-topic {
         border-radius: 4px;
@@ -277,6 +334,20 @@
                     border: 1px solid tomato;
                 }
             }
+        }
+    }
+    .article-login {
+        margin: 40px 0 40px;
+        padding-top: 40px;
+        border: 1px dashed #00b5ad;
+        width: 100%;
+        height: 80px;
+        border-radius: 4px;
+        position: relative;
+        a {
+            position: absolute;
+            font-size: smaller;
+            left: 40%;
         }
     }
     .sidebar-author {

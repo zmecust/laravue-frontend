@@ -4,11 +4,13 @@
             <div class="preview-container">
                 <div class="preview-body">
                     <div class="font">
-                        <span><i class="fa fa-exclamation" aria-hidden="true"></i></span>
+                        <div class="alert">
+                            <span>!</span>
+                        </div>
                     </div>
-                    <h4>您还未登录</h4>
-                    <el-button class="btn-like" @click="accept">确定</el-button>
+                    <p>您还未登录</p>
                 </div>
+                <div class="confirm" @click="accept">×</div>
             </div>
         </div>
     </div>
@@ -41,11 +43,11 @@
         vertical-align: middle;
     }
     .preview-container {
-        width: 400px;
-        height: 150px;
+        width: 380px;
+        height: 230px;
         margin: 0px auto;
         background-color: #fff;
-        border-radius: 2px;
+        border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
         transition: all .3s ease;
         font-family: Helvetica, Arial, sans-serif;
@@ -63,43 +65,26 @@
     }
     .preview-body {
         position: absolute;
-        width: 380px;
-        height: 130px;
+        width: 360px;
+        height: 210px;
         margin: 10px 10px 10px 10px;
         .font {
-            border-radius: 100px;
+            border-radius: 200px;
             border: 4px solid gold;
             color: gold;
-            height: 100px;
-            width: 100px;
-            margin: 10px auto;
+            height: 110px;
+            width: 110px;
+            margin: 20px auto;
+            .alert {
+                font-size: 100px;
+                padding-left: 42px;
+            }
         }
-        span {
-            font-size: 56px;
-            margin-left: 40px;
-        }
-    .btn-like {
-        background-color: #00b5ad;
-        color: #fff;
-        font-size: 18px;
-        padding: 8px 15px 8px 15px;
-        border-radius: 4px;
-        box-shadow: none;
-        cursor: pointer;
     }
-    .btn-like:hover,
-    .btn-like:active {
-        background-color: #169e98;
-    }
-    }
-    .preview-body > h4 {
+    .preview-body > p {
         position: absolute;
-        top: 25%;
-        left: 20%;
-    }
-    .preview-body > button {
-        position: absolute;
-        right: 10px;
-        bottom: 0px;
+        font-size: 24px;
+        top: 75%;
+        left: 33%;
     }
 </style>
