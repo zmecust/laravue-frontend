@@ -60,6 +60,12 @@ export default {
   get_comments(id) {
     return Vue.http.get('articles/' + id + '/comments');
   },
+  get_child_comment(id, params) {
+    return Vue.http.get('articles/' + id + '/child_comments?parent_id=' + params);
+  },
+  create_comment(params) {
+    return Vue.http.post('comments', params);
+  },
   hot_articles() {
     return Vue.http.get('hot_articles');
   },

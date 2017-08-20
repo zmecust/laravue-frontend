@@ -47,7 +47,7 @@
                                     placeholder="请输入评论内容"
                                     v-model="comment">
                             </el-input>
-                            <el-button>评 论</el-button>
+                            <el-button type="submit" @click.prevent="submit(0)">评 论</el-button>
                         </form>
                     </div>
                     <div v-if="! auth.check()" class="article-login">
@@ -61,26 +61,23 @@
                     <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
                     <div v-for="(comment, index) in comments">
                         <div class="comment-author">
-                            <router-link  style="float: left" :to="{name: 'UserArticles', params: {slug: comment.user.id}}">
-                                <img :src="comment.user.avatar" alt="">
-                            </router-link>
+                            <div style="float: left">
+                                <router-link :to="{name: 'UserArticles', params: {slug: comment.user.id}}">
+                                    <img :src="comment.user.avatar" alt="">
+                                </router-link>
+                            </div>
                             <div class="comment-author-detail">
                                 <div>
-                                    <span>
-                                        <router-link  style="float: left; padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
-                                            {{comment.user.name}}&nbsp;
-                                        </router-link>
-                                    </span>
-                                    <span> · 评论于 {{ comment.created_at }}</span>
-                                </div>
-                                <div class="comment-detail">
-                                    <span v-if="comment.parent_id !== 0">
-                                        <router-link  style="float: left; padding-top: 1px; font-size: 15px; color: #00b5ad; font-weight: bold" :to="{name: 'UserArticles', params: {slug: comment.parent_user_id}}">
-                                            @{{comment.parent_name}}
-                                        </router-link>
-                                    </span> {{comment.body}}
+                                    <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
+                                        {{comment.user.name}}&nbsp;
+                                    </router-link><br>
+                                    <span># {{index + 1}} · 评论于 {{ comment.created_at }}</span>
                                 </div>
                             </div>
+                            <div class="comment-detail">
+                                {{comment.body}}
+                            </div>
+                            <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
                         </div>
                     </div>
                 </div>
@@ -123,19 +120,21 @@
   import { Loading } from 'element-ui'
   import HotTopics from '../../components/HotTopics'
   import Popup from '../../components/Popup'
+  import ChildComment from '../../components/Comment'
 
   export default {
     components: {
       HotTopics,
       VueMarkdown,
       Popup,
-      Comment
+      ChildComment
     },
     data() {
       return {
         article: '',
         like: false,
         follow: false,
+        comment: '',
         comments: '',
         showPreview: false
       }
@@ -195,6 +194,13 @@
           this.showPreview = true;
         }
       },
+      submit(parent_id) {
+        api.create_comment({article_id: this.article_id, parent_id: parent_id, body: this.comment}).then((res) => {
+          if (res.data.status == 1) {
+            this.comments.push(res.data.data);
+          }
+        });
+      },
       closePreview() {
         this.showPreview = false;
       }
@@ -231,7 +237,7 @@
             margin-top: 5px;
         }
         .article-author-detail {
-            padding-top: 8px;
+            padding-top: 10px;
             padding-left: 65px;
             .article-detail {
                 padding-top: 6px;
@@ -259,18 +265,14 @@
             margin-top: 5px;
         }
         .comment-author-detail {
-            padding-top: 2px;
+            padding-top: 6px;
             padding-left: 50px;
             color: #999;
             font-size: 13px;
-            .comment-detail {
-                padding-top: 10px;
-                color: #555;
-                font-size: 15px;
-                span {
-                    padding-right: 5px;
-                }
-            }
+        }
+        .comment-detail {
+            padding: 20px 0 10px;
+            color: #555;
         }
     }
     #btn-topic {
