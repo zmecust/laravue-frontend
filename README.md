@@ -1,6 +1,6 @@
 ## 微型社区 LaraVue 的前台项目，地址：https://laravue.org (开发中)
 
-> LaraVue
+> 前后端分离，通过 token 验证用户信息，调取后端 API。
 
 ## 前言
 
@@ -39,11 +39,11 @@ vue2 + vuex + vue-router + vue-resource + ES6 + element-ui + sass
 │   │   └── Popup.vue                           // 弹出框组件
 │   ├── router
 │   │   └── router.js                           // 路由配置
-│   ├── store                                   // vuex的状态管理
-│   │   ├── modules                             // store模块
+│   ├── store                                   // vuex 的状态管理
+│   │   ├── modules                             // store 模块
 |   |   |   └── account.js                      // 用户信息
-│   │   ├── index.js                            // 引用vuex，创建store
-│   │   └── mutation-types.js                   // 定义常量muations名
+│   │   ├── index.js                            // 引用vuex，创建 store
+│   │   └── mutation-types.js                   // 定义常量 muations 名
 |   ├── views                                   // 视图
 │   │   ├── account                             // 用户视图
 |   |   |   ├── Editor.vue                      // 编辑用户信息
@@ -69,8 +69,8 @@ vue2 + vuex + vue-router + vue-resource + ES6 + element-ui + sass
 │   ├── main.js                                 // 程序入口文件，加载各种公共组件
 ├── static                                      // 静态文件
 |   ├── css                                     // css 文件
-|   |   └── markdown.css                        
-├── index.html                                  // 入口html文件
+|   |   └── markdown.css                         
+├── index.html                                  // 入口 html 文件
 .
 
 ```
