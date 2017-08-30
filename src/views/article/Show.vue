@@ -195,7 +195,7 @@
         }
       },
       submit(parent_id) {
-        api.create_comment({article_id: this.article_id, parent_id: parent_id, body: this.comment}).then((res) => {
+        api.create_comment({article_id: this.article.id, parent_id: parent_id, body: this.comment}).then((res) => {
           if (res.data.status == 1) {
             this.comments.push(res.data.data);
           }

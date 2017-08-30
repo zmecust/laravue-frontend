@@ -95,13 +95,13 @@
         width: 95%;
         margin-top: 30px;
         a {
-            color: #999;
+            color: #bbb;
             &:hover {
                 color: #00b5ad;
             }
         }
         .content-title {
-            color: #333;
+            color: #222;
             &:hover {
                 color: #00b5ad;
                 text-decoration: underline;

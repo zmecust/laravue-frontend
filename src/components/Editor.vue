@@ -12,7 +12,7 @@
 
   var defaultToolbar = [
     ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block', 'image'],
+    ['blockquote', 'image'],
 
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
 

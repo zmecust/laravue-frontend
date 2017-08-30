@@ -26,8 +26,18 @@
                             </el-select>
                         </div>
                         <div class="article-create">
-                            <dt>内容：</dt>
-                            <vue-editor style="width: 70%; padding-left: 17%" v-model="params.body"></vue-editor>
+                            <dt style="margin-right: 2%">内容：</dt>
+                            <!--<editor id="editor"
+                                        @imageAdded="handleImageAdded"
+                                        useCustomImageHandler
+                                        style="width: 70%; padding-left: 17%;"
+                                        v-model="params.body">
+                            </editor>-->
+                            <vue-html5-editor :content="params.body"
+                                              @change="updateData"
+                                              style="width: 70%;"
+                                              :height="400">
+                            </vue-html5-editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -51,13 +61,9 @@
 </template>
 
 <script>
-    import { VueEditor } from 'vue2-editor';
     import api from '../../api';
 
     export default {
-        components: {
-            VueEditor
-        },
         data() {
         return {
             params: {
@@ -100,6 +106,9 @@
                 }
             });
         },
+      updateData(data) {
+        this.params.body = data;
+      }
     }
     }
 </script>
