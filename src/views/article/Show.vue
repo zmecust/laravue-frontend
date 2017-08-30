@@ -47,7 +47,7 @@
                                     placeholder="请输入评论内容"
                                     v-model="comment">
                             </el-input>
-                            <el-button type="submit" @click.prevent="submit(0)">评 论</el-button>
+                            <el-button type="submit" @click.prevent="submit">评 论</el-button>
                         </form>
                     </div>
                     <div v-if="! auth.check()" class="article-login">
@@ -194,10 +194,11 @@
           this.showPreview = true;
         }
       },
-      submit(parent_id) {
-        api.create_comment({article_id: this.article.id, parent_id: parent_id, body: this.comment}).then((res) => {
+      submit() {
+        api.create_comment({article_id: this.article.id, parent_id: 0, body: this.comment}).then((res) => {
           if (res.data.status == 1) {
             this.comments.push(res.data.data);
+            console.log(this.comments);
           }
         });
       },

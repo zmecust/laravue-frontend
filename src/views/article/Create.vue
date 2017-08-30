@@ -102,7 +102,6 @@
       },
       handleImageAdded(file, Editor, cursorLocation) {
         var formData = new FormData();
-        var i = 1;
         formData.append('image', file);
         api.content_image(formData).then((res) => {
           let url = res.data.data.url // Get url from response
