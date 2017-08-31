@@ -5,11 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import VueHtml5Editor from 'vue-html5-editor'
-import 'simplemde-theme-base/dist/simplemde-theme-base.min.css'
 import 'element-ui/lib/theme-default/index.css'
 
-Vue.use(VueHtml5Editor);
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 

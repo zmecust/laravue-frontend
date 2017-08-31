@@ -87,4 +87,7 @@ export default {
   follow(id) {
     return Vue.http.get('user/follow', {params: {id: id}});
   },
+  get_categories() {
+    return Vue.http.get('categories');
+  }
 }

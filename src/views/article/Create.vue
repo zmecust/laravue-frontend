@@ -9,7 +9,18 @@
                             <el-input class="el-input" v-model="params.title" placeholder="至少4个字符"></el-input>
                         </div>
                         <div class="article-create">
-                            <dt>标签：</dt>
+                            <dt>文章类别：</dt>
+                            <el-select class="el-input" v-model="params.category" placeholder="请选择">
+                                <el-option
+                                        v-for="item in allCategories"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <div class="article-create">
+                            <dt>文章标签：</dt>
                             <el-select
                                     class="el-input"
                                     v-model="params.tag"
@@ -27,23 +38,23 @@
                         </div>
                         <div class="article-create">
                             <dt style="margin-right: 2%">内容：</dt>
-                            <!--<editor id="editor"
+                            <editor id="editor"
                                         @imageAdded="handleImageAdded"
                                         useCustomImageHandler
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
-                            </editor>-->
+                            </editor>
                             <!--<vue-html5-editor :content="params.body"
                                               @change="updateData"
                                               style="width: 70%;"
                                               :height="400">
                             </vue-html5-editor>-->
-                            <markdown-editor style="width: 70%; padding-left: 17%;"
+                            <!--<markdown-editor style="width: 70%; padding-left: 17%;"
                                              ref="markdownEditor"
                                              :configs="configs"
                                              :custom-theme="true"
                                              v-model="params.body">
-                            </markdown-editor>
+                            </markdown-editor>-->
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -68,13 +79,12 @@
 
 <script>
   import Editor from '../../components/Editor';
-  import { markdownEditor } from 'vue-simplemde'
+  /*import { markdownEditor } from 'vue-simplemde'*/
   import api from '../../api';
 
   export default {
     components: {
       Editor,
-      markdownEditor
     },
     data() {
       return {
@@ -82,6 +92,7 @@
           title: '',
           body: '',
           tag: '',
+          category: '',
           is_hidden: 'F'
         },
         options: [
@@ -89,6 +100,7 @@
           { value: 'T', label: '否' }
         ],
         allTags: '',
+        allCategories: '',
         configs: {
           status: false,
           initialValue: '请输入内容',
@@ -102,6 +114,9 @@
     mounted() {
       api.get_tags().then((res) => {
         this.allTags = res.data.data;
+      });
+      api.get_categories().then((res) => {
+        this.allCategories = res.data.data;
       });
     },
     methods: {
@@ -126,9 +141,9 @@
             console.log(err);
         })
       },
-      updateData(data) {
+      /*updateData(data) {
         this.params.body = data;
-      }
+      }*/
     }
   }
 </script>

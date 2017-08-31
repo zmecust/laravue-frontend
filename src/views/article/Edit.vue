@@ -9,7 +9,18 @@
                             <el-input class="el-input" v-model="params.title" placeholder="至少4个字符"></el-input>
                         </div>
                         <div class="article-create">
-                            <dt>标签：</dt>
+                            <dt>文章类别：</dt>
+                            <el-select class="el-input" v-model="params.category" placeholder="请选择">
+                                <el-option
+                                        v-for="item in allCategories"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <div class="article-create">
+                            <dt>文章标签：</dt>
                             <el-select
                                     class="el-input"
                                     v-model="tags"
@@ -27,23 +38,23 @@
                         </div>
                         <div class="article-create">
                             <dt style="margin-right: 2%">内容：</dt>
-                            <!--<editor id="editor"
+                            <editor id="editor"
                                         @imageAdded="handleImageAdded"
                                         useCustomImageHandler
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
-                            </editor>-->
+                            </editor>
                             <!--<vue-html5-editor :content="params.body"
                                               @change="updateData"
                                               style="width: 70%;"
                                               :height="400">
                             </vue-html5-editor>-->
-                            <markdown-editor style="width: 70%; padding-left: 17%;"
+                            <!--<markdown-editor style="width: 70%; padding-left: 17%;"
                                              ref="markdownEditor"
                                              :configs="configs"
                                              :custom-theme="true"
                                              v-model="params.body">
-                            </markdown-editor>
+                            </markdown-editor>-->
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -68,11 +79,12 @@
 
 <script>
   import api from '../../api';
-  import { markdownEditor } from 'vue-simplemde'
+  /*import { markdownEditor } from 'vue-simplemde'*/
+  import Editor from '../../components/Editor';
 
   export default {
     components: {
-      markdownEditor
+      Editor
     },
     data() {
       return {
@@ -80,6 +92,7 @@
           title: '',
           body: '',
           tag: '',
+          category: '',
           is_hidden: 'F'
         },
         options: [
@@ -88,6 +101,7 @@
         ],
         tags: [],
         allTags: '',
+        allCategories: '',
         configs: {
           status: false,
           initialValue: '请输入内容',
@@ -108,6 +122,9 @@
           this.params = res.data.data;
         });
       });
+      api.get_categories().then((res) => {
+        this.allCategories = res.data.data;
+      });
     },
     mounted() {
     },
@@ -123,6 +140,16 @@
             this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
           }
         });
+      },
+      handleImageAdded(file, Editor, cursorLocation) {
+        var formData = new FormData();
+        formData.append('image', file);
+        api.content_image(formData).then((res) => {
+          let url = res.data.data.url // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url);
+        }).catch((err) => {
+          console.log(err);
+        })
       },
       updateData(data) {
         this.params.body = data;
