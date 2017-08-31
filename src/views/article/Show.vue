@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="article-body">
-                        <vue-markdown class="markdown-body append-content">{{article.body}}</vue-markdown>
+                        <vue-markdown class="markdown-body">{{article.body}}</vue-markdown>
                     </div>
                     <div class="article-like">
                         <el-button type="submit" id="btn-like" @click.prevent="click_like()">

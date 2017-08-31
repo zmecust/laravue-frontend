@@ -33,11 +33,17 @@
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
                             </editor>-->
-                            <vue-html5-editor :content="params.body"
+                            <!--<vue-html5-editor :content="params.body"
                                               @change="updateData"
                                               style="width: 70%;"
                                               :height="400">
-                            </vue-html5-editor>
+                            </vue-html5-editor>-->
+                            <markdown-editor style="width: 70%; padding-left: 17%;"
+                                             ref="markdownEditor"
+                                             :configs="configs"
+                                             :custom-theme="true"
+                                             v-model="params.body">
+                            </markdown-editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -62,11 +68,13 @@
 
 <script>
   import Editor from '../../components/Editor';
+  import { markdownEditor } from 'vue-simplemde'
   import api from '../../api';
 
   export default {
     components: {
       Editor,
+      markdownEditor
     },
     data() {
       return {
@@ -81,6 +89,14 @@
           { value: 'T', label: '否' }
         ],
         allTags: '',
+        configs: {
+          status: false,
+          initialValue: '请输入内容',
+          renderingConfig: {
+            codeSyntaxHighlighting: true,
+            highlightingTheme: 'tomorrow'
+          }
+        }
       }
     },
     mounted() {

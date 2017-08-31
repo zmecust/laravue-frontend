@@ -33,11 +33,17 @@
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
                             </editor>-->
-                            <vue-html5-editor :content="params.body"
+                            <!--<vue-html5-editor :content="params.body"
                                               @change="updateData"
                                               style="width: 70%;"
                                               :height="400">
-                            </vue-html5-editor>
+                            </vue-html5-editor>-->
+                            <markdown-editor style="width: 70%; padding-left: 17%;"
+                                             ref="markdownEditor"
+                                             :configs="configs"
+                                             :custom-theme="true"
+                                             v-model="params.body">
+                            </markdown-editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -61,56 +67,68 @@
 </template>
 
 <script>
-    import api from '../../api';
+  import api from '../../api';
+  import { markdownEditor } from 'vue-simplemde'
 
-    export default {
-        data() {
-        return {
-            params: {
-                title: '',
-                body: '',
-                tag: '',
-                is_hidden: 'F'
-            },
-            options: [
-                { value: 'F', label: '是' },
-                { value: 'T', label: '否' }
-            ],
-            tags: [],
-            allTags: '',
+  export default {
+    components: {
+      markdownEditor
+    },
+    data() {
+      return {
+        params: {
+          title: '',
+          body: '',
+          tag: '',
+          is_hidden: 'F'
+        },
+        options: [
+          { value: 'F', label: '是' },
+          { value: 'T', label: '否' }
+        ],
+        tags: [],
+        allTags: '',
+        configs: {
+          status: false,
+          initialValue: '请输入内容',
+          renderingConfig: {
+            codeSyntaxHighlighting: true,
+            highlightingTheme: 'tomorrow'
+          }
         }
+      }
     },
     beforeCreate() {
-        api.get_tags().then((res) => {
-            this.allTags = res.data.data;
-            api.get_article(this.$route.params.slug).then((res) => {
-                for (let index in res.data.data.tags) {
-                    this.tags.push(res.data.data.tags[index].id);
-                }
-                this.params = res.data.data;
-            });
+      api.get_tags().then((res) => {
+        this.allTags = res.data.data;
+        api.get_article(this.$route.params.slug).then((res) => {
+          for (let index in res.data.data.tags) {
+            this.tags.push(res.data.data.tags[index].id);
+          }
+          this.params = res.data.data;
         });
+      });
     },
     mounted() {
     },
     methods: {
-        submit(e) {
-            // 判断是否为按了Enter键，防止在输入标签时被提交
-            if (e != null && e.keyCode === 13) {
-                return;
-            }
-            let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body}
-            api.edit_article(this.$route.params.slug, form).then((res) => {
-                if (res.data.status == 1) {
-                    this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
-                }
-            });
-        },
+      submit(e) {
+      // 判断是否为按了Enter键，防止在输入标签时被提交
+      if (e != null && e.keyCode === 13) {
+        return;
+      }
+      let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body}
+        api.edit_article(this.$route.params.slug, form).then((res) => {
+          if (res.data.status == 1) {
+            this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
+          }
+        });
+      },
       updateData(data) {
         this.params.body = data;
       }
     }
-    }
+  }
 </script>
 
 <style lang="scss" scoped>

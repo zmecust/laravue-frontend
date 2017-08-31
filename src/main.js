@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import VueHtml5Editor from 'vue-html5-editor'
+import 'simplemde-theme-base/dist/simplemde-theme-base.min.css'
 import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(VueHtml5Editor);
