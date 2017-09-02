@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import VeeValidate from 'vee-validate';
 import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(ElementUI)
+Vue.use(VeeValidate);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

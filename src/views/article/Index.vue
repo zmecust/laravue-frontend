@@ -39,6 +39,7 @@
 
 <script>
   import api from '../../api';
+  import { mapMutations } from 'vuex';
   import { Loading } from 'element-ui';
   import HotTopics from '../../components/HotTopics';
   let loadingInstance;
@@ -62,6 +63,14 @@
       next();
     },
     mounted() {
+      const validate_user = this.$route.query.validate;
+      if (validate_user) {
+        if (validate_user == 'yes') {
+          this.message_true();
+        } else {
+          this.message_false();
+        }
+      }
       let options = {
         target: document.querySelector('#app')
       };
@@ -80,6 +89,20 @@
             loadingInstance.close();
           }
         })
+      },
+      message_true() {
+        this.$notify.success({
+          title: '激活成功',
+          message: '感谢您支持 LaraVue，祝您使用愉快！',
+          offset: 100
+        });
+      },
+      message_false() {
+        this.$notify.success({
+          title: '激活失败',
+          message: '请联系管理员（root@laravue.org）激活用户！',
+          offset: 100
+        });
       }
     },
     watch: {

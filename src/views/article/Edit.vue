@@ -120,10 +120,11 @@
             this.tags.push(res.data.data.tags[index].id);
           }
           this.params = res.data.data;
+          api.get_categories().then((res) => {
+            this.allCategories = res.data.data;
+            this.params.category = res.data.data.category.id;
+          });
         });
-      });
-      api.get_categories().then((res) => {
-        this.allCategories = res.data.data;
       });
     },
     mounted() {
@@ -134,7 +135,7 @@
       if (e != null && e.keyCode === 13) {
         return;
       }
-      let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body}
+      let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body, category: this.params.category}
         api.edit_article(this.$route.params.slug, form).then((res) => {
           if (res.data.status == 1) {
             this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});

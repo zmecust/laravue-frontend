@@ -22,6 +22,9 @@ export default {
   login(params) {
     return Vue.http.post('user/login', params);
   },
+  github_login() {
+    return Vue.http.post('github');
+  },
   register(params) {
     return Vue.http.post('user/register', params);
   },

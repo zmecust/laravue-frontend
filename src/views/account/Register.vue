@@ -9,36 +9,41 @@
                     <span><router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link></span>
                 </div>
                 <div class="ms-login">
-                    <div v-if="failure" style="color: red">{{failure.message}}</div>
-                    <el-form ref="params" :model="params" :rules="rules" label-width="82px">
-                        <el-form-item label="用户名" prop="name">
-                            <el-input v-model="params.name" placeholder="请输入用户名"></el-input>
+                    <el-form ref="params" :model="params" label-width="82px">
+                        <el-form-item label="用户名：" prop="name">
+                            <el-input v-model="params.name" placeholder="至少4个字符"></el-input>
                         </el-form-item>
-                        <el-form-item label="邮箱" prop="email">
-                            <el-input v-model="params.email" placeholder="请输入邮箱"></el-input>
+                        <el-form-item label="邮箱：" prop="email">
+                            <el-input v-model="params.email" placeholder="请填写真实邮箱"></el-input>
                         </el-form-item>
-                        <el-form-item prop="password" label="密码">
-                            <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
+                        <el-form-item prop="password" label="密码：">
+                            <el-input type="password" placeholder="至少6个字符" v-model="params.password"></el-input>
                         </el-form-item>
-                        <el-form-item prop="password_confirmation" label="确认密码">
+                        <el-form-item prop="password_confirmation" label="确认密码：">
                             <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
                         </el-form-item>
+                        <div class="login-failure" v-if="failure">
+                            <div class="header">{{failure.message}}</div>
+                            <ul class="list">
+                                <li v-for="error in failure.data">{{error[0]}}</li>
+                            </ul>
+                        </div>
                         <div class="login-btn">
-                            <el-button class="btn-define" @click="submit('ruleForm')">注 册</el-button>
+                            <el-button class="btn-define" @click="submit()">注 册</el-button>
                         </div>
                     </el-form>
                     <div class="pull-center">
-                        GitHub 账号注册
+                        <el-button class="github_login" @click="github_login()">GitHub 账号注册</el-button>
                     </div>
                 </div>
-                <div style="clear: both; border: 1px solid #fff"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import api from '../../api';
+  import { mapState, mapMutations } from 'vuex';
   import Headers from '../../components/Headers';
 
   export default {
@@ -48,12 +53,9 @@
     },
     data() {
       return {
-        rules: {
-        },
         params: {
           name: '',
           email: '',
-          code: '',
           password: '',
           password_confirmation: '',
         }
@@ -69,8 +71,28 @@
       },
       successWatcher(val, oldVal) {
         if (val && !oldVal) {
-          this.$router.push('/');
+          this.message();
+          let self = this;
+          setTimeout(function() {
+            self.$router.push('/');
+          }, 2000);
         }
+      },
+      message() {
+        this.$notify.success({
+          title: '注册成功',
+          message: '感谢您支持 LaraVue，请先到前往邮箱激活账号',
+          offset: 100
+        });
+      },
+      github_login() {
+        api.github_login().then((res) => {
+          console.log(res.data);
+          if (res.data.status == 1) {
+            this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
+            this.$router.push('/');
+          }
+        });
       }
     },
     watch: {
@@ -91,9 +113,8 @@
         height: 100%;
         .container {
             position: absolute;
-            height: 490px;
             top: 10%;
-            left: 40%;
+            left: 38%;
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -109,8 +130,7 @@
         }
     }
     .ms-login {
-        width: 300px;
-        height: 200px;
+        width: 360px;
         padding: 40px;
         border-radius: 5px;
     }
@@ -138,5 +158,33 @@
     }
     .pull-center {
         text-align: center;
+    }
+    .login-failure {
+        padding: 10px 0 10px;
+        border-radius: 4px;
+        background-color: #ffeef0;
+        margin-bottom: 20px;
+        color: red;
+        line-height: 1.6;
+        text-align: left;
+        .header {
+            padding: 10px 0 0 35px;
+            font-weight: bold;
+        }
+        .list {
+            padding: 10px 0 0 35px;
+        }
+    }
+    .github_login {
+        background-color: #fff;
+        border: 0;
+        border-radius: 5px;
+        color: #00b5ad;
+        font-size: 15px;
+        font-weight: bold;
+        box-shadow: none;
+        &:hover {
+            box-shadow: none;
+        }
     }
 </style>

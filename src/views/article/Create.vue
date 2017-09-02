@@ -67,6 +67,12 @@
                                 </el-option>
                             </el-select>
                         </div>
+                        <div class="login-failure" v-if="failure">
+                            <div class="header">{{failure.message}}</div>
+                            <ul class="list">
+                                <li v-for="error in failure.data">{{error[0]}}</li>
+                            </ul>
+                        </div>
                         <div>
                             <button class="article-button" type="submit" @click="submit($event)">提 交</button>
                         </div>
@@ -99,6 +105,7 @@
           { value: 'F', label: '是' },
           { value: 'T', label: '否' }
         ],
+        failure: '',
         allTags: '',
         allCategories: '',
         configs: {
@@ -128,6 +135,8 @@
         api.create_article(this.params).then((res) => {
           if (res.data.status == 1) {
             this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
+          } else {
+            this.failure = res.data;
           }
         });
       },
@@ -189,6 +198,24 @@
                 border-radius: 100px;
                 background-color: #fff;
             }
+        }
+    }
+    .login-failure {
+        width: 70%;
+        margin-left: 17%;
+        margin-bottom: 20px;
+        padding: 10px 0 10px;
+        border-radius: 4px;
+        background-color: #ffeef0;
+        color: red;
+        line-height: 1.6;
+        .header {
+            padding: 10px 0 0 35px;
+            font-weight: bold;
+        }
+        .list {
+            padding: 10px 0 0 35px;
+            text-align: left;
         }
     }
 </style>
