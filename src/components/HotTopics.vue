@@ -4,9 +4,12 @@
             <p>热门话题</p>
             <div style="border-bottom: 1px solid #eee;"></div>
             <ul v-for="article in articles">
-                <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
+                <!-- <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
                     <li>• &nbsp;{{article.title}}</li>
-                </router-link>
+                </router-link> -->
+                <a :href="'/#/articles/' + article.id">
+                    <li>• &nbsp;{{article.title}}</li>
+                </a>
             </ul>
         </div>
         <div class="hot-tags">

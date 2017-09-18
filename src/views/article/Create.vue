@@ -38,23 +38,19 @@
                         </div>
                         <div class="article-create">
                             <dt style="margin-right: 2%">内容：</dt>
-                            <editor id="editor"
+                            <!-- <editor id="editor"
                                         @imageAdded="handleImageAdded"
                                         useCustomImageHandler
                                         style="width: 70%; padding-left: 17%;"
                                         v-model="params.body">
-                            </editor>
-                            <!--<vue-html5-editor :content="params.body"
-                                              @change="updateData"
-                                              style="width: 70%;"
-                                              :height="400">
-                            </vue-html5-editor>-->
-                            <!--<markdown-editor style="width: 70%; padding-left: 17%;"
+                            </editor> -->
+                            <markdown-editor style="width: 70%; padding-left: 17%;"
                                              ref="markdownEditor"
                                              :configs="configs"
+                                             :highlight="true"
                                              :custom-theme="true"
                                              v-model="params.body">
-                            </markdown-editor>-->
+                            </markdown-editor>
                         </div>
                         <div class="article-create">
                             <dt>是否允许评论：</dt>
@@ -84,13 +80,16 @@
 </template>
 
 <script>
-  import Editor from '../../components/Editor';
-  /*import { markdownEditor } from 'vue-simplemde'*/
+  //import Editor from '../../components/Editor';
+  import { markdownEditor } from 'vue-simplemde'
   import api from '../../api';
+  import hljs from 'highlight.js';
+  window.hljs = hljs;
 
   export default {
     components: {
-      Editor,
+      //Editor,
+      markdownEditor
     },
     data() {
       return {
@@ -149,15 +148,14 @@
         }).catch((err) => {
             console.log(err);
         })
-      },
-      /*updateData(data) {
-        this.params.body = data;
-      }*/
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+@import '~simplemde/dist/simplemde.min.css';
+@import '~highlight.js/styles/atom-one-dark.css';
     .grid-content {
         width: 100%;
         margin-top: 60px;

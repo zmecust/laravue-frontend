@@ -67,15 +67,16 @@
           this.$router.push(redirectUrl);
         }
       },
-      github_login() {
-        api.github_login().then((res) => {
-          console.log(res.data);
-          if (res.data.status == 1) {
-            this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
-            this.$router.push('/');
-          }
-        });
-      }
+//      github_login() {
+//        api.github_login().then((res) => {
+//          console.log(res.data);
+//          if (res.data.status == 1) {
+//            this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
+//            this.$router.push('/');
+//          }
+//        });
+//        window.
+//      }
     },
     watch: {
       success: 'successWatcher',

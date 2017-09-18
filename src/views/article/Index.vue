@@ -84,7 +84,7 @@
             this.articles = res.data.data.data;
             for (let index in this.articles) {
               this.articles[index].abstract = this.articles[index].body.substring(0, 150)
-                  .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ');
+                  .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g,'');
             }
             loadingInstance.close();
           }
