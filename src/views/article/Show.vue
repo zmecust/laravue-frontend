@@ -78,6 +78,7 @@
                                 {{comment.body}}
                             </div>
                             <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
+                            <div style="border-bottom: 1px solid #eee; padding-top: 15px"></div>
                         </div>
                     </div>
                 </div>
@@ -198,7 +199,6 @@
         api.create_comment({article_id: this.article.id, parent_id: 0, body: this.comment}).then((res) => {
           if (res.data.status == 1) {
             this.comments.push(res.data.data);
-            console.log(this.comments);
           }
         });
       },
@@ -256,7 +256,7 @@
     }
     .comment-author {
         clear: both;
-        margin-top: 30px;
+        margin-top: 15px;
         position: relative;
         img {
             position: absolute;

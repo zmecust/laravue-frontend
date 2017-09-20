@@ -15,7 +15,7 @@
                 <span>评论于 {{ child_comment.created_at }}</span>
                 <span style="padding-left: 10px; cursor: pointer;"><a @click.present="show(child_comment.id)"><i class="fa fa-reply" aria-hidden="true"></i> 回复</a></span>
             </div>
-            <div style="border-bottom: 1px dashed #eee; padding-top: 15px;"></div>
+            <div style="border-bottom: 1px dashed #eee; padding-top: 15px; margin-bottom: 10px"></div>
         </div>
         <div class="add-comment">
             <a @click.present="show(childComment)"><i class="fa fa-pencil" aria-hidden="true"></i> 添加新评论</a>
@@ -63,7 +63,7 @@
       submit() {
         api.create_comment({article_id: this.article_id, parent_id: this.parent_id, body: this.comment}).then((res) => {
           if (res.data.status == 1) {
-            this.get_comment();
+            this.child_comments.push(res.data.data);
             this.comment = '';
             this.show_comment = ! this.show_comment;
           }
@@ -99,7 +99,7 @@
         color: #999;
     }
     .add-comment {
-        margin-top: 15px;
+        margin-top: 5px;
         a {
             cursor: pointer;
             color: #999;
