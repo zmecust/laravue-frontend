@@ -1,15 +1,15 @@
 <template>
-    <div>
+  <div>
 
-    </div>
+  </div>
 </template>
 
 <script>
-    import api from '../../api';
+import api from '../../api';
 
-    export default {
+export default {
 
-    }
+}
 </script>
 
 <style lang="scss" scoped>

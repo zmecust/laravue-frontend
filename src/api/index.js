@@ -9,7 +9,7 @@ Vue.http.headers.common.Accept = `application/json`;
 
 Vue.http.interceptors.push((request, next) => {
   const auth = store.state.account.auth;
-  if(auth.check()) {
+  if (auth.check()) {
     const accessToken = auth.access_token;
     Vue.http.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
@@ -79,16 +79,16 @@ export default {
     return Vue.http.get('tags');
   },
   is_like_or_not(id) {
-    return Vue.http.get('article/is_like', {params: {id: id}});
+    return Vue.http.get('article/is_like', { params: { id: id } });
   },
   like(id) {
-    return Vue.http.get('article/like', {params: {id: id}});
+    return Vue.http.get('article/like', { params: { id: id } });
   },
   is_follow_or_not(id) {
-    return Vue.http.get('user/is_follow', {params: {id: id}});
+    return Vue.http.get('user/is_follow', { params: { id: id } });
   },
   follow(id) {
-    return Vue.http.get('user/follow', {params: {id: id}});
+    return Vue.http.get('user/follow', { params: { id: id } });
   },
   get_categories() {
     return Vue.http.get('categories');

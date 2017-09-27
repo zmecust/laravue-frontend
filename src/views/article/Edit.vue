@@ -1,199 +1,177 @@
 <template>
-    <div>
-        <el-row>
-            <el-col :span="12" :offset="6">
-                <div class="grid-content">
-                    <form action="" v-on:submit.prevent>
-                        <div class="article-create">
-                            <dt style="">标题：</dt>
-                            <el-input class="el-input" v-model="params.title" placeholder="至少4个字符"></el-input>
-                        </div>
-                        <div class="article-create">
-                            <dt>文章类别：</dt>
-                            <el-select class="el-input" v-model="params.category" placeholder="请选择">
-                                <el-option
-                                        v-for="item in allCategories"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </div>
-                        <div class="article-create">
-                            <dt>文章标签：</dt>
-                            <el-select
-                                    class="el-input"
-                                    v-model="tags"
-                                    multiple
-                                    filterable
-                                    allow-create
-                                    placeholder="请选择文章标签">
-                                <el-option
-                                        v-for="item in allTags"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </div>
-                        <div class="article-create">
-                            <dt style="margin-right: 2%">内容：</dt>
-                            <!-- <editor id="editor"
-                                        @imageAdded="handleImageAdded"
-                                        useCustomImageHandler
-                                        style="width: 70%; padding-left: 17%;"
-                                        v-model="params.body">
-                            </editor> -->
-                            <markdown-editor style="width: 70%; padding-left: 17%;"
-                                             ref="markdownEditor"
-                                             :configs="configs"
-                                             :custom-theme="true"
-                                             v-model="params.body">
-                            </markdown-editor>
-                        </div>
-                        <div class="article-create">
-                            <dt>是否允许评论：</dt>
-                            <el-select class="el-input" v-model="params.is_hidden" placeholder="请选择">
-                                <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </div>
-                        <div>
-                            <button class="article-button" type="submit" @click="submit($event)">提 交</button>
-                        </div>
-                    </form>
-                </div>
-            </el-col>
-        </el-row>
-    </div>
+  <div>
+    <el-row>
+      <el-col :span="12" :offset="6">
+        <div class="grid-content">
+          <form action="" v-on:submit.prevent>
+            <div class="article-create">
+              <dt style="">标题：</dt>
+              <el-input class="el-input" v-model="params.title" placeholder="至少4个字符"></el-input>
+            </div>
+            <div class="article-create">
+              <dt>文章类别：</dt>
+              <el-select class="el-input" v-model="params.category" placeholder="请选择">
+                <el-option v-for="item in allCategories" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="article-create">
+              <dt>文章标签：</dt>
+              <el-select class="el-input" v-model="tags" multiple filterable allow-create placeholder="请选择文章标签">
+                <el-option v-for="item in allTags" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="article-create">
+              <dt style="margin-right: 2%">内容：</dt>
+              <!-- <editor id="editor"
+                           @imageAdded="handleImageAdded"
+                           useCustomImageHandler
+                           style="width: 70%; padding-left: 17%;"
+                           v-model="params.body">
+              </editor> -->
+              <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs" :custom-theme="true" v-model="params.body">
+              </markdown-editor>
+            </div>
+            <div class="article-create">
+              <dt>是否允许评论：</dt>
+              <el-select class="el-input" v-model="params.is_hidden" placeholder="请选择">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <button class="article-button" type="submit" @click="submit($event)">提 交</button>
+            </div>
+          </form>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-  import api from '../../api';
-  import { markdownEditor } from 'vue-simplemde'
-  //import Editor from '../../components/Editor';
-  import hljs from 'highlight.js';
-  window.hljs = hljs;
+import api from '../../api';
+import { markdownEditor } from 'vue-simplemde'
+//import Editor from '../../components/Editor';
+import hljs from 'highlight.js';
+window.hljs = hljs;
 
-  export default {
-    components: {
-      //Editor,
-      markdownEditor
-    },
-    data() {
-      return {
-        params: {
-          title: '',
-          body: '',
-          tag: '',
-          category: '',
-          is_hidden: 'F'
-        },
-        options: [
-          { value: 'F', label: '是' },
-          { value: 'T', label: '否' }
-        ],
-        tags: [],
-        allTags: '',
-        allCategories: '',
-        configs: {
-          status: false,
-          initialValue: '请输入内容',
-          renderingConfig: {
-            codeSyntaxHighlighting: true,
-            highlightingTheme: 'tomorrow'
-          }
+export default {
+  components: {
+    //Editor,
+    markdownEditor
+  },
+  data() {
+    return {
+      params: {
+        title: '',
+        body: '',
+        tag: '',
+        category: '',
+        is_hidden: 'F'
+      },
+      options: [
+        { value: 'F', label: '是' },
+        { value: 'T', label: '否' }
+      ],
+      tags: [],
+      allTags: '',
+      allCategories: '',
+      configs: {
+        status: false,
+        initialValue: '请输入内容',
+        renderingConfig: {
+          codeSyntaxHighlighting: true,
+          highlightingTheme: 'tomorrow'
         }
       }
-    },
-    beforeCreate() {
-      api.get_tags().then((res) => {
-        this.allTags = res.data.data;
-        api.get_article(this.$route.params.slug).then((res) => {
-          for (let index in res.data.data.tags) {
-            this.tags.push(res.data.data.tags[index].id);
-          }
-          this.params = res.data.data;
-          api.get_categories().then((res) => {
-            this.allCategories = res.data.data;
-            this.params.category = res.data.data.category.id;
-          });
+    }
+  },
+  beforeCreate() {
+    api.get_tags().then((res) => {
+      this.allTags = res.data.data;
+      api.get_article(this.$route.params.slug).then((res) => {
+        for (let index in res.data.data.tags) {
+          this.tags.push(res.data.data.tags[index].id);
+        }
+        this.params = res.data.data;
+        api.get_categories().then((res) => {
+          this.allCategories = res.data.data;
+          this.params.category = res.data.data.category.id;
         });
       });
-    },
-    mounted() {
-    },
-    methods: {
-      submit(e) {
+    });
+  },
+  mounted() {
+  },
+  methods: {
+    submit(e) {
       // 判断是否为按了Enter键，防止在输入标签时被提交
       if (e != null && e.keyCode === 13) {
         return;
       }
-      let form = {tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body, category: this.params.category}
-        api.edit_article(this.$route.params.slug, form).then((res) => {
-          if (res.data.status == 1) {
-            this.$router.push({name: 'ArticleShow', params: {slug: res.data.data.id}});
-          }
-        });
-      },
-      handleImageAdded(file, Editor, cursorLocation) {
-        var formData = new FormData();
-        formData.append('image', file);
-        api.content_image(formData).then((res) => {
-          let url = res.data.data.url // Get url from response
-          Editor.insertEmbed(cursorLocation, 'image', url);
-        }).catch((err) => {
-          console.log(err);
-        })
-      }
+      let form = { tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body, category: this.params.category }
+      api.edit_article(this.$route.params.slug, form).then((res) => {
+        if (res.data.status == 1) {
+          this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
+        }
+      });
+    },
+    handleImageAdded(file, Editor, cursorLocation) {
+      var formData = new FormData();
+      formData.append('image', file);
+      api.content_image(formData).then((res) => {
+        let url = res.data.data.url // Get url from response
+        Editor.insertEmbed(cursorLocation, 'image', url);
+      }).catch((err) => {
+        console.log(err);
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
 @import '~simplemde/dist/simplemde.min.css';
 @import '~highlight.js/styles/atom-one-dark.css';
-    .grid-content {
-        width: 100%;
-        margin-top: 60px;
-    .article-create {
-        margin-bottom: 20px;
+.grid-content {
+  width: 100%;
+  margin-top: 60px;
+  .article-create {
+    margin-bottom: 20px;
     dt {
-        color: #555;
-        padding-top: 5px;
-        width: 15%;
-        text-align: right;
-        float: left;
+      color: #555;
+      padding-top: 5px;
+      width: 15%;
+      text-align: right;
+      float: left;
     }
     .el-input {
-        width: 70%;
-        margin-left: 2%;
+      width: 70%;
+      margin-left: 2%;
     }
-    }
-    .article-button {
-        cursor: pointer;
-        width: 70%;
-        margin-left: 17%;
-        background-color: #00b5ad;
-        color: #fff;
-        font-size: 17px;
-        padding: 5px 10px 5px 10px;
-        border: 1px solid #00b5ad;
-        border-radius: 100px;
-        box-shadow: none;
+  }
+  .article-button {
+    cursor: pointer;
+    width: 70%;
+    margin-left: 17%;
+    background-color: #00b5ad;
+    color: #fff;
+    font-size: 17px;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #00b5ad;
+    border-radius: 100px;
+    box-shadow: none;
     &:hover,
     &:focus,
     &:active {
-         color: tomato;
-         border: 1px solid tomato;
-         box-shadow: none;
-         border-radius: 100px;
-         background-color: #fff;
-     }
+      color: tomato;
+      border: 1px solid tomato;
+      box-shadow: none;
+      border-radius: 100px;
+      background-color: #fff;
     }
-    }
+  }
+}
 </style>
