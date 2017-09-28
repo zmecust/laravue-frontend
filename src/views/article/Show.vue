@@ -1,5 +1,5 @@
 <template>
-  <div id="load-show">
+  <div>
     <el-row :gutter="25">
       <el-col :span="10" :offset="5">
         <div class="article">
@@ -148,35 +148,41 @@ export default {
     auth: state => state.account.auth,
   }),
   mounted() {
-    let options = {
-      target: document.querySelector('#app')
-    };
-    let loadingInstance = Loading.service(options);
-    api.get_article(this.$route.params.slug).then((res) => {
-      if (res.data.status == 1) {
-        this.article = res.data.data;
-        if (this.auth.check()) {
-          api.is_follow_or_not(this.article.user.id).then((res) => {
-            if (res.data.status == 1) {
-              this.follow = res.data.data.followed;
-            }
-          });
-        }
-        loadingInstance.close();
-      }
-      api.get_comments(this.$route.params.slug).then((res) => {
-        this.comments = res.data.data;
-      });
-    });
-    if (this.auth.check()) {
-      api.is_like_or_not(this.$route.params.slug).then((res) => {
-        if (res.data.status == 1) {
-          this.like = res.data.data.liked;
-        }
-      });
-    }
+    this.reload();
+  },
+  created() {
+    this.reload();
   },
   methods: {
+    reload() {
+      let options = {
+        target: document.querySelector('#app')
+      };
+      let loadingInstance = Loading.service(options);
+      api.get_article(this.$route.params.slug).then((res) => {
+        if (res.data.status == 1) {
+          this.article = res.data.data;
+          if (this.auth.check()) {
+            api.is_follow_or_not(this.article.user.id).then((res) => {
+              if (res.data.status == 1) {
+                this.follow = res.data.data.followed;
+              }
+            });
+          }
+          loadingInstance.close();
+        }
+        api.get_comments(this.$route.params.slug).then((res) => {
+          this.comments = res.data.data;
+        });
+      });
+      if (this.auth.check()) {
+        api.is_like_or_not(this.$route.params.slug).then((res) => {
+          if (res.data.status == 1) {
+            this.like = res.data.data.liked;
+          }
+        });
+      }
+    },
     click_like() {
       if (this.auth.check()) {
         api.like(this.$route.params.slug).then((res) => {
@@ -193,6 +199,7 @@ export default {
         api.follow(this.article.user.id).then((res) => {
           if (res.data.status == 1) {
             this.follow = res.data.data.followed;
+            this.message();
           }
         });
       } else {
@@ -208,6 +215,24 @@ export default {
     },
     closePreview() {
       this.showPreview = false;
+    },
+    message() {
+      if (this.follow) {
+        this.$message({
+          message: '已关注',
+          type: 'success'
+        });
+      } else {
+        this.$message({
+          message: '已取消关注',
+          type: 'success'
+        });
+      }
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.reload();
     }
   }
 }

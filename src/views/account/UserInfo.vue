@@ -140,6 +140,7 @@ export default {
         api.follow(this.user.id).then((res) => {
           if (res.data.status == 1) {
             this.follow = res.data.data.followed;
+            this.message();
           }
         });
       } else {
@@ -151,6 +152,19 @@ export default {
     },
     closePreview() {
       this.showPreview = false;
+    },
+    message() {
+      if (this.follow) {
+        this.$message({
+          message: '已关注',
+          type: 'success'
+        });
+      } else {
+        this.$message({
+          message: '已取消关注',
+          type: 'success'
+        });
+      }
     }
   }
 }

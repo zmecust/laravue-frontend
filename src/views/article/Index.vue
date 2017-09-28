@@ -111,7 +111,7 @@ export default {
         message: '请联系管理员（root@laravue.org）激活用户！',
         offset: 100
       });
-    }
+    },
   },
   watch: {
     tagName: function() {

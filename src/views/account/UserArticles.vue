@@ -29,13 +29,23 @@ export default {
     }
   },
   mounted() {
-    api.user_get_articles(this.$route.params.slug).then((res) => {
-      if (res.data.status == 1) {
-        if (res.data.data.length) {
-          this.articles = res.data.data;
+    this.reload();
+  },
+  methods: {
+    reload() {
+      api.user_get_articles(this.$route.params.slug).then((res) => {
+        if (res.data.status == 1) {
+          if (res.data.data.length) {
+            this.articles = res.data.data;
+          }
         }
-      }
-    });
+      });
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.reload();
+    }
   }
 }
 </script>
