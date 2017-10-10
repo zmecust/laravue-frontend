@@ -54,7 +54,7 @@
                 </a>
               </div>
             </div>
-            <div v-if="! auth.check()" class="head-nav-login">
+            <div v-if="!auth.check()" class="head-nav-login">
               <router-link class="this-login" to="/user/register">
                 注册
               </router-link>
@@ -65,6 +65,10 @@
               </router-link>
             </div>
             <div style="float: right; padding-top: 2px">
+              <router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">
+                <i class="fa fa-bell-o"></i>
+                <!-- <span class="label label-warning">{{msgNum}}</span> -->
+              </router-link>
               <router-link to="/article/create" id="btn-topic">
                 <i class="fa fa-pencil"></i> 写文章
               </router-link>
@@ -83,7 +87,37 @@ export default {
   computed: mapState({
     auth: state => state.account.auth,
   }),
+  mounted() {
+    this.websocket();
+  },
   methods: {
+    websocket() {
+      var ws = new WebSocket(`ws://115.28.170.217:9501?uid=1`);
+      var _self = this;
+      ws.onopen = function(evt) {
+        if (ws.readyState == 1) {
+          _self.loadMsg = ws.readyState;
+          ws.send('{"action":17,"channels":[110]}');
+        } else {
+          console.log(0);
+          _self.loadMsg = 0;
+        }
+      },
+      //当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
+      ws.onclose = function(evt) {
+        console.log(2);
+        _self.loadMsg = 2;
+      },
+      ws.onmessage = function(evt) {
+        let data = JSON.parse(evt.data);
+        _self.wsMsg = data;
+      },
+      // 如果连接失败，发送、接收数据失败或者处理数据出现错误，browser会触发onerror消
+      ws.onerror = function(evt) {
+        console.log(3);
+        _self.loadMsg = 2;;
+      }
+    },
     logOut() {
       this.$store.dispatch('accountLogoutSubmit').then(
         res => { this.$router.push('/') }

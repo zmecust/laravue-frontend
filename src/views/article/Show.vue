@@ -110,6 +110,9 @@
             <span v-if="follow">
               <i class="fa fa-minus"></i> 已关注 </span>
           </el-button>
+          <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()">
+            <span> <i class="fa fa-envelope-o"></i> 发送私信 </span>
+          </el-button>
         </div>
         <hot-topics></hot-topics>
       </el-col>
