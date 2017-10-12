@@ -43,6 +43,7 @@
 import api from '../../api';
 import { mapState, mapMutations } from 'vuex';
 import Headers from '../../components/Headers';
+import openWindow from '../../tool/openWindow';
 
 export default {
   name: 'login',
@@ -71,16 +72,13 @@ export default {
         this.$router.push(redirectUrl);
       }
     },
-    //      github_login() {
-    //        api.github_login().then((res) => {
-    //          console.log(res.data);
-    //          if (res.data.status == 1) {
-    //            this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
-    //            this.$router.push('/');
-    //          }
-    //        });
-    //        window.
-    //      }
+    github_login() {
+      const client_id = 'cf64e4f1536e2f475d7b';
+      const redirect_uri = 'https://laravue.org/github/login/#';
+      const url = `https://github.com/login/oauth/authorize?redirect_uri=${redirect_uri}&response_type=code&client_id=${client_id}&state='xyz'`;
+      //openWindow(url, 'github', 540, 540)
+      window.open(url);
+    }
   },
   watch: {
     success: 'successWatcher',
