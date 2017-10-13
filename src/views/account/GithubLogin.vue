@@ -8,7 +8,14 @@ import api from '../../api';
 
 export default {
   beforeCreate() {
-    console.log(this.$route.params.code);
+    api.login_redirect(this.$route.query.id).then((res) => {
+      if (res.data.status) {
+        this.$store.commit('ACCOUNT_AUTH_STATUS_CHANGED', res.data);
+        this.$router.push('/');
+      } else {
+        this.$router.push('/user/login');
+      }
+    });
   }
 }
 </script>

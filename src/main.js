@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.use(ElementUI)
 Vue.use(VeeValidate);
 Vue.config.productionTip = false
+// Vue.prototype.router = router;
 
 /* eslint-disable no-new */
 new Vue({

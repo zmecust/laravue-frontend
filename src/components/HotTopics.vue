@@ -4,21 +4,18 @@
       <p>热门话题</p>
       <div style="border-bottom: 1px solid #eee;"></div>
       <ul v-for="article in articles">
-        <!-- <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
-                      <li>• &nbsp;{{article.title}}</li>
-                  </router-link> -->
-        <a :href="'/#/articles/' + article.id">
+        <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
           <li>• &nbsp;{{article.title}}</li>
-        </a>
+        </router-link>
       </ul>
     </div>
     <div class="hot-tags">
       <p>热门标签</p>
       <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
       <div class="tag" v-for="tag in tags">
-        <a :href="'/#/articles?tag=' + tag.name" id="btn-tag">
+        <router-link :to="{name: 'ArticleIndex', query: {tag: tag.name}}" id="btn-tag">
           {{tag.name}}
-        </a>
+        </router-link>
       </div>
       <div style="clear: both; margin-bottom: 15px"></div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="Login">
     <headers></headers>
     <div id="login" class='login-wrap'>
       <div class="container">
@@ -46,7 +46,7 @@ import Headers from '../../components/Headers';
 import openWindow from '../../tool/openWindow';
 
 export default {
-  name: 'login',
+  name: 'Login',
   components: {
     Headers
   },
@@ -73,11 +73,7 @@ export default {
       }
     },
     github_login() {
-      const client_id = 'cf64e4f1536e2f475d7b';
-      const redirect_uri = 'https://laravue.org/github/login/#';
-      const url = `https://github.com/login/oauth/authorize?redirect_uri=${redirect_uri}&response_type=code&client_id=${client_id}&state='xyz'`;
-      //openWindow(url, 'github', 540, 540)
-      window.open(url);
+      window.open('https://api.laravue.org/github');
     }
   },
   watch: {

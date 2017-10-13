@@ -25,6 +25,7 @@ const Error404 = resolve => require(['../views/error/404'], resolve)
 Vue.use(Router)
 
 const router = new Router({
+  // mode: 'history',
   routes: [
     {
       path: '/user/login',
@@ -38,14 +39,17 @@ const router = new Router({
     },
     {
       path: '/verify_email/:slug',
+      name: 'VerifyEmail',
       component: VerifyEmail
     },
     {
       path: '/github/login',
+      name: 'GithubLogin',
       component: GithubLogin
     },
     {
       path: '/',
+      name: 'Common',
       component: Common,
       children: [
         {
@@ -108,22 +112,13 @@ const router = new Router({
           ]
         },
         {
-          path: '/users/:slug',
-          component: UserInfo,
-          children: [
-            {
-              path: '/',
-              component: UserArticles
-            }
-          ]
-        },
-
-        {
           path: '/about',
+          name: 'About',
           component: About
         },
         {
           path: '/payment',
+          name: 'Payment',
           component: Payment
         },
       ]

@@ -22,8 +22,11 @@ export default {
   login(params) {
     return Vue.http.post('user/login', params);
   },
-  github_login() {
-    return Vue.http.post('github');
+  github_login(params) {
+    return Vue.http.post('https://github.com/login/oauth/access_token', params);
+  },
+  login_redirect(params) {
+    return Vue.http.get('https://api.laravue.org/github/login/redirect?id=' + params);
   },
   register(params) {
     return Vue.http.post('user/register', params);
