@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import VeeValidate from 'vee-validate';
-import 'element-ui/lib/theme-default/index.css'
+import VeeValidate from 'vee-validate' //表单验证
+import '../static/theme/index.css' //自定义element-ui样式
 
 Vue.use(ElementUI)
 Vue.use(VeeValidate);

@@ -37,6 +37,10 @@
           </div>
           <div style="border-bottom: 1px solid #ddd; padding-top: 50px"></div>
         </div>
+        <div style="text-align: right; margin-top: 20px">
+          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
+          </el-pagination>
+        </div>
       </el-col>
       <el-col :span="4" style="margin-top: 20px;">
         <hot-topics></hot-topics>
@@ -56,7 +60,9 @@ export default {
   data() {
     return {
       articles: '',
-      tagName: ''
+      tagName: '',
+      total: null,
+      page_size: 15,
     }
   },
   components: {
@@ -83,13 +89,14 @@ export default {
       target: document.querySelector('#app')
     };
     loadingInstance = Loading.service(options);
-    this.get_articles();
+    this.get_articles(undefined);
   },
   methods: {
-    get_articles() {
-      api.get_articles({ params: this.tagName }).then((res) => {
+    get_articles(val) {
+      api.get_articles({ params: {page: val, tag: this.tagName.tag} }).then((res) => {
         if (res.data.status == 1) {
           this.articles = res.data.data.data;
+          this.total = Number(res.data.data.total);
           for (let index in this.articles) {
             this.articles[index].abstract = this.articles[index].body.substring(0, 150)
               .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
@@ -112,10 +119,13 @@ export default {
         offset: 100
       });
     },
+    handleCurrentChange(page) {
+      this.get_articles(page);
+    },
   },
   watch: {
     tagName: function() {
-      this.get_articles();
+      this.get_articles(undefined);
     }
   }
 }
