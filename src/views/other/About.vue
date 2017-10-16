@@ -11,6 +11,13 @@
             <a href="https://github.com/zmecust/laravue-frontend">Github</a>， 有兴趣可以看看，不要忘了&nbsp;star&nbsp;哦，哈哈哈！
             <br>
           </p>
+
+          <h3 style="font-weight: bolder">兴趣爱好</h3>
+          <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
+          <p>
+            Web开发 &nbsp; 深度学习 &nbsp; 科幻剧
+          </p>
+
           <h3 style="font-weight: bolder">个人标签</h3>
           <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
           <p>

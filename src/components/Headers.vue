@@ -88,7 +88,7 @@ export default {
     auth: state => state.account.auth,
   }),
   mounted() {
-    this.websocket();
+    //this.websocket();
   },
   methods: {
     websocket() {
