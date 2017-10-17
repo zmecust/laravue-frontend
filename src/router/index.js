@@ -49,7 +49,6 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'Common',
       component: Common,
       children: [
         {

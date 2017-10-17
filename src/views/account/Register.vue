@@ -90,7 +90,7 @@ export default {
       });
     },
     github_login() {
-      window.open('https://api.laravue.org/github');
+      window.location.href = 'https://api.laravue.org/github';
     }
   },
   watch: {
