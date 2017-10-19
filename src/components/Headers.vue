@@ -11,13 +11,13 @@
               </router-link>
             </div>
             <div class="head-nav">
-              <router-link class="head-link" to="/">首页</router-link>
+              <router-link class="head-link" to="/" :style="[path == '' ? active : '']">文章</router-link>
             </div>
             <div class="head-nav">
-              <router-link class="head-link" to="/payment">打赏</router-link>
+              <router-link class="head-link" to="/payment" :style="[path == 'payment' ? active : '']">打赏</router-link>
             </div>
             <div class="head-nav">
-              <router-link class="head-link" to="/about">关于</router-link>
+              <router-link class="head-link" to="/about" :style="[path == 'about' ? active : '']">关于</router-link>
             </div>
             <div style="float: left; padding-left: 40px">
               <form method="GET" action="/search" accept-charset="UTF-8">
@@ -40,7 +40,7 @@
                   </span>
                   <span style="padding-left: 20px">个人中心</span>
                 </router-link>
-                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                <router-link :to="{name: 'EditUserInfo', params: {slug: auth.id}}">
                   <span>
                     <i class="fa fa-gear"></i>
                   </span>
@@ -87,6 +87,14 @@ export default {
   computed: mapState({
     auth: state => state.account.auth,
   }),
+  data() {
+    return {
+      active: {
+        color: '#00b5ad'
+      },
+      path: this.$route.path.split('/')[1]
+    }
+  },
   mounted() {
     //this.websocket();
   },
@@ -103,25 +111,30 @@ export default {
           _self.loadMsg = 0;
         }
       },
-      //当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
-      ws.onclose = function(evt) {
-        console.log(2);
-        _self.loadMsg = 2;
-      },
-      ws.onmessage = function(evt) {
-        let data = JSON.parse(evt.data);
-        _self.wsMsg = data;
-      },
-      // 如果连接失败，发送、接收数据失败或者处理数据出现错误，browser会触发onerror消
-      ws.onerror = function(evt) {
-        console.log(3);
-        _self.loadMsg = 2;;
-      }
+        //当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
+        ws.onclose = function(evt) {
+          console.log(2);
+          _self.loadMsg = 2;
+        },
+        ws.onmessage = function(evt) {
+          let data = JSON.parse(evt.data);
+          _self.wsMsg = data;
+        },
+        // 如果连接失败，发送、接收数据失败或者处理数据出现错误，browser会触发onerror消
+        ws.onerror = function(evt) {
+          console.log(3);
+          _self.loadMsg = 2;;
+        }
     },
     logOut() {
       this.$store.dispatch('accountLogoutSubmit').then(
         res => { this.$router.push('/') }
       );
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.path = this.$route.path.split('/')[1]
     }
   }
 }
@@ -141,11 +154,6 @@ export default {
     color: #555;
     .head-link {
       color: #555;
-      &:hover {
-        color: #00b5ad;
-        border-bottom: 1px solid #00b5ad;
-        margin-bottom: -1px;
-      }
     }
   }
 }
@@ -247,6 +255,7 @@ export default {
 }
 
 .dropdown-content a:hover {
+  cursor: pointer;
   background-color: #f1f1f1;
   color: #00b5ad;
 }

@@ -59,7 +59,10 @@ export default {
     ACCOUNT_REGISTER_FAILURE: (state, data) => {
       Vue.set(state.register, 'success', false);
       Vue.set(state.register, 'failure', data);
-    }
+    },
+    ACCOUNT_AVATAR_UPLOAD: (state, data) => {
+      Vue.set(state.register, 'success', false);
+    },
   },
   actions: {
     accountLoginSubmit({ commit }, params) {

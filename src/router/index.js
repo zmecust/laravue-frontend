@@ -21,6 +21,10 @@ const UserLikesArticles = resolve => require(['../views/account/UserLikesArticle
 const About = resolve => require(['../views/other/About'], resolve)
 const Payment = resolve => require(['../views/other/Payment'], resolve)
 const Error404 = resolve => require(['../views/error/404'], resolve)
+const EditCommon = resolve => require(['../views/editUserInfo/Common'], resolve)
+const EditAvatar = resolve => require(['../views/editUserInfo/EditAvatar'], resolve)
+const EditPassword = resolve => require(['../views/editUserInfo/EditPassword'], resolve)
+const EditUserInfo = resolve => require(['../views/editUserInfo/EditUserInfo'], resolve)
 
 Vue.use(Router)
 
@@ -108,6 +112,27 @@ const router = new Router({
               name: 'UserLikesArticles',
               component: UserLikesArticles
             }
+          ]
+        },
+        {
+          path: 'users/:slug',
+          component: EditCommon,
+          children: [
+            {
+              path: 'edit',
+              name: 'EditUserInfo',
+              component: EditUserInfo
+            },
+            {
+              path: 'edit_password',
+              name: 'EditPassword',
+              component: EditPassword
+            },
+            {
+              path: 'edit_avatar',
+              name: 'EditAvatar',
+              component: EditAvatar
+            },
           ]
         },
         {

@@ -37,6 +37,9 @@ export default {
   logout() {
     return Vue.http.get('user/logout');
   },
+  edit_password(params) {
+    return Vue.http.post('edit_password', params);
+  },
 
   get_user(id) {
     return Vue.http.get('users/' + id);

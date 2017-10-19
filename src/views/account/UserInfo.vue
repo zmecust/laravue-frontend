@@ -63,8 +63,9 @@
                 <i class="fa fa-minus"></i> 已关注 </span>
             </el-button>
             <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()">
-            <span> <i class="fa fa-envelope-o"></i> 发送私信 </span>
-          </el-button>
+              <span>
+                <i class="fa fa-envelope-o"></i> 发送私信 </span>
+            </el-button>
           </div>
           <div v-if="auth.id == user.id">
             <el-button class="btn-define" @click.prevent="edit_user_info()">
@@ -76,22 +77,22 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link :to="{name: 'UserArticles', params: {slug: user.id}}">
+              <router-link :to="{name: 'UserArticles', params: {slug: user.id}}" :style="[path == 'articles' ? active : '']">
                 <i class="text-md fa fa-list-ul"></i> Ta 发布的话题
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserReplies', params: {slug: user.id}}">
+              <router-link :to="{name: 'UserReplies', params: {slug: user.id}}" :style="[path == 'replies' ? active : '']">
                 <i class="text-md fa fa-comment"></i> Ta 发表的回复
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesUsers', params: {slug: user.id}}">
+              <router-link :to="{name: 'UserLikesUsers', params: {slug: user.id}}" :style="[path == 'likes_users' ? active : '']">
                 <i class="text-md fa fa-eye"></i> Ta 关注的用户
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesArticles', params: {slug: user.id}}">
+              <router-link :to="{name: 'UserLikesArticles', params: {slug: user.id}}" :style="[path == 'likes_articles' ? active : '']">
                 <i class="text-md fa fa-thumbs-up"></i> Ta 赞过的话题
               </router-link>
             </li>
@@ -116,7 +117,11 @@ export default {
     return {
       user: '',
       follow: false,
-      showPreview: false
+      showPreview: false,
+      active: {
+        color: '#00b5ad'
+      },
+      path: this.$route.path.split('/')[3]
     }
   },
   components: {
@@ -168,6 +173,11 @@ export default {
           type: 'success'
         });
       }
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.path = this.$route.path.split('/')[3]
     }
   }
 }
@@ -250,11 +260,6 @@ export default {
       a {
         color: #333;
         font-size: 14px;
-        &:hover,
-        &:active,
-        &:focus {
-          color: #00b5ad;
-        }
       }
     }
   }
