@@ -156,7 +156,7 @@ export default {
       }
     },
     edit_user_info() {
-
+      this.$router.push({name: 'EditUserInfo', params: {slug: this.auth.id}});
     },
     closePreview() {
       this.showPreview = false;

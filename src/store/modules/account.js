@@ -61,8 +61,18 @@ export default {
       Vue.set(state.register, 'failure', data);
     },
     ACCOUNT_AVATAR_UPLOAD: (state, data) => {
-      Vue.set(state.register, 'success', false);
+      let user = JSON.parse(localStorage.getItem(AUTH_USER));
+      user.avatar = data;
+      localStorage.removeItem(AUTH_USER);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
     },
+    ACCOUNT_EDIT_USER: (state, data) => {
+      let user = JSON.parse(localStorage.getItem(AUTH_USER));
+      user.real_name = data.real_name;
+      user.city = data.city;
+      localStorage.removeItem(AUTH_USER);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
+    }
   },
   actions: {
     accountLoginSubmit({ commit }, params) {

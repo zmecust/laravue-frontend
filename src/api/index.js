@@ -40,6 +40,9 @@ export default {
   edit_password(params) {
     return Vue.http.post('edit_password', params);
   },
+  edit_user_info(params) {
+    return Vue.http.post('edit_user_info', params);
+  },
 
   get_user(id) {
     return Vue.http.get('users/' + id);

@@ -6,9 +6,10 @@
     </div>
     <div class="body">
       <div class="upload-container">
-        <div>
+        <div class="avatar">
           <img :src="auth.user.avatar" alt="">
         </div>
+        <div><p>更换图像：</p></div>
         <el-upload class="upload-demo" drag :action="upload_url" :on-success="uploadCallback" :show-file-list="false" :headers="headers">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或
@@ -23,7 +24,7 @@
 <script>
 import { mapState } from 'vuex';
 import api from '../../api';
-import store from '../store';
+import store from '../../store';
 
 const accessToken = store.state.account.auth.access_token;
 
@@ -35,14 +36,14 @@ export default {
     return {
       upload_url: this.$http.options.root + '/avatar/upload',
       headers: {
-        Authorization: `${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   },
   methods: {
     uploadCallback(response, file, fileList) {
       if (1 == response.status) {
-        this.$store.commit();
+        this.$store.commit('ACCOUNT_AVATAR_UPLOAD', response.data.avatar);
       }
     }
   }
@@ -63,7 +64,13 @@ export default {
     }
   }
   .body {
-    padding: 30px 0 30px;
+    padding: 30px 0 30px 30px;
+    .avatar {
+      margin-bottom: 30px;
+      img {
+        width: 60%;
+      }
+    }
   }
 }
 </style>
