@@ -25,11 +25,11 @@
             <div class="article-create">
               <dt style="margin-right: 2%">内容：</dt>
               <!-- <editor id="editor"
-                                                 @imageAdded="handleImageAdded"
-                                                 useCustomImageHandler
-                                                 style="width: 70%; padding-left: 17%;"
-                                                 v-model="params.body">
-                                    </editor> -->
+                           @imageAdded="handleImageAdded"
+                           useCustomImageHandler
+                           style="width: 70%; padding-left: 17%;"
+                           v-model="params.body">
+              </editor> -->
               <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body">
               </markdown-editor>
             </div>
@@ -60,8 +60,6 @@
 //import Editor from '../../components/Editor';
 import { markdownEditor } from 'vue-simplemde'
 import api from '../../api';
-import hljs from 'highlight.js';
-window.hljs = hljs;
 
 export default {
   components: {
@@ -159,7 +157,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~simplemde/dist/simplemde.min.css';
-@import '~highlight.js/styles/atom-one-dark.css';
 .grid-content {
   width: 100%;
   margin-top: 60px;

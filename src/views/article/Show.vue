@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="article-body">
-            <vue-markdown class="markdown-body">{{article.body}}</vue-markdown>
+            <div class="markdown-body" v-html="article.body"></div>
           </div>
           <div class="article-like">
             <el-button type="submit" id="btn-like" @click.prevent="click_like()">
@@ -111,7 +111,8 @@
               <i class="fa fa-minus"></i> 已关注 </span>
           </el-button>
           <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()">
-            <span> <i class="fa fa-envelope-o"></i> 发送私信 </span>
+            <span>
+              <i class="fa fa-envelope-o"></i> 发送私信 </span>
           </el-button>
         </div>
         <hot-topics></hot-topics>
@@ -123,17 +124,16 @@
 
 <script>
 import api from '../../api'
-import VueMarkdown from 'vue-markdown'
 import { mapState } from 'vuex'
 import { Loading } from 'element-ui'
 import HotTopics from '../../components/HotTopics'
 import Popup from '../../components/Popup'
 import ChildComment from '../../components/Comment'
+import Marked from 'marked'
 
 export default {
   components: {
     HotTopics,
-    VueMarkdown,
     Popup,
     ChildComment
   },
@@ -151,6 +151,11 @@ export default {
     auth: state => state.account.auth,
   }),
   mounted() {
+    Marked.setOptions({
+      highlight: function(code) {
+        return require('highlight.js').highlightAuto(code).value;
+      }
+    });
     this.reload();
   },
   created() {
@@ -165,6 +170,7 @@ export default {
       api.get_article(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.article = res.data.data;
+          this.article.body = Marked(res.data.data.body);
           if (this.auth.check()) {
             api.is_follow_or_not(this.article.user.id).then((res) => {
               if (res.data.status == 1) {
@@ -243,6 +249,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../static/css/markdown.css';
+@import '~highlight.js/styles/atom-one-light.css';
 .article {
   margin-top: 40px;
   p {
