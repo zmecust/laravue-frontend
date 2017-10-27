@@ -93,7 +93,10 @@ export default {
   },
   methods: {
     get_articles(val) {
-      api.get_articles({ params: {page: val, tag: this.tagName.tag} }).then((res) => {
+      if (this.$route.query.tag) {
+        this.tagName = this.$route.query;
+      }
+      api.get_articles({ params: { page: val, tag: this.tagName.tag } }).then((res) => {
         if (res.data.status == 1) {
           this.articles = res.data.data.data;
           this.total = Number(res.data.data.total);
