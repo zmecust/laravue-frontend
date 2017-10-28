@@ -65,9 +65,9 @@
               </router-link>
             </div>
             <div style="float: right; padding-top: 2px">
-              <router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">
+              <router-link v-if="auth.check()" to="/message"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">
                 <i class="fa fa-bell-o"></i>
-                <!-- <span class="label label-warning">{{msgNum}}</span> -->
+                <span>{{ msgNum }}</span>
               </router-link>
               <router-link to="/article/create" id="btn-topic">
                 <i class="fa fa-pencil"></i> 写文章
@@ -82,6 +82,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import api from '../api';
 
 export default {
   computed: mapState({
@@ -92,10 +93,16 @@ export default {
       active: {
         color: '#00b5ad'
       },
-      path: this.$route.path.split('/')[1]
+      path: this.$route.path.split('/')[1],
+      msgNum: ''
     }
   },
   mounted() {
+    api.get_notification_count().then((res) => {
+      if (res.data.data.count) {
+        this.msgNum = res.data.data.count;
+      }
+    });
     //this.websocket();
   },
   methods: {
@@ -282,6 +289,7 @@ img {
   padding: 10px 20px 10px 20px;
   border-radius: 100px;
   color: #fff;
+  border: 1px solid tomato;
 }
 
 #btn-topic:hover {
@@ -291,5 +299,9 @@ img {
   border: 1px solid #00b5ad;
   box-shadow: none;
   text-decoration: none;
+}
+.label-warning {
+  color: tomato;
+  margin-right: 20px;
 }
 </style>

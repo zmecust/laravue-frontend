@@ -101,5 +101,11 @@ export default {
   },
   get_categories() {
     return Vue.http.get('categories');
+  },
+  send_message(params) {
+    return Vue.http.post('message/store', params);
+  },
+  get_notification_count() {
+    return Vue.http.get('message/count');
   }
 }

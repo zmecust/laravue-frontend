@@ -110,7 +110,7 @@
             <span v-if="follow">
               <i class="fa fa-minus"></i> 已关注 </span>
           </el-button>
-          <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()">
+          <el-button class="btn-define" style="margin-top: 0" @click.prevent="send_message()">
             <span>
               <i class="fa fa-envelope-o"></i> 发送私信 </span>
           </el-button>
@@ -119,17 +119,28 @@
       </el-col>
     </el-row>
     <popup v-show="showPreview" @closePreview="closePreview"></popup>
+    <el-dialog title="发送私信" :visible.sync="showDialog" width="600px">
+      <el-form label-position="left">
+        <el-form-item label="内容：">
+          <el-input v-model="content" type="textarea" :rows="4"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog">取 消</el-button>
+        <el-button type="primary" @click="submitDialog">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import api from '../../api'
-import { mapState } from 'vuex'
-import { Loading } from 'element-ui'
-import HotTopics from '../../components/HotTopics'
-import Popup from '../../components/Popup'
-import ChildComment from '../../components/Comment'
-import Marked from 'marked'
+import api from "../../api";
+import { mapState } from "vuex";
+import { Loading } from "element-ui";
+import HotTopics from "../../components/HotTopics";
+import Popup from "../../components/Popup";
+import ChildComment from "../../components/Comment";
+import Marked from "marked";
 
 export default {
   components: {
@@ -139,21 +150,23 @@ export default {
   },
   data() {
     return {
-      article: '',
+      article: "",
       like: false,
       follow: false,
-      comment: '',
-      comments: '',
-      showPreview: false
-    }
+      comment: "",
+      comments: "",
+      showPreview: false,
+      showDialog: false,
+      content: ''
+    };
   },
   computed: mapState({
-    auth: state => state.account.auth,
+    auth: state => state.account.auth
   }),
   mounted() {
     Marked.setOptions({
       highlight: function(code) {
-        return require('highlight.js').highlightAuto(code).value;
+        return require("highlight.js").highlightAuto(code).value;
       }
     });
     this.reload();
@@ -164,15 +177,15 @@ export default {
   methods: {
     reload() {
       let options = {
-        target: document.querySelector('#app')
+        target: document.querySelector("#app")
       };
       let loadingInstance = Loading.service(options);
-      api.get_article(this.$route.params.slug).then((res) => {
+      api.get_article(this.$route.params.slug).then(res => {
         if (res.data.status == 1) {
           this.article = res.data.data;
           this.article.body = Marked(res.data.data.body);
           if (this.auth.check()) {
-            api.is_follow_or_not(this.article.user.id).then((res) => {
+            api.is_follow_or_not(this.article.user.id).then(res => {
               if (res.data.status == 1) {
                 this.follow = res.data.data.followed;
               }
@@ -180,12 +193,12 @@ export default {
           }
           loadingInstance.close();
         }
-        api.get_comments(this.$route.params.slug).then((res) => {
+        api.get_comments(this.$route.params.slug).then(res => {
           this.comments = res.data.data;
         });
       });
       if (this.auth.check()) {
-        api.is_like_or_not(this.$route.params.slug).then((res) => {
+        api.is_like_or_not(this.$route.params.slug).then(res => {
           if (res.data.status == 1) {
             this.like = res.data.data.liked;
           }
@@ -194,7 +207,7 @@ export default {
     },
     click_like() {
       if (this.auth.check()) {
-        api.like(this.$route.params.slug).then((res) => {
+        api.like(this.$route.params.slug).then(res => {
           if (res.data.status == 1) {
             this.like = res.data.data.liked;
           }
@@ -205,7 +218,7 @@ export default {
     },
     click_follow() {
       if (this.auth.check()) {
-        api.follow(this.article.user.id).then((res) => {
+        api.follow(this.article.user.id).then(res => {
           if (res.data.status == 1) {
             this.follow = res.data.data.followed;
             this.message();
@@ -216,9 +229,28 @@ export default {
       }
     },
     submit() {
-      api.create_comment({ article_id: this.article.id, parent_id: 0, body: this.comment }).then((res) => {
-        if (res.data.status == 1) {
-          this.comments.push(res.data.data);
+      api
+        .create_comment({
+          article_id: this.article.id,
+          parent_id: 0,
+          body: this.comment
+        })
+        .then(res => {
+          if (res.data.status == 1) {
+            this.comments.push(res.data.data);
+          }
+        });
+    },
+    send_message() {
+      this.showDialog = true;
+    },
+    closeDialog() {
+      this.showDialog = false;
+    },
+    submitDialog() {
+      api.send_message({content: this.content, user_id: this.auth.id}).then((res) => {
+        if (res.data.status) {
+          this.showDialog = false;
         }
       });
     },
@@ -228,28 +260,28 @@ export default {
     message() {
       if (this.follow) {
         this.$message({
-          message: '已关注',
-          type: 'success'
+          message: "已关注",
+          type: "success"
         });
       } else {
         this.$message({
-          message: '已取消关注',
-          type: 'success'
+          message: "已取消关注",
+          type: "success"
         });
       }
     }
   },
   watch: {
-    '$route'(to, from) {
+    $route(to, from) {
       this.reload();
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../../static/css/markdown.css';
-@import '~highlight.js/styles/atom-one-light.css';
+@import "../../../static/css/markdown.css";
+@import "~highlight.js/styles/atom-one-light.css";
 .article {
   margin-top: 40px;
   p {

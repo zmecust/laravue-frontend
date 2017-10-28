@@ -25,6 +25,9 @@ const EditCommon = resolve => require(['../views/editUserInfo/Common'], resolve)
 const EditAvatar = resolve => require(['../views/editUserInfo/EditAvatar'], resolve)
 const EditPassword = resolve => require(['../views/editUserInfo/EditPassword'], resolve)
 const EditUserInfo = resolve => require(['../views/editUserInfo/EditUserInfo'], resolve)
+const NotificationCommon = resolve => require(['../views/notification/Common'], resolve)
+const Message = resolve => require(['../views/notification/Message'], resolve)
+const Notification = resolve => require(['../views/notification/Notification'], resolve)
 
 Vue.use(Router)
 
@@ -132,6 +135,22 @@ const router = new Router({
               path: 'edit_avatar',
               name: 'EditAvatar',
               component: EditAvatar
+            },
+          ]
+        },
+        {
+          path: '/',
+          component: NotificationCommon,
+          children: [
+            {
+              path: 'message',
+              name: 'Message',
+              component: Message
+            },
+            {
+              path: 'notification',
+              name: 'Notification',
+              component: Notification
             },
           ]
         },
