@@ -1,61 +1,65 @@
 <template>
   <div class="edit">
     <div class="title">
-      <p>
-        <i class="fa fa-envelope"></i> 我的提醒</p>
+      <p><i class="fa fa-envelope"></i> 我的提醒</p>
     </div>
     <div class="body">
-      <form action="" v-on:submit.prevent>
-        <div class="article-create">
-          <dt style="">真实姓名：</dt>
-          <el-input type="text" class="el-input" v-model="params.real_name"></el-input>
+      <div v-for="notification in notifications" :key="notification.id">
+        <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Comment') >= 0">
+          <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
+            <span>{{notification.data.name}}</span>
+          </router-link>
+          <span class="dex"> · 在话题中评论了你： </span>
+          <router-link :to="{name: 'ArticleShow', params: {slug: notification.data.title_id}}">
+            <span>{{notification.data.title}}</span>
+          </router-link>
+          <span class="dex"> · 于 {{notification.created_at}}</span>
+          <p>{{notification.data.comment}}</p>
+          <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
-        <div class="article-create">
-          <dt style="">所在城市：</dt>
-          <el-input type="text" class="el-input" v-model="params.city"></el-input>
+        <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Follow') >= 0">
+          <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
+            <span>{{notification.data.name}}</span>
+          </router-link>
+          <span class="dex"> · 关注了你 </span>
+          <span class="dex"> · 于 {{notification.created_at}}</span>
+          <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
-        <div>
-          <button class="article-button" type="submit" @click="submit()">提交修改</button>
+        <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Like') >= 0">
+          <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
+            <span>{{notification.data.name}}</span>
+          </router-link>
+          <span class="dex"> · 点赞了你的话题： </span>
+          <router-link :to="{name: 'ArticleShow', params: {slug: notification.data.title_id}}">
+            <span>{{notification.data.title}}</span>
+          </router-link>
+          <span class="dex"> · 于 {{notification.created_at}}</span>
+          <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import api from '../../api';
+import { mapState } from "vuex";
+import api from "../../api";
 
 export default {
-  computed: mapState({
-    auth: state => state.account.auth
-  }),
   data() {
     return {
-      params: {
-        real_name: '',
-        city: '',
-      }
-    }
+      notifications: ''
+    };
   },
   mounted() {
-    this.params.real_name = this.auth.user.real_name;
-    this.params.city = this.auth.user.city;
-  },
-  methods: {
-    submit() {
-      api.edit_user_info(this.params).then((res) => {
-        this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
-        this.open(res.data.message);
-      });
-    },
-    open(mes) {
-      this.$alert(mes, '', {
-        confirmButtonText: '确定'
-      });
-    }
+    api.get_notifications().then(res => {
+      if (res.data.status) {
+        this.notifications = res.data.data;
+        api.notifications_read();
+      }
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -72,43 +76,25 @@ export default {
     }
   }
   .body {
-    padding: 30px 0 30px;
-    .article-create {
-      margin-bottom: 20px;
-      dt {
-        color: #555;
-        padding-top: 5px;
-        width: 18%;
-        text-align: right;
-        float: left;
-      }
-      .el-input {
-        width: 70%;
-        margin-left: 2%;
-      }
-      #editor {
-        height: 400px;
-      }
+    padding: 0 0 30px;
+    .read {
+      background-color: #fff9ce;
     }
-    .article-button {
-      cursor: pointer;
-      width: 70%;
-      margin-left: 20%;
-      background-color: #00b5ad;
-      color: #fff;
-      font-size: 16px;
-      padding: 5px 10px 5px 10px;
-      border: 1px solid #00b5ad;
-      border-radius: 100px;
-      box-shadow: none;
-      &:hover,
-      &:focus,
-      &:active {
-        color: tomato;
-        border: 1px solid tomato;
-        box-shadow: none;
-        border-radius: 100px;
-        background-color: #fff;
+    .user-article {
+      padding: 20px 10px 0 20px;
+      a {
+        font-size: 15px;
+        color: #00b5ad;
+        &:hover {
+          color: tomato;
+        }
+      }
+      p {
+        padding-top: 10px;
+      }
+      .dex {
+        color: #999;
+        font-size: 14px;
       }
     }
   }

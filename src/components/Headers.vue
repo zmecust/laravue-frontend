@@ -65,9 +65,8 @@
               </router-link>
             </div>
             <div style="float: right; padding-top: 2px">
-              <router-link v-if="auth.check()" to="/message"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">
-                <i class="fa fa-bell-o"></i>
-                <span>{{ msgNum }}</span>
+              <router-link v-if="auth.check()" to="/message"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
+                <span :style="[msgNum ? 'color: tomato' : '']"><i class="fa fa-bell-o"></i>{{ msgNum }}</span>
               </router-link>
               <router-link to="/article/create" id="btn-topic">
                 <i class="fa fa-pencil"></i> 写文章
@@ -301,7 +300,6 @@ img {
   text-decoration: none;
 }
 .label-warning {
-  color: tomato;
   margin-right: 20px;
 }
 </style>

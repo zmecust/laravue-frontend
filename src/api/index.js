@@ -107,5 +107,11 @@ export default {
   },
   get_notification_count() {
     return Vue.http.get('message/count');
+  },
+  get_notifications() {
+    return Vue.http.get('notifications');
+  },
+  notifications_read() {
+    return Vue.http.get('notifications/read');
   }
 }
