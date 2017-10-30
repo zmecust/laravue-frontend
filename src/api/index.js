@@ -87,6 +87,9 @@ export default {
   get_tags() {
     return Vue.http.get('tags');
   },
+  get_article_likes(id) {
+    return Vue.http.get('articles/' + id + '/like');
+  },
   is_like_or_not(id) {
     return Vue.http.get('article/is_like', { params: { id: id } });
   },

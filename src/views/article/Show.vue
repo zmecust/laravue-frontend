@@ -41,6 +41,11 @@
                 <i class="fa fa-thumbs-up"></i> 已赞 </span>
               <!--<span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}-->
             </el-button>
+            <div style="text-align: center">
+              <div v-for="like in article_likes" :key="like.id" style="float: left; padding: 20px 5px 10px">
+                <img :src="like.avatar" :alt="like.name" :title="like.name" class="likes-avatar">
+              </div>
+            </div>
           </div>
           <div class="article-comment" v-if="auth.check()">
             <img :src="auth.user.avatar" alt="">
@@ -157,7 +162,8 @@ export default {
       comments: "",
       showPreview: false,
       showDialog: false,
-      content: ''
+      content: '',
+      article_likes: ''
     };
   },
   computed: mapState({
@@ -193,6 +199,11 @@ export default {
           }
           loadingInstance.close();
         }
+        api.get_article_likes(this.$route.params.slug).then(res => {
+          if (res.data.status) {
+            this.article_likes = res.data.data;
+          }
+        });
         api.get_comments(this.$route.params.slug).then(res => {
           this.comments = res.data.data;
         });
@@ -248,7 +259,7 @@ export default {
       this.showDialog = false;
     },
     submitDialog() {
-      api.send_message({content: this.content, user_id: this.auth.id}).then((res) => {
+      api.send_message({ content: this.content, user_id: this.auth.id }).then((res) => {
         if (res.data.status) {
           this.showDialog = false;
         }
@@ -261,12 +272,12 @@ export default {
       if (this.follow) {
         this.$message({
           message: "已关注",
-          type: "success"
+          type: "default"
         });
       } else {
         this.$message({
           message: "已取消关注",
-          type: "success"
+          type: "default"
         });
       }
     }
@@ -385,6 +396,7 @@ export default {
 }
 
 .article-comment {
+  clear: both;
   padding-top: 30px;
   img {
     position: absolute;
@@ -469,5 +481,10 @@ export default {
 .btn-define:active {
   background-color: #169e98;
   box-shadow: none;
+}
+.likes-avatar {
+  width: 40px;
+  border: 1px solid #aaa;
+  border-radius: 100px;
 }
 </style>
