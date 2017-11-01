@@ -10,12 +10,7 @@
           <img :src="auth.user.avatar" alt="">
         </div>
         <div><p>更换图像：</p></div>
-        <el-upload class="upload-demo" drag :action="upload_url" :on-success="uploadCallback" :show-file-list="false" :headers="headers">
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或
-            <em>点击上传</em>
-          </div>
-        </el-upload>
+        <Upload :url="'/avatar/upload'" @result="uploadCallback"></Upload>
       </div>
     </div>
   </div>
@@ -23,28 +18,18 @@
 
 <script>
 import { mapState } from 'vuex';
-import api from '../../api';
-import store from '../../store';
-
-const accessToken = store.state.account.auth.access_token;
+import Upload from '../../components/Upload.vue';
 
 export default {
   computed: mapState({
     auth: state => state.account.auth
   }),
-  data() {
-    return {
-      upload_url: this.$http.options.root + '/avatar/upload',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+  components: {
+    Upload
   },
   methods: {
-    uploadCallback(response, file, fileList) {
-      if (1 == response.status) {
-        this.$store.commit('ACCOUNT_AVATAR_UPLOAD', response.data.avatar);
-      }
+    uploadCallback(data) {
+      this.$store.commit('ACCOUNT_AVATAR_UPLOAD', data);
     }
   }
 }
@@ -70,6 +55,9 @@ export default {
       img {
         width: 60%;
       }
+    }
+    p {
+      padding-bottom: 10px; 
     }
   }
 }

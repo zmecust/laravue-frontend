@@ -25,13 +25,17 @@
             <div class="article-create">
               <dt style="margin-right: 2%">内容：</dt>
               <!-- <editor id="editor"
-                           @imageAdded="handleImageAdded"
-                           useCustomImageHandler
-                           style="width: 70%; padding-left: 17%;"
-                           v-model="params.body">
-              </editor> -->
+                             @imageAdded="handleImageAdded"
+                             useCustomImageHandler
+                             style="width: 70%; padding-left: 17%;"
+                             v-model="params.body">
+                </editor> -->
               <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body">
               </markdown-editor>
+            </div>
+            <div class="article-create">
+              <dt>插入图片：</dt>
+              <Upload :url="'/content_image'" style="padding-left: 17%;" @result="uploadCallback"></Upload>
             </div>
             <div class="article-create">
               <dt>是否允许评论：</dt>
@@ -60,11 +64,13 @@
 //import Editor from '../../components/Editor';
 import { markdownEditor } from 'vue-simplemde'
 import api from '../../api';
+import Upload from '../../components/Upload';
 
 export default {
   components: {
     //Editor,
-    markdownEditor
+    markdownEditor,
+    Upload
   },
   props: ['type'],
   data() {
@@ -85,7 +91,7 @@ export default {
       allCategories: '',
       configs: {
         status: false,
-        initialValue: '请输入内容',
+        initialValue: '',
         renderingConfig: {
           codeSyntaxHighlighting: true,
           highlightingTheme: 'tomorrow'
@@ -150,6 +156,10 @@ export default {
       }).catch((err) => {
         console.log(err);
       })
+    },
+    uploadCallback(data) {
+      const transforData = '![' + data + '](' + data + ')';
+      this.params.body += transforData;
     }
   }
 }
