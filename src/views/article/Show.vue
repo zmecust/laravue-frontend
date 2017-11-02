@@ -177,9 +177,6 @@ export default {
     });
     this.reload();
   },
-  created() {
-    this.reload();
-  },
   methods: {
     reload() {
       let options = {
@@ -220,6 +217,9 @@ export default {
       if (this.auth.check()) {
         api.like(this.$route.params.slug).then(res => {
           if (res.data.status == 1) {
+            if (res.data.data.liked) {
+              this.article_likes.push(res.data.data);
+            }
             this.like = res.data.data.liked;
           }
         });

@@ -23,12 +23,24 @@
               </el-select>
             </div>
             <div class="article-create">
+              <dt>封面图片：</dt>
+              <el-upload class="avatar-uploader"
+                         style="padding-left: 17%;"
+                         :action="upload_url"
+                         :show-file-list="false"
+                         :on-success="handleAvatarSuccess"
+                         :headers="headers">
+                <img v-if="params.article_url" :src="params.article_url" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </div>
+            <div class="article-create">
               <dt style="margin-right: 2%">内容：</dt>
               <!-- <editor id="editor"
-                             @imageAdded="handleImageAdded"
-                             useCustomImageHandler
-                             style="width: 70%; padding-left: 17%;"
-                             v-model="params.body">
+                           @imageAdded="handleImageAdded"
+                           useCustomImageHandler
+                           style="width: 70%; padding-left: 17%;"
+                           v-model="params.body">
                 </editor> -->
               <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body">
               </markdown-editor>
@@ -65,6 +77,8 @@
 import { markdownEditor } from 'vue-simplemde'
 import api from '../../api';
 import Upload from '../../components/Upload';
+import store from '../../store';
+const accessToken = store.state.account.auth.access_token;
 
 export default {
   components: {
@@ -77,9 +91,14 @@ export default {
     return {
       params: {
         title: '',
+        article_url: '',
         body: '',
         category: '',
         is_hidden: 'F'
+      },
+      upload_url: this.$http.options.root + '/article_image',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
       options: [
         { value: 'F', label: '是' },
@@ -139,9 +158,17 @@ export default {
           }
         });
       } else {
-        let form = { tag: this.tags, is_hidden: this.params.is_hidden, title: this.params.title, body: this.params.body, category: this.params.category }
+        let form = { 
+          tag: this.tags,
+          is_hidden: this.params.is_hidden,
+          title: this.params.title,
+          body: this.params.body,
+          category: this.params.category,
+          article_url: this.params.article_url
+        }
         api.edit_article(this.$route.params.slug, form).then((res) => {
           if (res.data.status == 1) {
+            console.log(res.data.data);
             this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
           }
         });
@@ -160,6 +187,11 @@ export default {
     uploadCallback(data) {
       const transforData = '![' + data + '](' + data + ')';
       this.params.body += transforData;
+    },
+    handleAvatarSuccess(response, file, fileList) {
+      if (1 == response.status) {
+        this.params.article_url = response.data.url;
+      }
     }
   }
 }
@@ -228,4 +260,28 @@ export default {
     text-align: left;
   }
 }
+
+.avatar-uploader .el-upload {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #00b5ad;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 120px;
+    display: block;
+  }
 </style>
