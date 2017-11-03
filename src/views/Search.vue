@@ -5,7 +5,7 @@
         <div class="result">
           <div class="search">
             <h4 v-if="! articles.total">
-              <i class="fa fa-search"></i> 未搜索到任何结果
+              <i class="fa fa-search"></i> 未搜索到关于 “{{ name }}” 任何结果
             </h4>
             <h4 v-else>
               <i class="fa fa-search"></i> 关于 “{{ name }}” 的搜索结果, 共 {{ articles.total }} 条
@@ -22,7 +22,7 @@
             <p>{{ article.abstract }} ...</p>
             <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
           </div>
-          <div style="text-align: right; margin-top: 20px">
+          <div v-if="! articles.total" style="text-align: right; margin-top: 20px">
             <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
             </el-pagination>
           </div>
