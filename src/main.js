@@ -5,12 +5,10 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import VeeValidate from 'vee-validate' //表单验证
 import '../static/theme/index.css' //自定义element-ui样式
 import 'font-awesome/css/font-awesome.css'
 
 Vue.use(ElementUI)
-Vue.use(VeeValidate);
 Vue.config.productionTip = false
 // Vue.prototype.router = router;
 

@@ -98,11 +98,13 @@ export default {
     }
   },
   mounted() {
-    api.get_notification_count().then((res) => {
-      if (res.data.data.count) {
-        this.msgNum = res.data.data.count;
-      }
-    });
+    if (this.auth.check()) {
+      api.get_notification_count().then((res) => {
+        if (res.data.data.count) {
+          this.msgNum = res.data.data.count;
+        }
+      });
+    }
     //this.websocket();
   },
   methods: {
