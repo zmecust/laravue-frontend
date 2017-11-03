@@ -43,7 +43,9 @@
             </el-button>
             <div style="text-align: center">
               <div v-for="like in article_likes" :key="like.id" style="float: left; padding: 20px 5px 10px">
-                <img :src="like.avatar" :alt="like.name" :title="like.name" class="likes-avatar">
+                <router-link :to="{name: 'UserArticles', params: {slug: like.id}}">
+                  <img :src="like.avatar" :alt="like.name" :title="like.name" class="likes-avatar">
+                </router-link>
               </div>
             </div>
           </div>
@@ -430,7 +432,7 @@ export default {
 }
 
 .article-login {
-  margin: 40px 0 40px;
+  margin: 100px 0 40px;
   padding-top: 40px;
   border: 1px dashed #00b5ad;
   width: 100%;

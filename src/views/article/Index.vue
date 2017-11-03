@@ -67,7 +67,7 @@ export default {
       articles: '',
       tagName: '',
       total: null,
-      page_size: 15,
+      page_size: 10,
     }
   },
   components: {
@@ -143,7 +143,7 @@ export default {
 .content-body {
   margin-top: 30px;
   .content-left {
-    width: 65%;
+    width: 67%;
     float: left;
     a {
       color: #bbb;
@@ -160,14 +160,16 @@ export default {
     }
     .content-body-body {
       padding-top: 12px;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 25px;
     }
   }
   .content-right {
+    margin-top: 10px;
     img {
+      margin-top: 8px;
       margin-left: 3%;
-      width: 30%;
+      width: 28%;
       border: 1px solid #ddd;
       border-radius: 4px;
     }

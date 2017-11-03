@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted() {
-    api.user_get_articles(this.$route.params.slug).then((res) => {
+    api.user_like_articles(this.$route.params.slug).then((res) => {
       if (res.data.status == 1) {
         if (res.data.data.length) {
           this.articles = res.data.data;

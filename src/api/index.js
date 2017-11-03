@@ -53,6 +53,12 @@ export default {
   user_get_replies(id) {
     return Vue.http.get('users/' + id + '/replies');
   },
+  user_like_articles(id) {
+    return Vue.http.get('users/' + id + '/like_articles');
+  },
+  user_follow_users(id) {
+    return Vue.http.get('users/' + id + '/follow_users');
+  },
 
   get_articles(params) {
     return Vue.http.get('articles', params);
