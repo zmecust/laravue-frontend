@@ -5,11 +5,11 @@
       <div class="container">
         <div class="ms-title">
           <span>
-            <router-link to="/user/login" style="color: #00b5ad; font-weight: bold">登录</router-link>
+            <router-link to="/user/login" :style="[path == 'login' ? active : '']" class="user-login">登录</router-link>
           </span>
           <span class="this-span">·</span>
           <span>
-            <router-link to="/user/register" style="color: #00b5ad; font-weight: bold">注册</router-link>
+            <router-link to="/user/register" :style="[path == 'register' ? active : '']" class="user-login">注册</router-link>
           </span>
         </div>
         <div class="ms-login">
@@ -62,7 +62,13 @@ export default {
         email: '',
         password: '',
         password_confirmation: '',
-      }
+      },
+      active: {
+        'color': '#00b5ad',
+        'font-weight': 'bold',
+        'border-bottom': '3px solid #00b5ad',
+      },
+      path: this.$route.path.split("/")[2]
     };
   },
   computed: mapState({
@@ -95,6 +101,9 @@ export default {
   },
   watch: {
     success: 'successWatcher',
+    $route(to, from) {
+      this.path = this.$route.path.split("/")[2];
+    }
   }
 }
 </script>
@@ -194,5 +203,9 @@ export default {
   &:hover {
     box-shadow: none;
   }
+}
+
+.user-login {
+  color: #333;
 }
 </style>

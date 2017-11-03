@@ -64,8 +64,8 @@
                 登录
               </router-link>
             </div>
-            <div style="float: right; padding-top: 2px">
-              <router-link v-if="auth.check()" to="/notification"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
+            <div v-if="auth.check()" style="float: right; padding-top: 2px">
+              <router-link to="/notification"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
                 <span :class="[msgNum ? 'notification' : '']"><i class="fa fa-bell-o"></i> {{ msgNum }}</span>
               </router-link>
               <router-link to="/article/create" id="btn-topic">
@@ -90,7 +90,8 @@ export default {
   data() {
     return {
       active: {
-        color: '#00b5ad'
+        'color': '#00b5ad',
+        'border-bottom': '1px solid #00b5ad'
       },
       path: this.$route.path.split('/')[1],
       msgNum: '',
