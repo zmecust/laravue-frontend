@@ -20,8 +20,8 @@
               <router-link class="head-link" to="/about" :style="[path == 'about' ? active : '']">关于</router-link>
             </div>
             <div style="float: left; padding-left: 40px">
-              <form method="GET" action="/search" accept-charset="UTF-8">
-                <input class="search-input" name="q" type="text" placeholder="搜索">
+              <form method="GET" action="/search" accept-charset="UTF-8" @submit.prevent="search()">
+                <input class="search-input" name="q" type="text" v-model="q" placeholder="搜索">
               </form>
             </div>
           </div>
@@ -65,7 +65,7 @@
               </router-link>
             </div>
             <div style="float: right; padding-top: 2px">
-              <router-link v-if="auth.check()" to="/message"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
+              <router-link v-if="auth.check()" to="/notification"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
                 <span :class="[msgNum ? 'notification' : '']"><i class="fa fa-bell-o"></i> {{ msgNum }}</span>
               </router-link>
               <router-link to="/article/create" id="btn-topic">
@@ -93,7 +93,8 @@ export default {
         color: '#00b5ad'
       },
       path: this.$route.path.split('/')[1],
-      msgNum: ''
+      msgNum: '',
+      q: ''
     }
   },
   mounted() {
@@ -136,11 +137,14 @@ export default {
       this.$store.dispatch('accountLogoutSubmit').then(
         res => { this.$router.push('/') }
       );
+    },
+    search() {
+      this.$router.push({ path: '/search', query: { q: this.q }});
     }
   },
   watch: {
     '$route'(to, from) {
-      this.path = this.$route.path.split('/')[1]
+      this.path = this.$route.path.split('/')[1];
     }
   }
 }

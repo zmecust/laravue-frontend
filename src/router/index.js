@@ -28,6 +28,7 @@ const EditUserInfo = resolve => require(['../views/editUserInfo/EditUserInfo'], 
 const NotificationCommon = resolve => require(['../views/notification/Common'], resolve)
 const Message = resolve => require(['../views/notification/Message'], resolve)
 const Notification = resolve => require(['../views/notification/Notification'], resolve)
+const Search = resolve => require(['../views/Search'], resolve)
 
 Vue.use(Router)
 
@@ -137,6 +138,11 @@ const router = new Router({
               component: EditAvatar
             },
           ]
+        },
+        {
+          path: 'search',
+          name: 'Search',
+          component: Search,
         },
         {
           path: '/',

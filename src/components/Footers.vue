@@ -8,7 +8,7 @@
             <p style="text-align: left">Developed By Min Zhang</p>
           </el-col>
           <el-col :span="8">
-            <p style="text-align: center">&copy; 2016
+            <p style="text-align: center">&copy; 2016-2017
               <span style="color: orangered">Lara</span>
               <span style="color: #00b5ad">Vue</span>
             </p>

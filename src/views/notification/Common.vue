@@ -5,13 +5,13 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link to="message" :style="[path == 'message' ? active : '']">
-                <i class="fa fa-bell" aria-hidden="true"></i> 私信
+              <router-link to="notification" :style="[path == 'notification' ? active : '']">
+                <i class="fa fa-envelope"></i> 通知
               </router-link>
             </li>
             <li>
-              <router-link to="notification" :style="[path == 'notification' ? active : '']">
-                <i class="fa fa-envelope"></i> 通知
+              <router-link to="message" :style="[path == 'message' ? active : '']">
+                <i class="fa fa-bell" aria-hidden="true"></i> 私信
               </router-link>
             </li>
           </ul>

@@ -122,5 +122,8 @@ export default {
   },
   notifications_read() {
     return Vue.http.get('notifications/read');
+  },
+  search(params) {
+    return Vue.http.get('search', { params: { q: params } });
   }
 }

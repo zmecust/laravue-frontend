@@ -40,7 +40,7 @@
               <img :src="article.article_url" alt="">
             </div>
           </div>
-          <div style="clear:both; border-bottom: 1px solid #ddd; padding-top: 40px"></div>
+          <div style="clear:both; border-bottom: 1px solid #ddd; padding-top: 30px"></div>
         </div>
         <div style="text-align: right; margin-top: 20px">
           <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
@@ -106,7 +106,7 @@ export default {
           this.articles = res.data.data.data;
           this.total = Number(res.data.data.total);
           for (let index in this.articles) {
-            this.articles[index].abstract = this.articles[index].body.substring(0, 100)
+            this.articles[index].abstract = this.articles[index].body.substring(0, 110)
               .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
           }
           loadingInstance.close();
@@ -159,8 +159,9 @@ export default {
       }
     }
     .content-body-body {
+      color: #333;
       padding-top: 12px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 25px;
     }
   }
