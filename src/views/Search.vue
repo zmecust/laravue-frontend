@@ -5,10 +5,10 @@
         <div class="result">
           <div class="search">
             <h4 v-if="! articles.total">
-              <i class="fa fa-search"></i> 未搜索到关于 “{{ name }}” 任何结果
+              <i class="fa fa-search"></i> 未搜索到关于 “<span style="color: tomato">{{ name }}</span>” 任何结果
             </h4>
             <h4 v-else>
-              <i class="fa fa-search"></i> 关于 “{{ name }}” 的搜索结果, 共 {{ articles.total }} 条
+              <i class="fa fa-search"></i> 关于 “<span style="color: tomato">{{ name }}</span>” 的搜索结果, 共 {{ articles.total }} 条
             </h4>
           </div>
           <div style="border-bottom: 1px solid #eee; padding-top: 10px"></div>
@@ -22,7 +22,7 @@
             <p>{{ article.abstract }} ...</p>
             <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
           </div>
-          <div v-if="! articles.total" style="text-align: right; margin-top: 20px">
+          <div v-if="articles.total" style="text-align: right; margin-top: 20px">
             <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
             </el-pagination>
           </div>
@@ -33,36 +33,48 @@
 </template>
 
 <script>
-import api from '../api';
+import api from "../api";
 
 export default {
   data() {
     return {
-      articles: '',
-      name: '',
+      articles: "",
+      name: "",
       total: null,
-      page_size: 30,
-    }
+      page_size: 30
+    };
   },
   mounted() {
-    this.name = this.$route.query.q;
-    api.search(this.$route.query.q).then((res) => {
-      if (res.data.status) {
-        this.articles = res.data.data;
-        this.total = Number(res.data.data.total);
-        for (let index in this.articles.data) {
-          this.articles.data[index].abstract = this.articles.data[index].body.substring(0, 200)
-              .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
-        }
-      }
-    });
+    this.reload();
   },
   methods: {
     handleCurrentChange(page) {
       this.get_articles(page);
+    },
+    reload() {
+      this.name = this.$route.query.q;
+      api.search(this.$route.query.q).then(res => {
+        if (res.data.status) {
+          this.articles = res.data.data;
+          this.total = Number(res.data.data.total);
+          for (let index in this.articles.data) {
+            this.articles.data[index].abstract = this.articles.data[index].body
+              .substring(0, 200)
+              .replace(/<\/?.+?>/g, "")
+              .replace(/ /g, "")
+              .replace(/&nbsp;/g, " ")
+              .replace(/#/g, "");
+          }
+        }
+      });
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.reload();
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -90,6 +102,9 @@ export default {
     a {
       color: #444;
       font-weight: bolder;
+      &:hover {
+        color: tomato;
+      }
     }
   }
 }
