@@ -38,6 +38,11 @@
         </div>
       </div>
     </div>
+    <div v-if="! notifications.length">
+      <div class="no-article">
+        <p>没有任何数据~~</p>
+      </div>
+    </div>
   </div>
 </template>
 

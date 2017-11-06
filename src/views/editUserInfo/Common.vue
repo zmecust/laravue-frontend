@@ -5,17 +5,17 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link :to="{name: 'EditUserInfo', params: {slug: id}}" :style="[path == 'edit' ? active : '']">
+              <router-link :to="{name: 'EditUserInfo', params: {slug: id}}">
                 <i class="text-md fa fa-list-ul"></i> 个人信息
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'EditAvatar', params: {slug: id}}" :style="[path == 'edit_avatar' ? active : '']">
+              <router-link :to="{name: 'EditAvatar', params: {slug: id}}">
                 <i class="fa fa-picture-o" aria-hidden="true"></i> 更换图像
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'EditPassword', params: {slug: id}}" :style="[path == 'edit_password' ? active : '']">
+              <router-link :to="{name: 'EditPassword', params: {slug: id}}">
                 <i class="fa fa-lock" aria-hidden="true"></i> 修改密码
               </router-link>
             </li>
@@ -35,20 +35,7 @@ import { mapState } from 'vuex';
 export default {
   computed: mapState({
     id: state => state.account.auth.id
-  }),
-  data() {
-    return {
-      active: {
-        color: '#00b5ad'
-      },
-      path: this.$route.path.split('/')[3]
-    }
-  },
-  watch: {
-    '$route'(to, from) {
-      this.path = this.$route.path.split('/')[3]
-    }
-  }
+  })
 }
 </script>
 
@@ -72,6 +59,9 @@ export default {
         // &:focus {
         //   color: #00b5ad;
         // }
+      }
+      .router-link-active {
+        color: #00b5ad;
       }
     }
   }

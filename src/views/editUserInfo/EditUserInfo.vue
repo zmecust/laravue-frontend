@@ -38,7 +38,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.params.real_name = this.auth.user.real_name;
     this.params.city = this.auth.user.city;
   },

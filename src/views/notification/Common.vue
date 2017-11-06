@@ -5,12 +5,12 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link to="notification" :style="[path == 'notification' ? active : '']">
+              <router-link to="notification">
                 <i class="fa fa-envelope"></i> 通知
               </router-link>
             </li>
             <li>
-              <router-link to="message" :style="[path == 'message' ? active : '']">
+              <router-link to="message">
                 <i class="fa fa-bell" aria-hidden="true"></i> 私信
               </router-link>
             </li>
@@ -30,20 +30,7 @@ import { mapState } from "vuex";
 export default {
   computed: mapState({
     id: state => state.account.auth.id
-  }),
-  data() {
-    return {
-      active: {
-        color: "#00b5ad"
-      },
-      path: this.$route.path.split("/")[1]
-    };
-  },
-  watch: {
-    $route(to, from) {
-      this.path = this.$route.path.split("/")[1];
-    }
-  }
+  })
 };
 </script>
 
@@ -67,6 +54,9 @@ export default {
         // &:focus {
         //   color: #00b5ad;
         // }
+      }
+      .router-link-active {
+        color: #00b5ad;
       }
     }
   }

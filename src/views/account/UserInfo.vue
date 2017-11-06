@@ -77,22 +77,22 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link :to="{name: 'UserArticles', params: {slug: user.id}}" :style="[path == 'articles' ? active : '']">
+              <router-link :to="{name: 'UserArticles', params: {slug: user.id}}">
                 <i class="text-md fa fa-list-ul"></i> Ta 发布的话题
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserReplies', params: {slug: user.id}}" :style="[path == 'replies' ? active : '']">
+              <router-link :to="{name: 'UserReplies', params: {slug: user.id}}">
                 <i class="text-md fa fa-comment"></i> Ta 发表的回复
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesUsers', params: {slug: user.id}}" :style="[path == 'likes_users' ? active : '']">
+              <router-link :to="{name: 'UserLikesUsers', params: {slug: user.id}}">
                 <i class="text-md fa fa-eye"></i> Ta 关注的用户
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesArticles', params: {slug: user.id}}" :style="[path == 'likes_articles' ? active : '']">
+              <router-link :to="{name: 'UserLikesArticles', params: {slug: user.id}}">
                 <i class="text-md fa fa-thumbs-up"></i> Ta 赞过的话题
               </router-link>
             </li>
@@ -129,10 +129,6 @@ export default {
       user: '',
       follow: false,
       showPreview: false,
-      active: {
-        color: '#00b5ad'
-      },
-      path: this.$route.path.split('/')[3],
       showDialog: false,
       content: '',
     }
@@ -207,7 +203,6 @@ export default {
   watch: {
     '$route'(to, from) {
       this.reload();
-      this.path = this.$route.path.split('/')[3]
     }
   }
 }
@@ -293,5 +288,8 @@ export default {
       }
     }
   }
+}
+.router-link-active {
+  color: #00b5ad;
 }
 </style>
