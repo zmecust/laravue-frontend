@@ -1,12 +1,17 @@
 <template>
   <div class="user-articles">
-    <div v-for="user in users" :key="user.id" style="float: left">
+    <div v-if="users" v-for="user in users" :key="user.id" style="float: left">
       <el-button @click="submit(user.id)">
         <img :src="user.avatar" alt="">
         <span>{{user.name}}</span>
       </el-button>
     </div>
     <div style="clear: both; margin-bottom: 15px"></div>
+    <div v-if="! users">
+      <div class="no-article">
+        <p>没有任何数据~~</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,6 +59,12 @@ export default {
     span {
       font-size: 16px;
       padding: 0 5px 0;
+    }
+  }
+  .no-article {
+    text-align: center;
+    p {
+      margin: 30px 0 30px;
     }
   }
 }

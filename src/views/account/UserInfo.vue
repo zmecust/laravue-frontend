@@ -103,6 +103,17 @@
         <router-view></router-view>
       </el-col>
       <popup v-show="showPreview" @closePreview="closePreview"></popup>
+      <el-dialog title="发送私信" :visible.sync="showDialog" width="600px">
+        <el-form label-position="left">
+          <el-form-item label="内容：">
+            <el-input v-model="content" type="textarea" :rows="4"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="closeDialog">取 消</el-button>
+          <el-button type="primary" @click="submitDialog">确 定</el-button>
+        </div>
+      </el-dialog>
     </el-row>
   </div>
 </template>
@@ -121,7 +132,9 @@ export default {
       active: {
         color: '#00b5ad'
       },
-      path: this.$route.path.split('/')[3]
+      path: this.$route.path.split('/')[3],
+      showDialog: false,
+      content: '',
     }
   },
   components: {
@@ -131,18 +144,21 @@ export default {
     auth: state => state.account.auth,
   }),
   mounted() {
-    api.get_user(this.$route.params.slug).then((res) => {
-      this.user = res.data.data;
-      if (this.auth.check()) {
-        api.is_follow_or_not(this.user.id).then((res) => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-          }
-        });
-      }
-    });
+    this.reload();
   },
   methods: {
+    reload() {
+      api.get_user(this.$route.params.slug).then((res) => {
+        this.user = res.data.data;
+        if (this.auth.check()) {
+          api.is_follow_or_not(this.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+            }
+          });
+        }
+      });
+    },
     click_follow() {
       if (this.auth.check()) {
         api.follow(this.user.id).then((res) => {
@@ -164,8 +180,11 @@ export default {
     closeDialog() {
       this.showDialog = false;
     },
+    send_message() {
+      this.showDialog = true;
+    },
     submitDialog() {
-      api.send_message({content: this.content, user_id: this.auth.id}).then((res) => {
+      api.send_message({ content: this.content, user_id: this.auth.id }).then((res) => {
         if (res.data.status) {
           this.showDialog = false;
         }
@@ -187,6 +206,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
+      this.reload();
       this.path = this.$route.path.split('/')[3]
     }
   }

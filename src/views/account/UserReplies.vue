@@ -1,6 +1,6 @@
 <template>
   <div class="user-articles">
-    <div v-if="comments" v-for="(comment, index) in comments">
+    <div v-if="comments.length" v-for="(comment, index) in comments" :key="comment.id">
       <div class="user-article">
         <router-link :to="{name: 'ArticleShow', params: {slug: comment.commentable.id}}">
           <span style="font-size: 15px">{{comment.commentable.title}}</span>
@@ -12,7 +12,7 @@
       </div>
       <div style="border-bottom: 1px solid #eee; padding-top: 8px"></div>
     </div>
-    <div v-if="! comments">
+    <div v-if="! comments.length">
       <div class="no-article">
         <p>没有任何数据~~</p>
       </div>
@@ -33,6 +33,7 @@ export default {
     api.user_get_replies(this.$route.params.slug).then((res) => {
       if (res.data.status == 1) {
         this.comments = res.data.data;
+        console.log(this.comments);
       }
     });
   }
