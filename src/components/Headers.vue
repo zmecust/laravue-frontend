@@ -14,6 +14,9 @@
               <router-link class="head-link" to="/" :style="[path == '' ? active : '']">文章</router-link>
             </div>
             <div class="head-nav">
+              <a class="head-link" href="http://47.52.156.68:8080">茶歇</a>
+            </div>
+            <div class="head-nav">
               <router-link class="head-link" to="/payment" :style="[path == 'payment' ? active : '']">打赏</router-link>
             </div>
             <div class="head-nav">
