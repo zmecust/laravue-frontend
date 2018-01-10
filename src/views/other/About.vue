@@ -4,6 +4,9 @@
       <el-col :span="10" :offset="5">
         <div class="about">
           <p class="first">关于</p>
+          <div style="text-align: center">
+            <img src="../../assets/me.jpg" style="width: 60%;" alt="">
+          </div>       
           <h3 style="font-weight: bolder">社区</h3>
           <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
           <p style="text-align:justify">
@@ -15,13 +18,13 @@
           <h3 style="font-weight: bolder">兴趣爱好</h3>
           <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
           <p>
-            Web开发 &nbsp; 深度学习 &nbsp; 科幻剧
+            Web开发 &nbsp; 机器学习
           </p>
 
           <h3 style="font-weight: bolder">个人标签</h3>
           <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
           <p>
-            张敏 &nbsp; 男 &nbsp; 90后小清新 &nbsp; 国产剧脑残粉 &nbsp; 现居于上海
+            张敏 &nbsp; 男 &nbsp; 90后小清新 &nbsp; 国产剧脑残粉 &nbsp; 积极的悲观主义者
           </p>
 
           <h3 style="font-weight: bolder">教育</h3>
@@ -40,7 +43,7 @@
               <li>计算机技能
                 <ul style="padding-left: 20px">
                   <li>语言：PHP、Python、JavaScript</li>
-                  <li>框架：Laravel、Vue.js、Keras</li>
+                  <li>框架：Laravel、Vue.js、TensorFlow</li>
                   <li>系统：CentOS & Ubuntu</li>
                 </ul>
               </li>
