@@ -33,7 +33,6 @@ export default {
     api.user_get_replies(this.$route.params.slug).then((res) => {
       if (res.data.status == 1) {
         this.comments = res.data.data;
-        console.log(this.comments);
       }
     });
   }

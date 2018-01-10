@@ -26,7 +26,8 @@ export default {
     register: {
       success: false,
       failure: null
-    }
+    },
+    upload_avatar: JSON.parse(localStorage.getItem(AUTH_USER)).avatar
   },
   mutations: {
     ACCOUNT_AUTH_STATUS_CHANGED: (state, data) => {
@@ -65,6 +66,7 @@ export default {
       user.avatar = data;
       localStorage.removeItem(AUTH_USER);
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
+      Vue.set(state, 'upload_avatar', data);
     },
     ACCOUNT_EDIT_USER: (state, data) => {
       let user = JSON.parse(localStorage.getItem(AUTH_USER));
@@ -78,11 +80,9 @@ export default {
     accountLoginSubmit({ commit }, params) {
       api.login(params).then((response) => {
         if (response.data.status) {
-          console.log(response.data);
           commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
           commit(types.ACCOUNT_LOGIN_SUCCESS);
         } else {
-          console.log(response.data);
           commit(types.ACCOUNT_LOGIN_FAILURE, response.data);
         }
       })
@@ -98,7 +98,6 @@ export default {
           //commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
           commit(types.ACCOUNT_REGISTER_SUCCESS);
         } else {
-          console.log(response.data);
           commit(types.ACCOUNT_REGISTER_FAILURE, response.data);
         }
       })

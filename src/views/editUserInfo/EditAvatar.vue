@@ -7,7 +7,7 @@
     <div class="body">
       <div class="upload-container">
         <div class="avatar">
-          <img :src="auth.user.avatar" alt="">
+          <img :src="upload_avatar" alt="">
         </div>
         <div><p>更换图像：</p></div>
         <Upload :url="'/avatar/upload'" @result="uploadCallback"></Upload>
@@ -17,13 +17,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import Upload from '../../components/Upload.vue';
 
 export default {
-  computed: mapState({
-    auth: state => state.account.auth
-  }),
+  computed: {
+    ...mapGetters([
+      'upload_avatar',
+    ])
+  },
   components: {
     Upload
   },

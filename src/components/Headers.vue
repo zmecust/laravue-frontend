@@ -27,7 +27,7 @@
           </div>
           <div class="head-right">
             <div class="dropdown" v-if="auth.check()">
-              <span><img :src="auth.user.avatar" alt=""></span>
+              <span><img :src="upload_avatar" alt=""></span>
               <p class="dropbtn">{{auth.user.name}}
                 <span>
                   <i class="fa fa-caret-down"></i>
@@ -65,8 +65,9 @@
               </router-link>
             </div>
             <div v-if="auth.check()" style="float: right; padding-top: 2px">
-              <router-link to="/notification"  class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">      
-                <span :class="[msgNum ? 'notification' : '']"><i class="fa fa-bell-o"></i> {{ msgNum }}</span>
+              <router-link to="/notification" class="label-warning" :title="msgNum ? `您有 ${msgNum} 条新消息` : '您目前没有新消息'">
+                <span :class="[msgNum ? 'notification' : '']">
+                  <i class="fa fa-bell-o"></i> {{ msgNum }}</span>
               </router-link>
               <router-link to="/article/create" id="btn-topic">
                 <i class="fa fa-pencil"></i> 写文章
@@ -80,13 +81,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import api from '../api';
 
 export default {
-  computed: mapState({
-    auth: state => state.account.auth,
-  }),
+  computed: {
+    ...mapGetters([
+      'upload_avatar',
+    ]),
+    ...mapState({
+      auth: state => state.account.auth,
+    })
+  },
   data() {
     return {
       active: {
@@ -142,7 +148,7 @@ export default {
       );
     },
     search() {
-      this.$router.push({ path: '/search', query: { q: this.q }});
+      this.$router.push({ path: '/search', query: { q: this.q } });
     }
   },
   watch: {
@@ -306,9 +312,11 @@ img {
   box-shadow: none;
   text-decoration: none;
 }
+
 .label-warning {
   margin-right: 20px;
 }
+
 .notification {
   color: tomato;
 }
