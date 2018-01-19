@@ -27,7 +27,7 @@ export default {
       success: false,
       failure: null
     },
-    upload_avatar: JSON.parse(localStorage.getItem(AUTH_USER)).avatar
+    upload_avatar: JSON.parse(localStorage.getItem(AUTH_USER)) ? JSON.parse(localStorage.getItem(AUTH_USER)).avatar : null
   },
   mutations: {
     ACCOUNT_AUTH_STATUS_CHANGED: (state, data) => {
