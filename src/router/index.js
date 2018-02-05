@@ -180,6 +180,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log();
   NProgress.start();
   if (to.matched.some(record => record.meta.requireAuth)) {
     const auth = store.state.account.auth;
