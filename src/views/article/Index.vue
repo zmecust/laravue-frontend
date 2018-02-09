@@ -1,6 +1,6 @@
 <template>
   <div id="load-index">
-    <el-row :gutter="25">
+    <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="10" :offset="5">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
         <div class="content" v-for="(article, index) in articles">

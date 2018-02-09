@@ -43,6 +43,7 @@ export default {
       Vue.set(state.auth, 'access_token', data.data.jwt_token.access_token);
       Vue.set(state.auth, 'id', data.data.id);
       Vue.set(state.auth, 'user', data.data);
+      Vue.set(state, 'upload_avatar', data.data.avatar);
       localStorage.setItem(AUTH_ACCESS_TOKEN, JSON.stringify(data.data.jwt_token.access_token));
       localStorage.setItem(AUTH_USER_ID, data.data.id);
       localStorage.setItem(AUTH_USER, JSON.stringify(data.data));

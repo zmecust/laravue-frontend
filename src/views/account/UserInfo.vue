@@ -1,6 +1,6 @@
 <template>
   <div id="load-show">
-    <el-row :gutter="25">
+    <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="4" :offset="5">
         <div class="sidebar-author">
           <p>作者： {{user.name}}</p>
@@ -286,10 +286,10 @@ export default {
         color: #333;
         font-size: 14px;
       }
+      .router-link-active {
+        color: #00b5ad;
+      }
     }
   }
-}
-.router-link-active {
-  color: #00b5ad;
 }
 </style>

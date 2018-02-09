@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="25">
+    <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="4" :offset="5">
         <div class="user-info">
           <ul class="reply">
