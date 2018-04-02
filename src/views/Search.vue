@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="14" :offset="5">
+      <el-col :span="24">
         <div class="result">
           <div class="search">
             <h4 v-if="! articles.total">

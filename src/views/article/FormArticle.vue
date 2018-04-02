@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="12" :offset="6">
+      <el-col :span="20" :offset="2">
         <div class="grid-content">
           <form action="" v-on:submit.prevent>
             <div class="article-create">
@@ -25,7 +25,7 @@
             <div class="article-create">
               <dt>封面图片：</dt>
               <el-upload class="avatar-uploader"
-                         style="padding-left: 17%;"
+                         style="padding-left: 17%"
                          :action="upload_url"
                          :show-file-list="false"
                          :on-success="handleAvatarSuccess"

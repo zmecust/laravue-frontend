@@ -77,7 +77,7 @@ export default {
 .comment {
   margin: 10px 0 10px;
   padding: 5px 0 10px 15px;
-  border-left: 2px solid #bbb;
+  border-left: 2px solid #cdcdcd;
 }
 
 .comment-detail {

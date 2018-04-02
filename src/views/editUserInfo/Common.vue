@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
-      <el-col :span="4" :offset="5">
+      <el-col :span="7">
         <div class="user-info">
           <ul class="reply">
             <li>
@@ -22,7 +22,7 @@
           </ul>
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="17">
         <router-view></router-view>
       </el-col>
     </el-row>

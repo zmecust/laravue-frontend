@@ -1,7 +1,7 @@
 <template>
   <div id="load-index">
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
-      <el-col :span="10" :offset="5">
+      <el-col :span="17">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
         <div class="content" v-for="(article, index) in articles">
           <div class="content-body">
@@ -47,7 +47,7 @@
           </el-pagination>
         </div>
       </el-col>
-      <el-col :span="4" style="margin-top: 20px;">
+      <el-col :span="7" style="margin-top: 20px;">
         <hot-topics></hot-topics>
       </el-col>
     </el-row>

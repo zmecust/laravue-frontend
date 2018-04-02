@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="10" :offset="5">
+      <el-col :span="18">
         <div class="about">
           <p class="first">关于</p>
           <div style="text-align: center">

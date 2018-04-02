@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <el-row>
-      <el-col :span="14" :offset="5">
+      <el-col :span="24">
         <div style="border-bottom: 1px solid #ddd; padding-top: 70px"></div>
         <el-row>
           <el-col :span="8">

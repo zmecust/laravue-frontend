@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
-      <el-col :xs="14" :span="10" :offset="5">
+      <el-col :span="17">
         <div class="article">
           <p>{{article.title}}</p>
           <div class="article-edit" v-if="auth.id == article.user.id ? true : false">
@@ -92,7 +92,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :xs="14" :span="4">
+      <el-col :span="7">
         <div class="sidebar-author">
           <p>作者： {{article.user.name}}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>

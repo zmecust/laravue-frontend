@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <el-row>
-      <el-col :span="14" :offset="5">
+      <el-col :span="24">
         <div class="grid-content bg-purple">
           <div class="head-left">
             <div style="float: left; padding-right: 10px">
