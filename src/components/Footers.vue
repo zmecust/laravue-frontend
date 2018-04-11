@@ -5,7 +5,7 @@
         <div style="border-bottom: 1px solid #ddd; padding-top: 70px"></div>
         <el-row>
           <el-col :span="8">
-            <p style="text-align: left">Developed By Min Zhang</p>
+            <p style="text-align: left">Developed By <span><a href="https://github.com/zmecust">Min Zhang</a></span></p>
           </el-col>
           <el-col :span="8">
             <p style="text-align: center">&copy; 2016-2017
