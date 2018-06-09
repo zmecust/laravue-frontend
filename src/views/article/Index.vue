@@ -76,14 +76,6 @@ export default {
   components: {
     HotTopics
   },
-  beforeRouteUpdate(to, from, next) {
-    this.tagName = to.query.tag;
-    next();
-  },
-  beforeRouteLeave(to, from, next) {
-    this.tagName = to.query.tag;
-    next();
-  },
   async mounted() {
     const validate_user = this.$route.query.validate;
     if (validate_user) {
@@ -134,10 +126,10 @@ export default {
     },
   },
   watch: {
-    tagName: function() {
-      this.get_articles(undefined);
-    },
-    '$route': function() {
+    '$route': function(newVal, oldVal) {
+      if (!this.$route.query.tag) {
+        this.tagName = '';
+      }
       this.get_articles(undefined);
     },
   }
