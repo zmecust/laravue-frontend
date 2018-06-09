@@ -105,7 +105,7 @@ export default {
   .container {
     position: absolute;
     top: 10%;
-    left: 38%;
+    left: 30%;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 5px;
