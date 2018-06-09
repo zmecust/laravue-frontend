@@ -3,7 +3,7 @@
     <div v-if="users" v-for="user in users" :key="user.id" style="float: left">
       <el-button @click="submit(user.id)">
         <img :src="user.avatar" alt="">
-        <span>{{user.name}}</span>
+        <span>{{ user.name }}</span>
       </el-button>
     </div>
     <div style="clear: both; margin-bottom: 15px"></div>

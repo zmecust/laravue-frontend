@@ -15,7 +15,7 @@
           <div class="articles" v-for="article in articles.data" :key="article.id">
             <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">{{ article.title }}</router-link>
             <small>&nbsp; by</small>
-            <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+            <router-link :to="{ name: 'UserArticles', params: { slug: article.user.id } }">
               <img class="avatar" alt="article.user.name" :src="article.user.avatar"/>
               <small>{{ article.user.name }}</small>
             </router-link>

@@ -9,7 +9,7 @@
         <router-link class="comment-name" :to="{ name: 'UserArticles', params: { slug: child_comment.parent_user_id } }">
           @{{ child_comment.parent_name }}
         </router-link>
-        &nbsp;{{child_comment.body}}
+        &nbsp;{{ child_comment.body }}
       </div>
       <div class="comment-time">
         <span>评论于 {{ child_comment.created_at }}</span>
@@ -49,26 +49,24 @@ export default {
     this.get_comment();
   },
   methods: {
-    get_comment() {
-      api.get_child_comment(this.article_id, this.childComment).then((res) => {
-        if (res.data.status == 1) {
-          this.child_comments = res.data.data
-        }
-      });
+    async get_comment() {
+      const res = await api.get_child_comment(this.article_id, this.childComment);
+      if (res.data.status === 1) {
+        this.child_comments = res.data.data
+      }
     },
-    show(parent_id) {
+    async show(parent_id) {
       this.parent_id = parent_id;
       this.show_comment = !this.show_comment;
     },
-    submit() {
-      api.create_comment({ article_id: this.article_id, parent_id: this.parent_id, body: this.comment }).then((res) => {
-        if (res.data.status == 1) {
-          this.child_comments.push(res.data.data);
-          this.comment = '';
-          this.show_comment = !this.show_comment;
-        }
-      });
-    },
+    async submit() {
+      const res = await api.create_comment({ article_id: this.article_id, parent_id: this.parent_id, body: this.comment });
+      if (res.data.status === 1) {
+        this.child_comments.push(res.data.data);
+        this.comment = '';
+        this.show_comment = !this.show_comment;
+      }
+    }
   }
 }
 </script>

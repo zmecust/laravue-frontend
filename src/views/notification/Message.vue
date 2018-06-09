@@ -5,7 +5,7 @@
         <i class="fa fa-bell" aria-hidden="true"></i> 我的私信</p>
     </div>
     <div class="body">
-      
+      <p>该功能尚未完成~~</p>
     </div>
   </div>
 </template>
@@ -15,7 +15,6 @@ import { mapState } from 'vuex';
 import api from '../../api';
 
 export default {
-  
 }
 </script>
 
@@ -33,7 +32,7 @@ export default {
     }
   }
   .body {
-    padding: 30px 0 30px;
+    padding: 30px 0 30px 30px;
   }
 }
 </style>

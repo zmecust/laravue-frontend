@@ -5,7 +5,7 @@
       <div style="border-bottom: 1px solid #eee;"></div>
       <ul v-for="article in articles">
         <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
-          <li>• &nbsp;{{article.title}}</li>
+          <li>• &nbsp;{{ article.title }}</li>
         </router-link>
       </ul>
     </div>
@@ -14,7 +14,7 @@
       <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
       <div class="tag" v-for="tag in tags">
         <router-link :to="{name: 'ArticleIndex', query: {tag: tag.name}}" id="btn-tag">
-          {{tag.name}}
+          {{ tag.name }}
         </router-link>
       </div>
       <div style="clear: both; margin-bottom: 15px"></div>
@@ -32,17 +32,17 @@ export default {
       tags: ''
     }
   },
-  mounted() {
-    api.hot_articles().then((res) => {
-      if (res.data.status == 1) {
-        this.articles = res.data.data;
-      }
-    });
-    api.hot_tags().then((res) => {
-      if (res.data.status == 1) {
-        this.tags = res.data.data;
-      }
-    });
+  async mounted() {
+    const [ hot_articles, hot_tags ] = await Promise.all([
+      api.hot_articles(),
+      api.hot_tags()
+    ]); ;
+    if (hot_articles.data.status === 1) {
+      this.articles = hot_articles.data.data;
+    }
+    if (hot_tags.data.status === 1) {
+      this.tags = hot_tags.data.data;
+    }
   }
 }
 </script>

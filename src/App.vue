@@ -15,6 +15,7 @@ export default {
   margin: 0 auto;
   width: 1080px;
 }
+
 ::-webkit-scrollbar {
 width: 5px;
 }
@@ -25,7 +26,6 @@ height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-
 border-radius: 0px;
 }
 

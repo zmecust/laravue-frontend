@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import store from '../store'
-import Router from 'vue-router'
+import Vue from 'vue';
+import store from '../store';
+import Router from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
-const Login = resolve => require(['../views/account/Login'], resolve) //懒加载
+// 懒加载
+const Login = resolve => require(['../views/account/Login'], resolve)
 const Register = resolve => require(['../views/account/Register'], resolve)
 const VerifyEmail = resolve => require(['../views/account/VerifyEmail'], resolve)
 const GithubLogin = resolve => require(['../views/account/GithubLogin'], resolve)
@@ -180,7 +181,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log();
   NProgress.start();
   if (to.matched.some(record => record.meta.requireAuth)) {
     const auth = store.state.account.auth;

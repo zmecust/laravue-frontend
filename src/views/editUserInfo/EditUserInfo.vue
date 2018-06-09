@@ -2,7 +2,9 @@
   <div class="edit">
     <div class="title">
       <p>
-        <i class="fa fa-lock" aria-hidden="true"></i> 修改个人信息</p>
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        修改个人信息
+      </p>
     </div>
     <div class="body">
       <form action="" v-on:submit.prevent>
@@ -43,11 +45,10 @@ export default {
     this.params.city = this.auth.user.city;
   },
   methods: {
-    submit() {
-      api.edit_user_info(this.params).then((res) => {
-        this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
-        this.open(res.data.message);
-      });
+    async submit() {
+      const res = api.edit_user_info(this.params);
+      this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
+      this.open(res.data.message);
     },
     open(mes) {
       this.$alert(mes, '', {

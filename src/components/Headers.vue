@@ -107,17 +107,17 @@ export default {
       q: ''
     }
   },
-  mounted() {
+  async mounted() {
     if (this.auth.check()) {
-      api.get_notification_count().then((res) => {
-        if (res.data.data.count) {
-          this.msgNum = res.data.data.count;
-        }
-      });
+      const res = await api.get_notification_count();
+      if (res.data.data.count) {
+        this.msgNum = res.data.data.count;
+      }
     }
     //this.websocket();
   },
   methods: {
+    // 测试 websocket
     websocket() {
       var ws = new WebSocket(`ws://115.28.170.217:9501?uid=1`);
       var _self = this;
@@ -130,7 +130,7 @@ export default {
           _self.loadMsg = 0;
         }
       },
-        //当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
+        // 当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
         ws.onclose = function(evt) {
           console.log(2);
           _self.loadMsg = 2;

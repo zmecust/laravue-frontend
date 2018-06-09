@@ -5,10 +5,10 @@
         <div style="border-bottom: 1px solid #ddd; padding-top: 70px"></div>
         <el-row>
           <el-col :span="8">
-            <p style="text-align: left">Developed By <span><a href="https://github.com/zmecust">Min Zhang</a></span></p>
+            <p style="text-align: left">Developed By <a href="https://github/zmecust">Min Zhang</a></p>
           </el-col>
           <el-col :span="8">
-            <p style="text-align: center">&copy; 2016-2017
+            <p style="text-align: center">&copy; 2016-2018
               <span style="color: orangered">Lara</span>
               <span style="color: #00b5ad">Vue</span>
             </p>

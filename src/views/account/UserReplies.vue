@@ -3,12 +3,12 @@
     <div v-if="comments.length" v-for="(comment, index) in comments" :key="comment.id">
       <div class="user-article">
         <router-link :to="{name: 'ArticleShow', params: {slug: comment.commentable.id}}">
-          <span style="font-size: 15px">{{comment.commentable.title}}</span>
+          <span style="font-size: 15px">{{ comment.commentable.title }}</span>
         </router-link>
-        <span class="dex"> · {{comment.commentable.comments_count}} 条回复 ·</span>
-        <span class="dex">{{comment.commentable.likes_count}} 人关注 ·</span>
-        <span class="dex">评论于 {{comment.created_at.split(' ')[0]}}</span>
-        <p style="padding-top: 10px; font-size: 15px">{{comment.body}}</p>
+        <span class="dex"> · {{ comment.commentable.comments_count }} 条回复 ·</span>
+        <span class="dex">{{ comment.commentable.likes_count }} 人关注 ·</span>
+        <span class="dex">评论于 {{ comment.created_at.split(' ')[0] }}</span>
+        <p style="padding-top: 10px; font-size: 15px">{{ comment.body }}</p>
       </div>
       <div style="border-bottom: 1px solid #eee; padding-top: 8px"></div>
     </div>

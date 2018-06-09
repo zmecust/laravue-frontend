@@ -118,45 +118,36 @@ export default {
       }
     }
   },
-  mounted() {
-    if (this.type == 'create_article') {
-      api.get_tags().then((res) => {
-        this.allTags = res.data.data;
-      });
-      api.get_categories().then((res) => {
-        this.allCategories = res.data.data;
-      });
-    } else {
-      api.get_tags().then((res) => {
-        this.allTags = res.data.data;
-        api.get_categories().then((res) => {
-          this.allCategories = res.data.data;
-          api.get_article(this.$route.params.slug).then((res) => {
-            for (let index in res.data.data.tags) {
-              this.tags.push(res.data.data.tags[index].id);
-            }
-            this.params = res.data.data;
-            this.params.category = res.data.data.category_id;
-          });
-        });
-      });
+  async mounted() {
+    const [ get_tags, get_categories ] = await Promise.all([
+      api.get_tags(),
+      api.get_categories()
+    ]);
+    this.allTags = get_tags.data.data;
+    this.allCategories = get_categories.data.data;
+    if (this.type !== 'create_article') {
+      const res = await api.get_article(this.$route.params.slug);
+      for (let index in res.data.data.tags) {
+        this.tags.push(res.data.data.tags[index].id);
+      }
+      this.params = res.data.data;
+      this.params.category = res.data.data.category_id;
     }
   },
   methods: {
-    submit(e) {
+    async submit(e) {
       // 判断是否为按了Enter键，防止在输入标签时被提交
       if (e != null && e.keyCode === 13) {
         return;
       }
       if (this.type == 'create_article') {
         this.params.tag = this.tags;
-        api.create_article(this.params).then((res) => {
-          if (res.data.status == 1) {
-            this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
-          } else {
-            this.failure = res.data;
-          }
-        });
+        const res = await api.create_article(this.params);
+        if (res.data.status == 1) {
+          this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
+        } else {
+          this.failure = res.data;
+        }
       } else {
         let form = { 
           tag: this.tags,
@@ -166,12 +157,10 @@ export default {
           category: this.params.category,
           article_url: this.params.article_url
         }
-        api.edit_article(this.$route.params.slug, form).then((res) => {
-          if (res.data.status == 1) {
-            console.log(res.data.data);
-            this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
-          }
-        });
+        const res = await api.edit_article(this.$route.params.slug, form)
+        if (res.data.status == 1) {
+          this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
+        }
       }
     },
     handleImageAdded(file, Editor, cursorLocation) {

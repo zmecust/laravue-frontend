@@ -3,11 +3,11 @@
     <div v-if="articles" v-for="(article, index) in articles">
       <div class="user-article">
         <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">
-          <span>{{article.title}}</span>
+          <span>{{ article.title }}</span>
         </router-link>
-        <span class="dex"> · {{article.comments_count}} 条回复 ·</span>
-        <span class="dex">{{article.likes_count}} 人关注 ·</span>
-        <span class="dex">创建于 {{article.created_at.split(' ')[0]}}</span>
+        <span class="dex"> · {{ article.comments_count }} 条回复 ·</span>
+        <span class="dex">{{ article.likes_count }} 人关注 ·</span>
+        <span class="dex">创建于 {{ article.created_at.split(' ')[0] }}</span>
       </div>
       <div style="border-bottom: 1px solid #eee; padding-top: 10px"></div>
     </div>

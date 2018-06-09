@@ -1,6 +1,5 @@
 <template>
-  <form-article :type="'edit_article'">
-  </form-article>
+  <form-article :type="'edit_article'"></form-article>
 </template>
 
 <script>

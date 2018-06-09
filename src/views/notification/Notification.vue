@@ -6,42 +6,40 @@
     <div class="body">
       <div v-for="notification in notifications" :key="notification.id">
         <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Comment') >= 0">
-          <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
-            <span>{{notification.data.name}}</span>
+          <router-link :to="{ name: 'UserArticles', params: { slug: notification.data.user_id } }">
+            <span>{{ notification.data.name }}</span>
           </router-link>
           <span class="dex"> · 在话题中评论了你： </span>
-          <router-link :to="{name: 'ArticleShow', params: {slug: notification.data.title_id}}">
-            <span>{{notification.data.title}}</span>
+          <router-link :to="{ name: 'ArticleShow', params: { slug: notification.data.title_id } }">
+            <span>{{ notification.data.title }}</span>
           </router-link>
-          <span class="dex"> · 于 {{notification.created_at}}</span>
-          <p>{{notification.data.comment}}</p>
+          <span class="dex"> · 于 {{ notification.created_at }}</span>
+          <p>{{ notification.data.comment }}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
         <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Follow') >= 0">
           <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
-            <span>{{notification.data.name}}</span>
+            <span>{{ notification.data.name }}</span>
           </router-link>
           <span class="dex"> · 关注了你 </span>
-          <span class="dex"> · 于 {{notification.created_at}}</span>
+          <span class="dex"> · 于 {{ notification.created_at }}</span>
           <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
         <div :class="[notification.read_at == null ? 'user-article read' : 'user-article']" v-if="notification.type.indexOf('Like') >= 0">
-          <router-link :to="{name: 'UserArticles', params: {slug: notification.data.user_id}}">
-            <span>{{notification.data.name}}</span>
+          <router-link :to="{ name: 'UserArticles', params:  {slug: notification.data.user_id } }">
+            <span>{{ notification.data.name }}</span>
           </router-link>
           <span class="dex"> · 点赞了你的话题： </span>
-          <router-link :to="{name: 'ArticleShow', params: {slug: notification.data.title_id}}">
-            <span>{{notification.data.title}}</span>
+          <router-link :to="{ name: 'ArticleShow', params: { slug: notification.data.title_id } }">
+            <span>{{ notification.data.title }}</span>
           </router-link>
-          <span class="dex"> · 于 {{notification.created_at}}</span>
+          <span class="dex"> · 于 {{ notification.created_at }}</span>
           <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
         </div>
       </div>
     </div>
-    <div v-if="! notifications.length">
-      <div class="no-article">
-        <p>没有任何数据~~</p>
-      </div>
+    <div v-if="!notifications.length" class="no-article">
+      <p>没有任何数据~~</p>
     </div>
   </div>
 </template>
@@ -53,16 +51,15 @@ import api from "../../api";
 export default {
   data() {
     return {
-      notifications: ''
+      notifications: []
     };
   },
-  mounted() {
-    api.get_notifications().then(res => {
-      if (res.data.status) {
-        this.notifications = res.data.data;
-        api.notifications_read();
-      }
-    });
+  async mounted() {
+    const res = await api.get_notifications();
+    if (res.data.status) {
+      this.notifications = res.data.data;
+      api.notifications_read();
+    }
   }
 };
 </script>
@@ -102,6 +99,9 @@ export default {
         font-size: 14px;
       }
     }
+  }
+  .no-article {
+    padding: 0 0 30px 30px;
   }
 }
 </style>

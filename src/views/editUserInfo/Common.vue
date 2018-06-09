@@ -5,17 +5,17 @@
         <div class="user-info">
           <ul class="reply">
             <li>
-              <router-link :to="{name: 'EditUserInfo', params: {slug: id}}">
+              <router-link :to="{ name: 'EditUserInfo', params: { slug: id } }">
                 <i class="text-md fa fa-list-ul"></i> 个人信息
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'EditAvatar', params: {slug: id}}">
+              <router-link :to="{ name: 'EditAvatar', params: { slug: id } }">
                 <i class="fa fa-picture-o" aria-hidden="true"></i> 更换图像
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'EditPassword', params: {slug: id}}">
+              <router-link :to="{ name: 'EditPassword', params: { slug: id } }">
                 <i class="fa fa-lock" aria-hidden="true"></i> 修改密码
               </router-link>
             </li>

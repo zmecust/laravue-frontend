@@ -6,11 +6,14 @@
         <div class="content" v-for="(article, index) in articles">
           <div class="content-body">
             <div class="content-left">
-              <router-link class="content-title" :to="{name: 'ArticleShow', params: {slug: article.id}}">
-                <h3>{{article.title}}</h3>
+              <router-link class="content-title" :to="{ name: 'ArticleShow', params: { slug: article.id } }">
+                <h3>{{ article.title }}</h3>
               </router-link>
               <div style="padding-top: 5px; font-size: 13px; color: #bbb">由
-                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link> 发表于 {{article.created_at}}</div>
+                <router-link :to="{ name: 'UserArticles', params: { slug: article.user.id } }">
+                  {{ article.user.name }}
+                </router-link> 发表于 {{article.created_at}}
+              </div>
               <div class="content-body-body">
                 {{ article.abstract }} ...
               </div>
@@ -74,14 +77,14 @@ export default {
     HotTopics
   },
   beforeRouteUpdate(to, from, next) {
-    this.tagName = to.query;
+    this.tagName = to.query.tag;
     next();
   },
   beforeRouteLeave(to, from, next) {
-    this.tagName = to.query;
+    this.tagName = to.query.tag;
     next();
   },
-  mounted() {
+  async mounted() {
     const validate_user = this.$route.query.validate;
     if (validate_user) {
       if (validate_user == 'yes') {
@@ -94,24 +97,23 @@ export default {
       target: document.querySelector('#app')
     };
     loadingInstance = Loading.service(options);
-    this.get_articles(undefined);
+    await this.get_articles(undefined);
   },
   methods: {
-    get_articles(val) {
+    async get_articles(val) {
       if (this.$route.query.tag) {
-        this.tagName = this.$route.query;
+        this.tagName = this.$route.query.tag;
       }
-      api.get_articles({ params: { page: val, tag: this.tagName.tag } }).then((res) => {
-        if (res.data.status == 1) {
-          this.articles = res.data.data.data;
-          this.total = Number(res.data.data.total);
-          for (let index in this.articles) {
-            this.articles[index].abstract = this.articles[index].body.substring(0, 110)
-              .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
-          }
-          loadingInstance.close();
+      const res = await api.get_articles({ params: { page: val, tag: this.tagName } });
+      if (res.data.status) {
+        this.articles = res.data.data.data;
+        this.total = Number(res.data.data.total);
+        for (let index in this.articles) {
+          this.articles[index].abstract = this.articles[index].body.substring(0, 110)
+            .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
         }
-      })
+        loadingInstance.close();
+      }
     },
     message_true() {
       this.$notify.success({
@@ -127,14 +129,17 @@ export default {
         offset: 100
       });
     },
-    handleCurrentChange(page) {
-      this.get_articles(page);
+    async handleCurrentChange(page) {
+      await this.get_articles(page);
     },
   },
   watch: {
     tagName: function() {
       this.get_articles(undefined);
-    }
+    },
+    '$route': function() {
+      this.get_articles(undefined);
+    },
   }
 }
 </script>

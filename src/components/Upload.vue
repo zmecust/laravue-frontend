@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     uploadCallback(response, file, fileList) {
-      if (1 == response.status) {
+      if (1 === response.status) {
         this.$emit('result', response.data.url);
       }
     }

@@ -3,24 +3,24 @@
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="17">
         <div class="article">
-          <p>{{article.title}}</p>
+          <p>{{ article.title }}</p>
           <div class="article-edit" v-if="auth.id == article.user.id ? true : false">
-            <router-link :to="{name: 'ArticleEdit', params: {slug: this.$route.params.slug}}">
+            <router-link :to="{ name: 'ArticleEdit', params: { slug: this.$route.params.slug } }">
               <span style="padding-left: 10px; font-size: larger">
                 <i class="fa fa-edit"></i>
               </span>
             </router-link>
           </div>
           <div class="article-author">
-            <router-link style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+            <router-link style="float: left" :to="{ name: 'UserArticles', params: { slug: article.user.id } }">
               <img :src="article.user.avatar" alt="">
             </router-link>
             <div class="article-author-detail">
               <div>
-                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}" id="btn-topic">
+                <router-link :to="{ name: 'UserArticles', params: { slug: article.user.id } }" id="btn-topic">
                   作者
                 </router-link>
-                <span>{{article.user.name}}</span>
+                <span>{{ article.user.name }}</span>
               </div>
               <div class="article-detail">
                 <span>创作于 {{ article.created_at }}</span>
@@ -43,7 +43,7 @@
             </el-button>
             <div style="text-align: center">
               <div v-for="like in article_likes" :key="like.id" style="float: left; padding: 20px 5px 10px">
-                <router-link :to="{name: 'UserArticles', params: {slug: like.id}}">
+                <router-link :to="{ name: 'UserArticles', params: { slug: like.id } }">
                   <img :src="like.avatar" :alt="like.name" :title="like.name" class="likes-avatar">
                 </router-link>
               </div>
@@ -57,7 +57,7 @@
               <el-button type="submit" @click.prevent="submit">评 论</el-button>
             </form>
           </div>
-          <div v-if="! auth.check()" class="article-login">
+          <div v-if="!auth.check()" class="article-login">
             <p>
               <router-link :to="{path: '/user/login', query: { redirect_url: this.$route.path }}">
                 登录参与评论
@@ -65,7 +65,7 @@
             </p>
           </div>
           <div style="clear: both">
-            <h4>{{article.comments_count ? article.comments_count + ' 条' : '暂无'}}评论</h4>
+            <h4>{{ article.comments_count ? article.comments_count + ' 条' : '暂无' }}评论</h4>
           </div>
           <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
           <div v-for="(comment, index) in comments">
@@ -77,14 +77,14 @@
               </div>
               <div class="comment-author-detail">
                 <div>
-                  <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
-                    {{comment.user.name}}&nbsp;
+                  <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{ name: 'UserArticles', params: { slug: comment.user_id } }">
+                    {{ comment.user.name }}&nbsp;
                   </router-link><br>
-                  <span># {{index + 1}} · 评论于 {{ comment.created_at }}</span>
+                  <span># {{ index + 1 }} · 评论于 {{ comment.created_at }}</span>
                 </div>
               </div>
               <div class="comment-detail">
-                {{comment.body}}
+                {{ comment.body }}
               </div>
               <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
               <div style="border-bottom: 1px solid #eee; padding-top: 15px"></div>
@@ -94,20 +94,20 @@
       </el-col>
       <el-col :span="7">
         <div class="sidebar-author">
-          <p>作者： {{article.user.name}}</p>
+          <p>作者： {{ article.user.name }}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
           <img :src="article.user.avatar" alt="">
           <el-row>
             <el-col :span="8">
-              <h2>{{article.user.followers_count}}</h2>
+              <h2>{{ article.user.followers_count }}</h2>
               <p>关注者</p>
             </el-col>
             <el-col :span="8">
-              <h2>{{article.user.comments_count}}</h2>
+              <h2>{{ article.user.comments_coun }}</h2>
               <p>评论</p>
             </el-col>
             <el-col :span="8">
-              <h2>{{article.user.articles_count}}</h2>
+              <h2>{{ article.user.articles_count }}</h2>
               <p>文章</p>
             </el-col>
           </el-row>
@@ -119,7 +119,8 @@
           </el-button>
           <el-button class="btn-define" style="margin-top: 0" @click.prevent="send_message()">
             <span>
-              <i class="fa fa-envelope-o"></i> 发送私信 </span>
+              <i class="fa fa-envelope-o"></i> 发送私信
+            </span>
           </el-button>
         </div>
         <hot-topics></hot-topics>
@@ -180,92 +181,87 @@ export default {
     this.reload();
   },
   methods: {
-    reload() {
+    async reload() {
       let options = {
         target: document.querySelector("#app")
       };
       let loadingInstance = Loading.service(options);
-      api.get_article(this.$route.params.slug).then(res => {
-        if (res.data.status == 1) {
-          this.article = res.data.data;
-          this.article.body = Marked(res.data.data.body);
-          if (this.auth.check()) {
-            api.is_follow_or_not(this.article.user.id).then(res => {
-              if (res.data.status == 1) {
-                this.follow = res.data.data.followed;
-              }
-            });
+      const res = await api.get_article(this.$route.params.slug);
+      if (res.data.status) {
+        this.article = res.data.data;
+        this.article.body = Marked(res.data.data.body);
+        if (this.auth.check()) {
+          const is_follow_or_not = await api.is_follow_or_not(this.article.user.id);
+          if (is_follow_or_not.data.status) {
+            this.follow = is_follow_or_not.data.data.followed;
           }
-          loadingInstance.close();
         }
-        api.get_article_likes(this.$route.params.slug).then(res => {
-          if (res.data.status) {
-            this.article_likes = res.data.data;
+        loadingInstance.close();
+      }
+      const [ get_article_likes, get_comments ] = await Promise.all([
+        api.get_article_likes(this.$route.params.slug),
+        api.get_comments(this.$route.params.slug)
+      ]);
+      if (get_article_likes.data.status) {
+        this.article_likes = get_article_likes.data.data;
+      }
+      this.comments = get_comments.data.data;
+      if (this.auth.check()) {
+        const is_like_or_not = await api.is_like_or_not(this.$route.params.slug);
+        if (is_like_or_not.data.status) {
+          this.like = is_like_or_not.data.data.liked;
+        }
+      }
+    },
+    async click_like() {
+      if (this.auth.check()) {
+        const res = await api.like(this.$route.params.slug);
+        if (res.data.status == 1) {
+          if (res.data.data.liked) {
+            this.article_likes.push(res.data.data);
           }
-        });
-        api.get_comments(this.$route.params.slug).then(res => {
-          this.comments = res.data.data;
-        });
+          this.like = res.data.data.liked;
+        }
+      } else {
+        this.showPreview = true;
+      }
+    },
+    async click_follow() {
+      if (this.auth.check()) {
+        const res = await api.follow(this.article.user.id);
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
+          this.message();
+        }
+      } else {
+        this.showPreview = true;
+      }
+    },
+    async submit() {
+      const res = await api.create_comment({
+        article_id: this.article.id,
+        parent_id: 0,
+        body: this.comment
       });
-      if (this.auth.check()) {
-        api.is_like_or_not(this.$route.params.slug).then(res => {
-          if (res.data.status == 1) {
-            this.like = res.data.data.liked;
-          }
-        });
+      if (res.data.status == 1) {
+        this.comments.push(res.data.data);
       }
-    },
-    click_like() {
-      if (this.auth.check()) {
-        api.like(this.$route.params.slug).then(res => {
-          if (res.data.status == 1) {
-            if (res.data.data.liked) {
-              this.article_likes.push(res.data.data);
-            }
-            this.like = res.data.data.liked;
-          }
-        });
-      } else {
-        this.showPreview = true;
-      }
-    },
-    click_follow() {
-      if (this.auth.check()) {
-        api.follow(this.article.user.id).then(res => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-            this.message();
-          }
-        });
-      } else {
-        this.showPreview = true;
-      }
-    },
-    submit() {
-      api
-        .create_comment({
-          article_id: this.article.id,
-          parent_id: 0,
-          body: this.comment
-        })
-        .then(res => {
-          if (res.data.status == 1) {
-            this.comments.push(res.data.data);
-          }
-        });
     },
     send_message() {
-      this.showDialog = true;
+      if (this.auth.check()) {
+        this.showDialog = true;
+      } else {
+        this.showPreview = true;
+      }
     },
     closeDialog() {
       this.showDialog = false;
     },
-    submitDialog() {
-      api.send_message({ content: this.content, user_id: this.auth.id }).then((res) => {
-        if (res.data.status) {
-          this.showDialog = false;
-        }
-      });
+    async submitDialog() {
+      const res = await api.send_message({ content: this.content, user_id: this.auth.id });
+      if (res.data.status) {
+        this.showDialog = false;
+      }
     },
     closePreview() {
       this.showPreview = false;

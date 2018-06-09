@@ -3,20 +3,20 @@
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="7">
         <div class="sidebar-author">
-          <p>作者： {{user.name}}</p>
+          <p>作者： {{ user.name }}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
           <img :src="user.avatar" alt="">
           <el-row>
             <el-col :span="8">
-              <h2>{{user.followers_count}}</h2>
+              <h2>{{ user.followers_count }}</h2>
               <p>关注者</p>
             </el-col>
             <el-col :span="8">
-              <h2>{{user.comments_count}}</h2>
+              <h2>{{ user.comments_count }}</h2>
               <p>评论</p>
             </el-col>
             <el-col :span="8">
-              <h2>{{user.articles_count}}</h2>
+              <h2>{{ user.articles_count }}</h2>
               <p>文章</p>
             </el-col>
           </el-row>
@@ -143,26 +143,23 @@ export default {
     this.reload();
   },
   methods: {
-    reload() {
-      api.get_user(this.$route.params.slug).then((res) => {
-        this.user = res.data.data;
-        if (this.auth.check()) {
-          api.is_follow_or_not(this.user.id).then((res) => {
-            if (res.data.status == 1) {
-              this.follow = res.data.data.followed;
-            }
-          });
-        }
-      });
-    },
-    click_follow() {
+    async reload() {
+      const res = await api.get_user(this.$route.params.slug);
+      this.user = res.data.data;
       if (this.auth.check()) {
-        api.follow(this.user.id).then((res) => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-            this.message();
-          }
-        });
+        const is_follow_or_not = await api.is_follow_or_not(this.user.id);
+        if (is_follow_or_not.data.status) {
+          this.follow = is_follow_or_not.data.data.followed;
+        }
+      }
+    },
+    async click_follow() {
+      if (this.auth.check()) {
+        const res = await api.follow(this.user.id);
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
+          this.message();
+        }
       } else {
         this.showPreview = true;
       }
@@ -179,12 +176,11 @@ export default {
     send_message() {
       this.showDialog = true;
     },
-    submitDialog() {
-      api.send_message({ content: this.content, user_id: this.auth.id }).then((res) => {
-        if (res.data.status) {
-          this.showDialog = false;
-        }
-      });
+    async submitDialog() {
+      const res = await api.send_message({ content: this.content, user_id: this.auth.id });
+      if (res.data.status) {
+        this.showDialog = false;
+      }
     },
     message() {
       if (this.follow) {

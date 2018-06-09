@@ -10,7 +10,7 @@
           <h3 style="font-weight: bolder">社区</h3>
           <div style="width:100%; border-top:1px solid #ddd; clear:both;"></div>
           <p style="text-align:justify">
-            LaraVue&nbsp;是两个框架名字组合而成的，这两个框架是我接触编程学的第一个后端框架&nbsp;“Laravel”&nbsp; 以及第一个前端框架&nbsp;“Vue”。本来今年三月份准备申请&nbsp;laravue.com&nbsp;的域名，但是发现国外一哥们抢先我三天申请了。 这个微型社区是一个前后端完全分离的项目，是我前一个社区的改进版，无奈自己的&nbsp;CSS&nbsp;太渣，不然这几个页面早就撸完了。 该社区也没有什么定位，主要是对一些技术上的思考进行分享，方便自己顺便方便后人。项目源代码都开源到了&nbsp;
+            LaraVue&nbsp;是两个框架名字组合而成的，这两个框架是我接触编程学的第一个后端框架&nbsp;“Laravel”&nbsp; 以及第一个前端框架&nbsp;“Vue”。本来2017年3月份准备申请&nbsp;laravue.com&nbsp;的域名，但是发现国外一哥们抢先我三天申请了。 这个微型社区是一个前后端完全分离的项目，是我前一个社区的改进版，无奈自己的&nbsp;CSS&nbsp;太渣，不然这几个页面早就撸完了。 该社区也没有什么定位，主要是对一些技术上的思考进行分享，方便自己顺便方便后人。项目源代码都开源到了&nbsp;
             <a href="https://github.com/zmecust/laravue-frontend">Github</a>， 有兴趣可以看看，不要忘了&nbsp;star&nbsp;哦，哈哈哈！
             <br>
           </p>
@@ -43,7 +43,7 @@
               <li>计算机技能
                 <ul style="padding-left: 20px">
                   <li>语言：PHP、Python、JavaScript</li>
-                  <li>框架：Laravel、Vue.js、TensorFlow</li>
+                  <li>框架：Laravel、Vue.js、TensorFlow、Koa</li>
                   <li>系统：CentOS & Ubuntu</li>
                 </ul>
               </li>

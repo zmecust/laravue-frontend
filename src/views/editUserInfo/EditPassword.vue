@@ -43,10 +43,9 @@ export default {
     }
   },
   methods: {
-    submit() {
-      api.edit_password(this.params).then((res) => {
-        this.open(res.data.message);
-      });
+    async submit() {
+      const res = await api.edit_password(this.params);
+      this.open(res.data.message);
     },
     open(mes) {
       this.$alert(mes, '', {

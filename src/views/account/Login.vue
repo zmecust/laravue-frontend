@@ -21,9 +21,9 @@
               <el-input type="password" placeholder="请输入密码" v-model="params.password"></el-input>
             </el-form-item>
             <div class="login-failure" v-if="failure">
-              <div class="header">{{failure.message}}</div>
+              <div class="header">{{ failure.message }}</div>
               <ul class="list">
-                <li v-for="error in failure.data">{{error[0]}}</li>
+                <li v-for="error in failure.data">{{ error[0] }}</li>
               </ul>
             </div>
             <div class="login-btn">
