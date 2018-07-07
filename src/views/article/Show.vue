@@ -103,7 +103,7 @@
               <p>关注者</p>
             </el-col>
             <el-col :span="8">
-              <h2>{{ article.user.comments_coun }}</h2>
+              <h2>{{ article.user.comments_count }}</h2>
               <p>评论</p>
             </el-col>
             <el-col :span="8">
