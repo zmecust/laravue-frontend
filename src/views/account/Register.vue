@@ -96,7 +96,7 @@ export default {
       });
     },
     github_login() {
-      window.location.href = 'https://api.laravue.org/github';
+      window.location.href = process.env.API_URI + '/github';
     }
   },
   watch: {
