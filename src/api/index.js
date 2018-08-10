@@ -125,5 +125,5 @@ export default {
   },
   search(params) {
     return Vue.http.get('search', { params: { q: params } });
-  }
-}
+  },
+};

@@ -121,7 +121,7 @@
 <script>
 import api from '../../api';
 import { mapState } from 'vuex';
-import Popup from '../../components/Popup'
+import Popup from '../../components/Popup';
 
 export default {
   data() {
@@ -131,10 +131,10 @@ export default {
       showPreview: false,
       showDialog: false,
       content: '',
-    }
+    };
   },
   components: {
-    Popup
+    Popup,
   },
   computed: mapState({
     auth: state => state.account.auth,
@@ -186,22 +186,22 @@ export default {
       if (this.follow) {
         this.$message({
           message: '已关注',
-          type: 'success'
+          type: 'success',
         });
       } else {
         this.$message({
           message: '已取消关注',
-          type: 'success'
+          type: 'success',
         });
       }
-    }
+    },
   },
   watch: {
-    '$route'(to, from) {
+    $route(to, from) {
       this.reload();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

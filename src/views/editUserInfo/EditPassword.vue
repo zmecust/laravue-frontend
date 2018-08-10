@@ -32,15 +32,15 @@ import api from '../../api';
 
 export default {
   computed: mapState({
-    auth: state => state.account.auth
+    auth: state => state.account.auth,
   }),
   data() {
     return {
       params: {
         password: '',
         password_confirmation: '',
-      }
-    }
+      },
+    };
   },
   methods: {
     async submit() {
@@ -49,11 +49,11 @@ export default {
     },
     open(mes) {
       this.$alert(mes, '', {
-        confirmButtonText: '确定'
+        confirmButtonText: '确定',
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

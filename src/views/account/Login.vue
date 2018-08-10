@@ -48,7 +48,7 @@ import openWindow from '../../tool/openWindow';
 export default {
   name: 'Login',
   components: {
-    Headers
+    Headers,
   },
   data() {
     return {
@@ -57,11 +57,11 @@ export default {
         password: '',
       },
       active: {
-        'color': '#00b5ad',
+        color: '#00b5ad',
         'font-weight': 'bold',
         'border-bottom': '3px solid #00b5ad',
       },
-      path: this.$route.path.split("/")[2]
+      path: this.$route.path.split('/')[2],
     };
   },
   computed: mapState({
@@ -80,21 +80,21 @@ export default {
     },
     github_login() {
       window.location.href = process.env.API_URI + '/github';
-    }
+    },
   },
   watch: {
     success: 'successWatcher',
     $route(to, from) {
-      this.path = this.$route.path.split("/")[2];
-    }
-  }
-}
+      this.path = this.$route.path.split('/')[2];
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .message {
   margin-bottom: 18px;
-  text-align: center
+  text-align: center;
 }
 
 .login-wrap {

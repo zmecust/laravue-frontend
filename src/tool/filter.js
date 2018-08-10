@@ -1,5 +1,3 @@
 export default {
-  _filter(data) {
-
-  }
-}
+  _filter(data) {},
+};

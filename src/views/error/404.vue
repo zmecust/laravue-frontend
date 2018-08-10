@@ -18,8 +18,7 @@
 </template>
 
 <script>
-export default {
-}
+export default {};
 </script>
 
 <style scoped>
@@ -52,7 +51,8 @@ h3 {
   padding: 20px 0 20px;
 }
 
-a, a:visited {
+a,
+a:visited {
   color: #00b5ad;
 }
 

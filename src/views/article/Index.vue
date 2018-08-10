@@ -71,10 +71,10 @@ export default {
       tagName: '',
       total: null,
       page_size: 10,
-    }
+    };
   },
   components: {
-    HotTopics
+    HotTopics,
   },
   async mounted() {
     const validate_user = this.$route.query.validate;
@@ -86,7 +86,7 @@ export default {
       }
     }
     let options = {
-      target: document.querySelector('#app')
+      target: document.querySelector('#app'),
     };
     loadingInstance = Loading.service(options);
     await this.get_articles(undefined);
@@ -101,8 +101,12 @@ export default {
         this.articles = res.data.data.data;
         this.total = Number(res.data.data.total);
         for (let index in this.articles) {
-          this.articles[index].abstract = this.articles[index].body.substring(0, 110)
-            .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
+          this.articles[index].abstract = this.articles[index].body
+            .substring(0, 110)
+            .replace(/<\/?.+?>/g, '')
+            .replace(/ /g, '')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/#/g, '');
         }
         loadingInstance.close();
       }
@@ -111,14 +115,14 @@ export default {
       this.$notify.success({
         title: '激活成功',
         message: '感谢您支持 LaraVue，祝您使用愉快！',
-        offset: 100
+        offset: 100,
       });
     },
     message_false() {
       this.$notify.success({
         title: '激活失败',
         message: '请联系管理员（root@laravue.org）激活用户！',
-        offset: 100
+        offset: 100,
       });
     },
     async handleCurrentChange(page) {
@@ -126,14 +130,14 @@ export default {
     },
   },
   watch: {
-    '$route': function(newVal, oldVal) {
+    $route: function(newVal, oldVal) {
       if (!this.$route.query.tag) {
         this.tagName = '';
       }
       this.get_articles(undefined);
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

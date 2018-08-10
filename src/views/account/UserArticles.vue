@@ -25,8 +25,8 @@ import api from '../../api';
 export default {
   data() {
     return {
-      articles: ''
-    }
+      articles: '',
+    };
   },
   mounted() {
     this.reload();
@@ -39,14 +39,14 @@ export default {
           this.articles = res.data.data;
         }
       }
-    }
+    },
   },
   watch: {
-    '$route'(to, from) {
+    $route(to, from) {
       this.reload();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

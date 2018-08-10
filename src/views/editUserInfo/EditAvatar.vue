@@ -22,19 +22,17 @@ import Upload from '../../components/Upload.vue';
 
 export default {
   computed: {
-    ...mapGetters([
-      'upload_avatar',
-    ])
+    ...mapGetters(['upload_avatar']),
   },
   components: {
-    Upload
+    Upload,
   },
   methods: {
     uploadCallback(data) {
       this.$store.commit('ACCOUNT_AVATAR_UPLOAD', data);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -59,7 +57,7 @@ export default {
       }
     }
     p {
-      padding-bottom: 10px; 
+      padding-bottom: 10px;
     }
   }
 }

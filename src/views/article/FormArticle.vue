@@ -74,7 +74,7 @@
 
 <script>
 //import Editor from '../../components/Editor';
-import { markdownEditor } from 'vue-simplemde'
+import { markdownEditor } from 'vue-simplemde';
 import api from '../../api';
 import Upload from '../../components/Upload';
 import store from '../../store';
@@ -84,7 +84,7 @@ export default {
   components: {
     //Editor,
     markdownEditor,
-    Upload
+    Upload,
   },
   props: ['type'],
   data() {
@@ -94,16 +94,13 @@ export default {
         article_url: '',
         body: '',
         category: '',
-        is_hidden: 'F'
+        is_hidden: 'F',
       },
       upload_url: this.$http.options.root + '/article_image',
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      options: [
-        { value: 'F', label: '是' },
-        { value: 'T', label: '否' }
-      ],
+      options: [{ value: 'F', label: '是' }, { value: 'T', label: '否' }],
       failure: '',
       tags: [],
       allTags: '',
@@ -113,16 +110,13 @@ export default {
         initialValue: '',
         renderingConfig: {
           codeSyntaxHighlighting: true,
-          highlightingTheme: 'tomorrow'
-        }
-      }
-    }
+          highlightingTheme: 'tomorrow',
+        },
+      },
+    };
   },
   async mounted() {
-    const [ get_tags, get_categories ] = await Promise.all([
-      api.get_tags(),
-      api.get_categories()
-    ]);
+    const [get_tags, get_categories] = await Promise.all([api.get_tags(), api.get_categories()]);
     this.allTags = get_tags.data.data;
     this.allCategories = get_categories.data.data;
     if (this.type !== 'create_article') {
@@ -149,15 +143,15 @@ export default {
           this.failure = res.data;
         }
       } else {
-        let form = { 
+        let form = {
           tag: this.tags,
           is_hidden: this.params.is_hidden,
           title: this.params.title,
           body: this.params.body,
           category: this.params.category,
-          article_url: this.params.article_url
-        }
-        const res = await api.edit_article(this.$route.params.slug, form)
+          article_url: this.params.article_url,
+        };
+        const res = await api.edit_article(this.$route.params.slug, form);
         if (res.data.status == 1) {
           this.$router.push({ name: 'ArticleShow', params: { slug: res.data.data.id } });
         }
@@ -166,12 +160,15 @@ export default {
     handleImageAdded(file, Editor, cursorLocation) {
       var formData = new FormData();
       formData.append('image', file);
-      api.content_image(formData).then((res) => {
-        let url = res.data.data.url // Get url from response
-        Editor.insertEmbed(cursorLocation, 'image', url);
-      }).catch((err) => {
-        console.log(err);
-      })
+      api
+        .content_image(formData)
+        .then(res => {
+          let url = res.data.data.url; // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     uploadCallback(data) {
       const transforData = '![' + data + '](' + data + ')';
@@ -181,9 +178,9 @@ export default {
       if (1 == response.status) {
         this.params.article_url = response.data.url;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -251,26 +248,26 @@ export default {
 }
 
 .avatar-uploader .el-upload {
-    border: 1px solid #aaa;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #00b5ad;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 120px;
-    line-height: 120px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 120px;
-    display: block;
-  }
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #00b5ad;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 120px;
+  display: block;
+}
 </style>

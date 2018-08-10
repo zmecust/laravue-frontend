@@ -33,15 +33,15 @@
 </template>
 
 <script>
-import api from "../api";
+import api from '../api';
 
 export default {
   data() {
     return {
-      articles: "",
-      name: "",
+      articles: '',
+      name: '',
       total: null,
-      page_size: 30
+      page_size: 30,
     };
   },
   mounted() {
@@ -60,20 +60,20 @@ export default {
           for (let index in this.articles.data) {
             this.articles.data[index].abstract = this.articles.data[index].body
               .substring(0, 200)
-              .replace(/<\/?.+?>/g, "")
-              .replace(/ /g, "")
-              .replace(/&nbsp;/g, " ")
-              .replace(/#/g, "");
+              .replace(/<\/?.+?>/g, '')
+              .replace(/ /g, '')
+              .replace(/&nbsp;/g, ' ')
+              .replace(/#/g, '');
           }
         }
       });
-    }
+    },
   },
   watch: {
     $route(to, from) {
       this.reload();
-    }
-  }
+    },
+  },
 };
 </script>
 

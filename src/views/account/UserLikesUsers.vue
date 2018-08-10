@@ -21,11 +21,11 @@ import api from '../../api';
 export default {
   data() {
     return {
-      users: ''
-    }
+      users: '',
+    };
   },
   mounted() {
-    api.user_follow_users(this.$route.params.slug).then((res) => {
+    api.user_follow_users(this.$route.params.slug).then(res => {
       if (res.data.status == 1) {
         if (res.data.data.length) {
           this.users = res.data.data;
@@ -35,10 +35,10 @@ export default {
   },
   methods: {
     submit(id) {
-      this.$router.push({name: 'UserArticles', params: {slug: id}});
-    }
-  }
-}
+      this.$router.push({ name: 'UserArticles', params: { slug: id } });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -54,7 +54,7 @@ export default {
     img {
       width: 38px;
       border-radius: 100px;
-      vertical-align: middle
+      vertical-align: middle;
     }
     span {
       font-size: 16px;

@@ -14,8 +14,7 @@
 import { mapState } from 'vuex';
 import api from '../../api';
 
-export default {
-}
+export default {};
 </script>
 
 <style lang="scss" scoped>

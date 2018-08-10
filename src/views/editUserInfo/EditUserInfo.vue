@@ -30,15 +30,15 @@ import api from '../../api';
 
 export default {
   computed: mapState({
-    auth: state => state.account.auth
+    auth: state => state.account.auth,
   }),
   data() {
     return {
       params: {
         real_name: '',
         city: '',
-      }
-    }
+      },
+    };
   },
   created() {
     this.params.real_name = this.auth.user.real_name;
@@ -52,11 +52,11 @@ export default {
     },
     open(mes) {
       this.$alert(mes, '', {
-        confirmButtonText: '确定'
+        confirmButtonText: '确定',
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

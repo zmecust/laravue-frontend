@@ -142,48 +142,48 @@
 </template>
 
 <script>
-import api from "../../api";
-import { mapState } from "vuex";
-import { Loading } from "element-ui";
-import HotTopics from "../../components/HotTopics";
-import Popup from "../../components/Popup";
-import ChildComment from "../../components/Comment";
-import Marked from "marked";
+import api from '../../api';
+import { mapState } from 'vuex';
+import { Loading } from 'element-ui';
+import HotTopics from '../../components/HotTopics';
+import Popup from '../../components/Popup';
+import ChildComment from '../../components/Comment';
+import Marked from 'marked';
 
 export default {
   components: {
     HotTopics,
     Popup,
-    ChildComment
+    ChildComment,
   },
   data() {
     return {
-      article: "",
+      article: '',
       like: false,
       follow: false,
-      comment: "",
-      comments: "",
+      comment: '',
+      comments: '',
       showPreview: false,
       showDialog: false,
       content: '',
-      article_likes: ''
+      article_likes: '',
     };
   },
   computed: mapState({
-    auth: state => state.account.auth
+    auth: state => state.account.auth,
   }),
   mounted() {
     Marked.setOptions({
       highlight: function(code) {
-        return require("highlight.js").highlightAuto(code).value;
-      }
+        return require('highlight.js').highlightAuto(code).value;
+      },
     });
     this.reload();
   },
   methods: {
     async reload() {
       let options = {
-        target: document.querySelector("#app")
+        target: document.querySelector('#app'),
       };
       let loadingInstance = Loading.service(options);
       const res = await api.get_article(this.$route.params.slug);
@@ -198,9 +198,9 @@ export default {
         }
         loadingInstance.close();
       }
-      const [ get_article_likes, get_comments ] = await Promise.all([
+      const [get_article_likes, get_comments] = await Promise.all([
         api.get_article_likes(this.$route.params.slug),
-        api.get_comments(this.$route.params.slug)
+        api.get_comments(this.$route.params.slug),
       ]);
       if (get_article_likes.data.status) {
         this.article_likes = get_article_likes.data.data;
@@ -241,7 +241,7 @@ export default {
       const res = await api.create_comment({
         article_id: this.article.id,
         parent_id: 0,
-        body: this.comment
+        body: this.comment,
       });
       if (res.data.status == 1) {
         this.comments.push(res.data.data);
@@ -269,28 +269,28 @@ export default {
     message() {
       if (this.follow) {
         this.$message({
-          message: "已关注",
-          type: "default"
+          message: '已关注',
+          type: 'default',
         });
       } else {
         this.$message({
-          message: "已取消关注",
-          type: "default"
+          message: '已取消关注',
+          type: 'default',
         });
       }
-    }
+    },
   },
   watch: {
     $route(to, from) {
       this.reload();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../static/css/markdown.css";
-@import "~highlight.js/styles/atom-one-light.css";
+@import '../../../static/css/markdown.css';
+@import '~highlight.js/styles/atom-one-light.css';
 .article {
   margin-top: 40px;
   p {

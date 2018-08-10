@@ -17,17 +17,19 @@ export default {
       },
       access_token: JSON.parse(localStorage.getItem(AUTH_ACCESS_TOKEN)),
       id: parseInt(localStorage.getItem(AUTH_USER_ID), 10) || 0,
-      user: JSON.parse(localStorage.getItem(AUTH_USER))
+      user: JSON.parse(localStorage.getItem(AUTH_USER)),
     },
     login: {
       success: false,
-      failure: null
+      failure: null,
     },
     register: {
       success: false,
-      failure: null
+      failure: null,
     },
-    upload_avatar: JSON.parse(localStorage.getItem(AUTH_USER)) ? JSON.parse(localStorage.getItem(AUTH_USER)).avatar : null
+    upload_avatar: JSON.parse(localStorage.getItem(AUTH_USER))
+      ? JSON.parse(localStorage.getItem(AUTH_USER)).avatar
+      : null,
   },
   mutations: {
     ACCOUNT_AUTH_STATUS_CHANGED: (state, data) => {
@@ -48,14 +50,14 @@ export default {
       localStorage.setItem(AUTH_USER_ID, data.data.id);
       localStorage.setItem(AUTH_USER, JSON.stringify(data.data));
     },
-    ACCOUNT_LOGIN_SUCCESS: (state) => {
+    ACCOUNT_LOGIN_SUCCESS: state => {
       Vue.set(state.login, 'success', true);
     },
     ACCOUNT_LOGIN_FAILURE: (state, data) => {
       Vue.set(state.login, 'success', false);
       Vue.set(state.login, 'failure', data);
     },
-    ACCOUNT_REGISTER_SUCCESS: (state) => {
+    ACCOUNT_REGISTER_SUCCESS: state => {
       Vue.set(state.register, 'success', true);
     },
     ACCOUNT_REGISTER_FAILURE: (state, data) => {
@@ -75,33 +77,33 @@ export default {
       user.city = data.city;
       localStorage.removeItem(AUTH_USER);
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
-    }
+    },
   },
   actions: {
     accountLoginSubmit({ commit }, params) {
-      api.login(params).then((response) => {
+      api.login(params).then(response => {
         if (response.data.status) {
           commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
           commit(types.ACCOUNT_LOGIN_SUCCESS);
         } else {
           commit(types.ACCOUNT_LOGIN_FAILURE, response.data);
         }
-      })
+      });
     },
     accountLogoutSubmit({ commit }) {
-      api.logout().then((response) => {
+      api.logout().then(response => {
         commit(types.ACCOUNT_AUTH_STATUS_CHANGED, { status: 0 });
       });
     },
     accountRegisterSubmit({ commit }, params) {
-      api.register(params).then((response) => {
+      api.register(params).then(response => {
         if (response.data.status) {
           //commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
           commit(types.ACCOUNT_REGISTER_SUCCESS);
         } else {
           commit(types.ACCOUNT_REGISTER_FAILURE, response.data);
         }
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};

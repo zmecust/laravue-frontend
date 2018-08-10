@@ -29,22 +29,19 @@ export default {
   data() {
     return {
       articles: '',
-      tags: ''
-    }
+      tags: '',
+    };
   },
   async mounted() {
-    const [ hot_articles, hot_tags ] = await Promise.all([
-      api.hot_articles(),
-      api.hot_tags()
-    ]); ;
+    const [hot_articles, hot_tags] = await Promise.all([api.hot_articles(), api.hot_tags()]);
     if (hot_articles.data.status === 1) {
       this.articles = hot_articles.data.data;
     }
     if (hot_tags.data.status === 1) {
       this.tags = hot_tags.data.data;
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

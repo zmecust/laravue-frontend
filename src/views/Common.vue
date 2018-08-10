@@ -14,11 +14,10 @@ export default {
   name: 'common',
   components: {
     Headers,
-    Footers
-  }
-}
+    Footers,
+  },
+};
 </script>
 
 <style>
-
 </style>

@@ -22,14 +22,14 @@ export default {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    };
   },
   methods: {
     uploadCallback(response, file, fileList) {
       if (1 === response.status) {
         this.$emit('result', response.data.url);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

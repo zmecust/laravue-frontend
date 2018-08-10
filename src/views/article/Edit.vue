@@ -7,7 +7,7 @@ import FormArticle from './FormArticle';
 
 export default {
   components: {
-    FormArticle
-  }
-}
+    FormArticle,
+  },
+};
 </script>

@@ -26,17 +26,17 @@ import api from '../../api';
 export default {
   data() {
     return {
-      comments: ''
-    }
+      comments: '',
+    };
   },
   mounted() {
-    api.user_get_replies(this.$route.params.slug).then((res) => {
+    api.user_get_replies(this.$route.params.slug).then(res => {
       if (res.data.status == 1) {
         this.comments = res.data.data;
       }
     });
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

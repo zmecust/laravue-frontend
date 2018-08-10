@@ -6,25 +6,25 @@
 </template>
 
 <script>
-import Quill from 'quill'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
+import Quill from 'quill';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
 
 var defaultToolbar = [
   ['bold', 'italic', 'underline', 'strike'],
   ['blockquote', 'image'],
 
-  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+  [{ list: 'ordered' }, { list: 'bullet' }],
 
-  [{ 'indent': '-1' }, { 'indent': '+1' }],
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ indent: '-1' }, { indent: '+1' }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-  [{ 'color': [] }, { 'background': [] }],
-  [{ 'font': [] }],
-  [{ 'align': [] }],
+  [{ color: [] }, { background: [] }],
+  [{ font: [] }],
+  [{ align: [] }],
 
-  ['clean']
-]
+  ['clean'],
+];
 
 export default {
   name: 'vue-editor',
@@ -32,15 +32,15 @@ export default {
     value: String,
     id: {
       type: String,
-      default: 'quill-container'
+      default: 'quill-container',
     },
     placeholder: String,
     disabled: Boolean,
     editorToolbar: Array,
     useCustomImageHandler: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data() {
@@ -48,54 +48,54 @@ export default {
       quill: null,
       editor: null,
       toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar,
-    }
+    };
   },
 
   mounted() {
-    this.initializeVue2Editor()
-    this.handleUpdatedEditor()
+    this.initializeVue2Editor();
+    this.handleUpdatedEditor();
   },
 
   watch: {
     value(val) {
       if (val != this.editor.innerHTML && !this.quill.hasFocus()) {
-        this.editor.innerHTML = val
+        this.editor.innerHTML = val;
       }
     },
     disabled(status) {
       this.quill.enable(!status);
-    }
+    },
   },
 
   methods: {
     initializeVue2Editor() {
-      this.setQuillElement()
-      this.setEditorElement()
-      this.checkForInitialContent()
+      this.setQuillElement();
+      this.setEditorElement();
+      this.checkForInitialContent();
     },
 
     setQuillElement() {
       this.quill = new Quill(this.$refs.quillContainer, {
         modules: {
-          toolbar: this.toolbar
+          toolbar: this.toolbar,
         },
         placeholder: this.placeholder ? this.placeholder : '',
         theme: 'snow',
         readOnly: this.disabled ? this.disabled : false,
-      })
-      this.checkForCustomImageHandler()
+      });
+      this.checkForCustomImageHandler();
     },
 
     setEditorElement() {
-      this.editor = document.querySelector(`#${this.id} .ql-editor`)
+      this.editor = document.querySelector(`#${this.id} .ql-editor`);
     },
 
     checkForInitialContent() {
-      this.editor.innerHTML = this.value || ''
+      this.editor.innerHTML = this.value || '';
     },
 
     checkForCustomImageHandler() {
-      this.useCustomImageHandler === true ? this.setupCustomImageHandler() : ''
+      this.useCustomImageHandler === true ? this.setupCustomImageHandler() : '';
     },
 
     setupCustomImageHandler() {
@@ -105,8 +105,8 @@ export default {
 
     handleUpdatedEditor() {
       this.quill.on('text-change', () => {
-        this.$emit('input', this.editor.innerHTML)
-      })
+        this.$emit('input', this.editor.innerHTML);
+      });
     },
 
     customImageHandler(image, callback) {
@@ -114,14 +114,14 @@ export default {
     },
 
     emitImageInfo($event) {
-      let file = $event.target.files[0]
-      let Editor = this.quill
+      let file = $event.target.files[0];
+      let Editor = this.quill;
       let range = Editor.getSelection();
-      let cursorLocation = range.index
-      this.$emit('imageAdded', file, Editor, cursorLocation)
-    }
-  }
-}
+      let cursorLocation = range.index;
+      this.$emit('imageAdded', file, Editor, cursorLocation);
+    },
+  },
+};
 </script>
 
 <style>

@@ -34,9 +34,9 @@ import { mapState } from 'vuex';
 
 export default {
   computed: mapState({
-    id: state => state.account.auth.id
-  })
-}
+    id: state => state.account.auth.id,
+  }),
+};
 </script>
 
 <style lang="scss" scoped>

@@ -45,13 +45,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import api from "../../api";
+import { mapState } from 'vuex';
+import api from '../../api';
 
 export default {
   data() {
     return {
-      notifications: []
+      notifications: [],
     };
   },
   async mounted() {
@@ -60,7 +60,7 @@ export default {
       this.notifications = res.data.data;
       api.notifications_read();
     }
-  }
+  },
 };
 </script>
 

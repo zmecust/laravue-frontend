@@ -89,23 +89,21 @@ import api from '../api';
 
 export default {
   computed: {
-    ...mapGetters([
-      'upload_avatar',
-    ]),
+    ...mapGetters(['upload_avatar']),
     ...mapState({
       auth: state => state.account.auth,
-    })
+    }),
   },
   data() {
     return {
       active: {
-        'color': '#00b5ad',
-        'border-bottom': '1px solid #00b5ad'
+        color: '#00b5ad',
+        'border-bottom': '1px solid #00b5ad',
       },
       path: this.$route.path.split('/')[1],
       msgNum: '',
-      q: ''
-    }
+      q: '',
+    };
   },
   async mounted() {
     if (this.auth.check()) {
@@ -121,7 +119,7 @@ export default {
     websocket() {
       var ws = new WebSocket(`ws://115.28.170.217:9501?uid=1`);
       var _self = this;
-      ws.onopen = function(evt) {
+      (ws.onopen = function(evt) {
         if (ws.readyState == 1) {
           _self.loadMsg = ws.readyState;
           ws.send('{"action":17,"channels":[110]}');
@@ -129,37 +127,37 @@ export default {
           console.log(0);
           _self.loadMsg = 0;
         }
-      },
+      }),
         // 当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息。
-        ws.onclose = function(evt) {
+        (ws.onclose = function(evt) {
           console.log(2);
           _self.loadMsg = 2;
-        },
-        ws.onmessage = function(evt) {
+        }),
+        (ws.onmessage = function(evt) {
           let data = JSON.parse(evt.data);
           _self.wsMsg = data;
-        },
+        }),
         // 如果连接失败，发送、接收数据失败或者处理数据出现错误，browser会触发onerror消
-        ws.onerror = function(evt) {
+        (ws.onerror = function(evt) {
           console.log(3);
-          _self.loadMsg = 2;;
-        }
+          _self.loadMsg = 2;
+        });
     },
     logOut() {
-      this.$store.dispatch('accountLogoutSubmit').then(
-        res => { this.$router.push('/') }
-      );
+      this.$store.dispatch('accountLogoutSubmit').then(res => {
+        this.$router.push('/');
+      });
     },
     search() {
       this.$router.push({ path: '/search', query: { q: this.q } });
-    }
+    },
   },
   watch: {
-    '$route'(to, from) {
+    $route(to, from) {
       this.path = this.$route.path.split('/')[1];
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

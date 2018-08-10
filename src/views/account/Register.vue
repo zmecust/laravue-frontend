@@ -53,7 +53,7 @@ import Headers from '../../components/Headers';
 export default {
   name: 'register',
   components: {
-    Headers
+    Headers,
   },
   data() {
     return {
@@ -64,11 +64,11 @@ export default {
         password_confirmation: '',
       },
       active: {
-        'color': '#00b5ad',
+        color: '#00b5ad',
         'font-weight': 'bold',
         'border-bottom': '3px solid #00b5ad',
       },
-      path: this.$route.path.split("/")[2]
+      path: this.$route.path.split('/')[2],
     };
   },
   computed: mapState({
@@ -92,26 +92,26 @@ export default {
       this.$notify.success({
         title: '注册成功',
         message: '感谢您支持 LaraVue，请先到前往邮箱激活账号',
-        offset: 100
+        offset: 100,
       });
     },
     github_login() {
       window.location.href = process.env.API_URI + '/github';
-    }
+    },
   },
   watch: {
     success: 'successWatcher',
     $route(to, from) {
-      this.path = this.$route.path.split("/")[2];
-    }
-  }
-}
+      this.path = this.$route.path.split('/')[2];
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .message {
   margin-bottom: 18px;
-  text-align: center
+  text-align: center;
 }
 
 .login-wrap {
