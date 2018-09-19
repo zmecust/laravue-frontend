@@ -77,4 +77,4 @@ vue2 + vuex + vue-router + vue-resource + ES6 + element-ui + sass
 
 ## 联系我
 
-如有任何疑问或者问题，可随时联系我 `root@laravue.org`
+- 如有任何疑问或者问题，可随时联系我 `root@laravue.org`
