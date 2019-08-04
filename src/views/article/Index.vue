@@ -3,7 +3,7 @@
     <el-row :gutter="25" style="margin-left: 0; margin-right: 0">
       <el-col :span="17">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
-        <div class="content" v-for="(article, index) in articles">
+        <div class="content" v-for="(article, index) in articles" :key="index">
           <div class="content-body">
             <div class="content-left">
               <router-link class="content-title" :to="{ name: 'ArticleShow', params: { slug: article.id } }">
@@ -18,7 +18,7 @@
                 {{ article.abstract }} ...
               </div>
               <div style="padding-top: 15px">
-                <div v-for="tag in article.tags" style="float: left">
+                <div v-for="(tag, index) in article.tags" style="float: left" :key="index">
                   <a v-if="tag" :href="'/#/articles?tag=' + tag.name" id="btn-topic">
                     # {{ tag.name }}
                   </a>

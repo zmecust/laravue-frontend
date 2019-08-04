@@ -59,7 +59,7 @@
             <div class="login-failure" v-if="failure">
               <div class="header">{{failure.message}}</div>
               <ul class="list">
-                <li v-for="error in failure.data">{{error[0]}}</li>
+                <li v-for="(error, index) in failure.data" :key="index">{{ error[0] }}</li>
               </ul>
             </div>
             <div>
@@ -78,6 +78,7 @@ import { markdownEditor } from 'vue-simplemde';
 import api from '../../api';
 import Upload from '../../components/Upload';
 import store from '../../store';
+
 const accessToken = store.state.account.auth.access_token;
 
 export default {

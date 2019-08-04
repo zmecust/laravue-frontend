@@ -49,11 +49,6 @@ export default {
       a {
         color: #333;
         font-size: 14px;
-        // &:hover,
-        // &:active,
-        // &:focus {
-        //   color: #00b5ad;
-        // }
       }
       .router-link-active {
         color: #00b5ad;

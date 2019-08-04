@@ -68,7 +68,7 @@
             <h4>{{ article.comments_count ? article.comments_count + ' 条' : '暂无' }}评论</h4>
           </div>
           <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
-          <div v-for="(comment, index) in comments">
+          <div v-for="(comment, index) in comments" :key="index">
             <div class="comment-author">
               <div style="float: left">
                 <router-link :to="{name: 'UserArticles', params: {slug: comment.user.id}}">

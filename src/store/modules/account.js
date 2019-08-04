@@ -31,6 +31,7 @@ export default {
       ? JSON.parse(localStorage.getItem(AUTH_USER)).avatar
       : null,
   },
+
   mutations: {
     ACCOUNT_AUTH_STATUS_CHANGED: (state, data) => {
       if (!data.status) {
@@ -79,6 +80,7 @@ export default {
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
     },
   },
+
   actions: {
     accountLoginSubmit({ commit }, params) {
       api.login(params).then(response => {

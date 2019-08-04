@@ -5,6 +5,7 @@ import App from './App';
 import router from './router';
 import store from './store';
 import ElementUI from 'element-ui';
+
 import '../static/theme/index.css'; // 自定义 element-ui 样式
 
 Vue.use(ElementUI);
