@@ -8,7 +8,7 @@
             <p style="text-align: left">Developed By <a href="https://github.com/zmecust">Min Zhang</a></p>
           </el-col>
           <el-col :span="8">
-            <p style="text-align: center">&copy; 2016-2018
+            <p style="text-align: center">&copy; 2016-2019
               <span style="color: orangered">Lara</span>
               <span style="color: #00b5ad">Vue</span>
             </p>

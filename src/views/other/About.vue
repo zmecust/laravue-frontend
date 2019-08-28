@@ -3,22 +3,29 @@
     <el-row>
       <el-col :span="18">
         <div class="about">
-          <p class="first">关于</p>
           <div style="text-align: center">
             <img src="../../assets/me.jpg" style="width: 60%;" alt="">
           </div>       
-          <h3 class="sub-title">社区</h3>
+          <h3 class="sub-title">关于</h3>
           <div class="cut-off-line"></div>
-          <p style="text-align:justify">
+          <!-- <p >
             LaraVue&nbsp;是两个框架名字组合而成的，这两个框架是我转行接触编程所学的第一个后端框架&nbsp;“Laravel”&nbsp; 以及第一个前端框架&nbsp;“Vue”。本来2017年3月份准备申请&nbsp;laravue.com&nbsp;的域名，但是发现国外一哥们抢先我三天申请了。 这个微社区是一个前后端完全分离的项目，是我前一个社区的改进版。 该社区也没有什么高大上定位，主要是对一些技术和人生方面的思考进行分享，方便自己顺便方便后人。项目源代码都开源到了&nbsp;
             <a href="https://github.com/zmecust/laravue-frontend">Github</a>， 有兴趣可以看看，不要忘了&nbsp;star&nbsp;哦，哈哈哈！
             <br>
+          </p> -->
+          <p style="text-align:justify">
+            <ul style="padding-left: 20px">
+              <li>非科班 CS 专业，硕士期间自学编程。从 PHP 起家，最喜欢 Laravel 框架以及它所包含的设计模式</li>
+              <li>后因工作需要，转移到大前端。Vue、Angular、React 都撸过项目，喜欢 Vue 的渐进式即插即用，喜欢 React 的 JXS，喜欢 Koa 的洋葱模型以及面向切面编程，和 Nodejs 异步非阻塞</li>
+              <li>我的数学基础自我感觉比较好，如果不玩 AI 真是浪费了我的数学天赋。目前专注于 NLP 以及 CV 领域的目标检测</li>
+              <li>业余喜欢炒股，主动投资者，立志做一名全职 Quant。寻找属于自己的 α，以期实现财富自由</li>
+            </ul>
           </p>
 
           <h3 class="sub-title">兴趣爱好</h3>
           <div class="cut-off-line"></div>
           <p>
-            Web开发 &nbsp; 机器学习 &nbsp; 量化投资
+            Web 开发 &nbsp; 人工智能 &nbsp; 量化投资
           </p>
 
           <h3 class="sub-title">个人标签</h3>
