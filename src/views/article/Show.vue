@@ -169,9 +169,11 @@ export default {
       article_likes: '',
     };
   },
+
   computed: mapState({
     auth: state => state.account.auth,
   }),
+
   mounted() {
     Marked.setOptions({
       highlight: function(code) {
@@ -180,6 +182,7 @@ export default {
     });
     this.reload();
   },
+
   methods: {
     async reload() {
       let options = {
@@ -213,6 +216,7 @@ export default {
         }
       }
     },
+
     async click_like() {
       if (this.auth.check()) {
         const res = await api.like(this.$route.params.slug);
@@ -226,6 +230,7 @@ export default {
         this.showPreview = true;
       }
     },
+
     async click_follow() {
       if (this.auth.check()) {
         const res = await api.follow(this.article.user.id);
@@ -237,6 +242,7 @@ export default {
         this.showPreview = true;
       }
     },
+
     async submit() {
       const res = await api.create_comment({
         article_id: this.article.id,
@@ -247,6 +253,7 @@ export default {
         this.comments.push(res.data.data);
       }
     },
+
     send_message() {
       if (this.auth.check()) {
         this.showDialog = true;
@@ -254,18 +261,22 @@ export default {
         this.showPreview = true;
       }
     },
+
     closeDialog() {
       this.showDialog = false;
     },
+
     async submitDialog() {
       const res = await api.send_message({ content: this.content, user_id: this.auth.id });
       if (res.data.status) {
         this.showDialog = false;
       }
     },
+
     closePreview() {
       this.showPreview = false;
     },
+
     message() {
       if (this.follow) {
         this.$message({
@@ -280,6 +291,7 @@ export default {
       }
     },
   },
+
   watch: {
     $route(to, from) {
       this.reload();
@@ -291,6 +303,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../../static/css/markdown.css';
 @import '~highlight.js/styles/atom-one-light.css';
+
 .article {
   margin-top: 40px;
   p {

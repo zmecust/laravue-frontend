@@ -36,17 +36,11 @@
             </div>
             <div class="article-create">
               <dt style="margin-right: 2%">内容：</dt>
-              <!-- <editor id="editor"
-                           @imageAdded="handleImageAdded"
-                           useCustomImageHandler
-                           style="width: 70%; padding-left: 17%;"
-                           v-model="params.body">
-                </editor> -->
               <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body">
               </markdown-editor>
             </div>
             <div class="article-create">
-              <dt>插入图片：</dt>
+              <dt>插入正文图片：</dt>
               <Upload :url="'/content_image'" style="padding-left: 17%;" @result="uploadCallback"></Upload>
             </div>
             <div class="article-create">
@@ -73,7 +67,6 @@
 </template>
 
 <script>
-//import Editor from '../../components/Editor';
 import { markdownEditor } from 'vue-simplemde';
 import api from '../../api';
 import Upload from '../../components/Upload';
@@ -87,7 +80,9 @@ export default {
     markdownEditor,
     Upload,
   },
+
   props: ['type'],
+
   data() {
     return {
       params: {
@@ -116,10 +111,12 @@ export default {
       },
     };
   },
+
   async mounted() {
     const [get_tags, get_categories] = await Promise.all([api.get_tags(), api.get_categories()]);
     this.allTags = get_tags.data.data;
     this.allCategories = get_categories.data.data;
+
     if (this.type !== 'create_article') {
       const res = await api.get_article(this.$route.params.slug);
       for (let index in res.data.data.tags) {
@@ -129,6 +126,7 @@ export default {
       this.params.category = res.data.data.category_id;
     }
   },
+
   methods: {
     async submit(e) {
       // 判断是否为按了Enter键，防止在输入标签时被提交
@@ -158,23 +156,12 @@ export default {
         }
       }
     },
-    handleImageAdded(file, Editor, cursorLocation) {
-      var formData = new FormData();
-      formData.append('image', file);
-      api
-        .content_image(formData)
-        .then(res => {
-          let url = res.data.data.url; // Get url from response
-          Editor.insertEmbed(cursorLocation, 'image', url);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
+
     uploadCallback(data) {
       const transforData = '![' + data + '](' + data + ')';
       this.params.body += transforData;
     },
+
     handleAvatarSuccess(response, file, fileList) {
       if (1 == response.status) {
         this.params.article_url = response.data.url;
@@ -189,8 +176,10 @@ export default {
 .grid-content {
   width: 100%;
   margin-top: 60px;
+
   .article-create {
     margin-bottom: 20px;
+
     dt {
       color: #555;
       padding-top: 5px;
@@ -198,14 +187,17 @@ export default {
       text-align: right;
       float: left;
     }
+
     .el-input {
       width: 70%;
       margin-left: 2%;
     }
+
     #editor {
       height: 400px;
     }
   }
+
   .article-button {
     cursor: pointer;
     width: 70%;
@@ -217,6 +209,7 @@ export default {
     border: 1px solid #00b5ad;
     border-radius: 100px;
     box-shadow: none;
+
     &:hover,
     &:focus,
     &:active {
@@ -238,10 +231,12 @@ export default {
   background-color: #ffeef0;
   color: red;
   line-height: 1.6;
+
   .header {
     padding: 10px 0 0 35px;
     font-weight: bold;
   }
+
   .list {
     padding: 10px 0 0 35px;
     text-align: left;
@@ -255,9 +250,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #00b5ad;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -265,7 +262,13 @@ export default {
   height: 120px;
   line-height: 120px;
   text-align: center;
+  border-radius: 3px;
+  border-top: 1px solid #afcac8;
+  border-left: 1px solid #afcac8;
+  border-right: 1px solid #afcac8;
+  border-bottom: 1px solid #afcac8;
 }
+
 .avatar {
   width: 178px;
   height: 120px;
