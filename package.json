@@ -48,7 +48,7 @@
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
     "husky": "^2.3.0",
-    "lint-staged": "^8.1.7",
+    "lint-staged": "^13.1.0",
     "node-sass": "^4.9.3",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
